@@ -1,4 +1,4 @@
-package net.insomniacs;
+package net.insomniacs.nucleus;
 
 import net.fabricmc.api.ClientModInitializer;
 
