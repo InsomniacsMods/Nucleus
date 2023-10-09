@@ -4,17 +4,12 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 
-public class Nucleus implements ClientModInitializer, ModInitializer {
+public class Nucleus implements ModInitializer {
 
     public static final String API_ID = "Nucleus";
 
     @Override
     public void onInitialize() {
-
-    }
-
-    @Override
-    public void onInitializeClient() {
 
     }
 
