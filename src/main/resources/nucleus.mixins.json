@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "net.insomniacs.nucleus.impl.mixins.common",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+      "BlockEntityTypeMixin",
+		"DataComponentAttachment",
+		"EntityMixin",
+		"ServerMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
