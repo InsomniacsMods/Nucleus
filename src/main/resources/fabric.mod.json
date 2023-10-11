@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"net.insomniacs.nucleus.NucleusClient"
+		],
+		"cardinal-components" : [
+			"net.insomniacs.nucleus.impl.components.ComponentInitializer"
 		]
 	},
 	"mixins": [
@@ -37,5 +40,10 @@
 	},
 	"suggests": {
 		"another-mod": "*"
+	},
+	"custom": {
+		"cardinal-components": [
+			"manic:sanity"
+		]
 	}
 }
