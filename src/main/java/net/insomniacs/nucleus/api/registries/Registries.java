@@ -1,6 +1,5 @@
 package net.insomniacs.nucleus.api.registries;
 
-import net.insomniacs.nucleus.api.components.DataComponent;
 import net.insomniacs.nucleus.api.components.TickingComponent;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -9,7 +8,6 @@ import static net.insomniacs.nucleus.Nucleus.getLocation;
 
 public class Registries {
 
-    public static final RegistryKey<Registry<DataComponent>> COMPONENT = getKey("components");
     public static final RegistryKey<Registry<TickingComponent>> TICKING_COMPONENTS = getKey("ticking_components");
 
     /**
