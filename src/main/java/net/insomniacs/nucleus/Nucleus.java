@@ -2,11 +2,14 @@ package net.insomniacs.nucleus;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
+import net.insomniacs.nucleus.api.utils.BlockEntityHelper;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
 
 public class Nucleus implements ModInitializer {
 
     public static final String API_ID = "Nucleus";
+    public static final String MANIC_ID = "manic";
 
     @Override
     public void onInitialize() {
