@@ -8,15 +8,17 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 /**
  * The sanity component logic, this is integrated directly into nucleus to make me have less hassle
+ * @author dragoncommands
  */
 public class SanityComponentInstance implements SanityComponent, AutoSyncedComponent {
 
-    private static final int MAX_SANITY = 0;
+    public static final int MAX_SANITY = 100;
     private int sanity;
-    private Entity provider;
+    private final Entity provider;
 
     public SanityComponentInstance(Entity provider) {
         this.provider = provider;
+        this.sanity = MAX_SANITY;
     }
 
     public void setSanity(int sanity) {
