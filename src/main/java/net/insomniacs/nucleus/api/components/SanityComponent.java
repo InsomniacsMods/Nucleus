@@ -11,5 +11,6 @@ public interface SanityComponent extends ComponentV3 {
      * @return the current sanity level of the provider.
      */
     int getSanity();
+    void setSanity(int sanity);
 
 }

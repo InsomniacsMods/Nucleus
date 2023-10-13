@@ -21,6 +21,7 @@ public class SanityComponentInstance implements SanityComponent, AutoSyncedCompo
         this.sanity = MAX_SANITY;
     }
 
+    @Override
     public void setSanity(int sanity) {
         this.sanity = NucleusMathUtils.clamp(this.sanity, 0, MAX_SANITY);
         ComponentKeys.SANITY.sync(this.provider);
