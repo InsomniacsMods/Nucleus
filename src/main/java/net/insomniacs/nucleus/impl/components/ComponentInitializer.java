@@ -12,6 +12,7 @@ public class ComponentInitializer implements EntityComponentInitializer {
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         if(FabricLoader.getInstance().isModLoaded("manic")) {
+            System.out.println("Manic is loaded.");
             registry.registerForPlayers(ComponentKeys.SANITY, SanityComponentInstance::new, RespawnCopyStrategy.NEVER_COPY);
         }
     }
