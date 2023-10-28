@@ -8,8 +8,7 @@ import net.minecraft.util.Identifier;
 
 public class Nucleus implements ModInitializer {
 
-    public static final String API_ID = "Nucleus";
-    public static final String MANIC_ID = "manic";
+    public static final String API_ID = "nucleus";
 
     @Override
     public void onInitialize() {
