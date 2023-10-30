@@ -5,6 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import net.insomniacs.nucleus.api.utils.BlockEntityHelper;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
+import org.apache.logging.log4j.Logger;
 
 public class Nucleus implements ModInitializer {
 
@@ -22,6 +23,9 @@ public class Nucleus implements ModInitializer {
      */
     public static Identifier getLocation(String name) {
         return new Identifier(API_ID,name);
+    }
+    public static Logger getDebugLogger() {
+        return null;
     }
 
 }
