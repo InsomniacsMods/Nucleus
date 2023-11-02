@@ -3,6 +3,7 @@ package net.insomniacs.nucleus.api.components;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.insomniacs.nucleus.api.utils.NucleusMathUtils;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -14,16 +15,16 @@ public class SanityComponentInstance implements SanityComponent, AutoSyncedCompo
 
     public static final int MAX_SANITY = 100;
     private int sanity;
-    private final Entity provider;
+    private final PlayerEntity provider;
 
-    public SanityComponentInstance(Entity provider) {
+    public SanityComponentInstance(PlayerEntity provider) {
         this.provider = provider;
         this.sanity = MAX_SANITY;
     }
 
     @Override
     public void setSanity(int sanity) {
-        this.sanity = NucleusMathUtils.clamp(this.sanity, 0, MAX_SANITY);
+        this.sanity = NucleusMathUtils.clamp(sanity, 0, MAX_SANITY);
         ComponentKeys.SANITY.sync(this.provider);
     }
 

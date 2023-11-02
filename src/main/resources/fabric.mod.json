@@ -43,7 +43,8 @@
 	},
 	"custom": {
 		"cardinal-components": [
-			"manic:sanity"
+			"manic:sanity",
+			"manic:insight"
 		]
 	}
 }
