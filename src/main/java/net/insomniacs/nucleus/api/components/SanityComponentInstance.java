@@ -13,6 +13,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
  */
 public class SanityComponentInstance implements SanityComponent, AutoSyncedComponent {
 
+    private static final String SANITY_KEY = "sanity";
     public static final int MAX_SANITY = 100;
     private int sanity;
     private final PlayerEntity provider;
