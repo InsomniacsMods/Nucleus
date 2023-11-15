@@ -1,0 +1,7 @@
+{
+    "item.nucleus.mob_spawning_food.unscented": "No effect",
+    "item.nucleus.mob_spawning_food.description": "Spawns %s",
+
+    "ui.nucleus.when_eaten": "When Eaten:",
+    "ui.nucleus.soulbound": "Soulbound"
+}
