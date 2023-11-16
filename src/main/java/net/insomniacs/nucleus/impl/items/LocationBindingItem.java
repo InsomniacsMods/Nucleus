@@ -1,9 +1,7 @@
 package net.insomniacs.nucleus.impl.items;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.insomniacs.nucleus.impl.misc.Location;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
@@ -14,43 +12,27 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
-public class LocationBindingItem extends Item implements HasPredicates {
+public class LocationBindingItem extends Item {
 
     public static final String BIND_DATA = "location";
     public static final String IS_BOUND_KEY = "bound";
 
-
-    public static final List<LocationBindingItem> ITEMS = new ArrayList<>();
-
     public LocationBindingItem(Item.Settings settings) {
         super(settings);
-        ITEMS.add(this);
     }
-
-    public float registerPredicates(ItemStack stack, World world, LivingEntity entity, int i) {
-        return hasLocation(stack);
-    }
-
-//    public static void registerPredicates() {
-//        ITEMS.forEach(item -> ModItemPredicates.registerPredicate(item, "has_location",
-//                (stack, level, entity, i) -> hasLocation(stack)
-//        ));
-//        ITEMS.clear();
-//    }
 
     public static float hasLocation(ItemStack stack) {
         return stack.getOrCreateNbt().contains(BIND_DATA) ? 1F : 0F;
     }
-
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
@@ -85,24 +67,15 @@ public class LocationBindingItem extends Item implements HasPredicates {
     }
 
     public static Text locationTooltip(NbtCompound nbt) {
-        if(!nbt.contains(BIND_DATA))
-            return Text.of("You shouldn't be seeing this.");
+        if(!nbt.contains(BIND_DATA)) return Text.empty();
+
         Location data = Location.CODEC.parse(NbtOps.INSTANCE, nbt.get(BIND_DATA)).get().orThrow();
         BlockPos pos = data.pos();
         Text dimension = Text.translatable(data.worldRegistryKey().getValue().toTranslationKey("dimension"));
 
-
-        return Text.translatable("item.manic.anima_shackles.location",
+        return Text.translatable("item.nucleus.location_binding_item.location",
                 dimension, pos.getX(), pos.getY(), pos.getZ()
-        ).fillStyle(TEXT_STYLE);
-    }
-
-    public record Location(BlockPos pos, RegistryKey<World> worldRegistryKey) {
-        public static final Codec<Location> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                BlockPos.CODEC.fieldOf("position").forGetter(Location::pos),
-                World.CODEC.fieldOf("world").forGetter(Location::worldRegistryKey)
-        ).apply(instance, Location::new));
-
+        ).formatted(Formatting.GRAY);
     }
 
 }

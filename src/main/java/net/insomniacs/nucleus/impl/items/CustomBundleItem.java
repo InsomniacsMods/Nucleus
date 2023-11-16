@@ -54,28 +54,17 @@ public class CustomBundleItem extends BundleItem {
     }
 
 
-    public static final List<CustomBundleItem> ITEMS = new ArrayList<>();
-
     public CustomBundleItem(Settings settings, @Nullable BundleItemSoundGroup soundGroup, @Nullable Integer maxStorage, @Nullable Function<ItemStack, Integer> itemOccupancy) {
         super(settings);
         this.soundGroup = soundGroup == null ? NucleusSoundEvents.BUNDLE_ITEM : soundGroup;
         this.maxStorage = maxStorage == null ? 64 : maxStorage;
         this.itemOccupancy = itemOccupancy == null ? DEFAULT_ITEM_OCCUPANCY : itemOccupancy;
-        ITEMS.add(this);
     }
-
-//    TODO do the predicate thing
-//    public static void registerPredicates() {
-//        ITEMS.forEach(item -> ModItemPredicates.registerPredicate(item, "filled",
-//                (stack, level, entity, i) -> getAmountFilled(stack)
-//        ));
-//        ITEMS.clear();
-//    }
-
 
     public static float getAmountFilled(ItemStack stack) {
         return (float)getBundleOccupancy(stack) / getMaxStorage(stack);
     }
+
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
@@ -238,12 +227,12 @@ public class CustomBundleItem extends BundleItem {
 
     @Override
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
-        tooltip.add(Text.translatable("item.minecraft.bundle.fullness", getBundleOccupancy(stack), this.getMaxStorage(stack)).formatted(Formatting.GRAY));
+        tooltip.add(Text.translatable("item.minecraft.bundle.fullness", getBundleOccupancy(stack), getMaxStorage(stack)).formatted(Formatting.GRAY));
     }
 
     @Override
     public int getItemBarStep(ItemStack stack) {
-        return Math.min(1 + 12 * getBundleOccupancy(stack) / this.getMaxStorage(stack), 13);
+        return Math.min(1 + 12 * getBundleOccupancy(stack) / getMaxStorage(stack), 13);
     }
 
     @Override
