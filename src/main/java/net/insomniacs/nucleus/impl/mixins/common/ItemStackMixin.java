@@ -21,6 +21,7 @@ import java.util.List;
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 
+    @Shadow public abstract boolean isSoulbound();
     @Shadow public abstract boolean isIn(TagKey<Item> tag);
     @Shadow public abstract NbtCompound getOrCreateNbt();
 
@@ -36,15 +37,7 @@ public abstract class ItemStackMixin {
 
     @Unique
     public void addSoulboundTooltip(List<Text> texts) {
-        boolean pass = false;
-
-        // TODO use `ItemStack.isSoulbound()` whenever asm is added
-        NbtCompound nbt = this.getOrCreateNbt();
-        if (nbt.contains("soulbound") && nbt.getBoolean("soulbound")) pass = true;
-        if (this.isIn(NucleusTags.SOULBOUND_ITEMS)) pass = true;
-
-        if (!pass) return;
-
+        if (!this.isSoulbound()) return;
         Text text = Text.translatable("ui.nucleus.soulbound").styled(style -> style.withItalic(true).withColor(SOULBOUND_COLOR));
         texts.add(text);
     }

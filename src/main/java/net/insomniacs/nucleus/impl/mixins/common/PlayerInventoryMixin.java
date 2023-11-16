@@ -31,11 +31,7 @@ public class PlayerInventoryMixin {
             for(int i = 0; i < list.size(); ++i) {
                 ItemStack stack = list.get(i);
                 if (stack.isEmpty()) continue;
-
-                // TODO add a method with ASM that's basically `ItemStack.isSoulbound()` to replace this
-                NbtCompound nbt = stack.getOrCreateNbt();
-                if (nbt.contains("soulbound") && nbt.getBoolean("soulbound")) continue;
-                if (stack.isIn(NucleusTags.SOULBOUND_ITEMS)) continue;
+                if (stack.isSoulbound()) continue;
 
                 this.player.dropItem(stack, true, false);
                 list.set(i, ItemStack.EMPTY);
