@@ -9,6 +9,7 @@ public class NucleusCreativeModeTabs {
 
     public static void init() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.OPERATOR).register(entries -> {
+            if (!entries.shouldShowOpRestrictedItems()) return;
             entries.add(NucleusItems.LOCATION_BINDING_ITEM);
             entries.add(NucleusItems.MOB_SPAWNING_ITEM);
         });

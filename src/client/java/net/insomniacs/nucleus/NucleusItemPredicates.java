@@ -46,7 +46,7 @@ public class NucleusItemPredicates {
 
     public static void registerPredicateProvider(Item item) {
         for (Class<? extends Item> newItem : ITEM_PREDICATES.keySet()) {
-            if (!item.getClass().isAssignableFrom(newItem)) continue;
+            if (!newItem.isAssignableFrom(item.getClass())) continue;
 
             Map<String, ClampedModelPredicateProvider> predicates = ITEM_PREDICATES.get(newItem);
             for (String path : predicates.keySet()) {
