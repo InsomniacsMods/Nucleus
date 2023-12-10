@@ -1,0 +1,80 @@
+package net.insomniacs.nucleus.misc.brewing.recipes;
+
+import com.mojang.serialization.Codec;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.recipe.BrewingRecipeRegistry;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.util.Identifier;
+
+public class ItemBrewingRecipe extends BrewingRecipe {
+
+    private final Identifier id;
+    private final Ingredient base;
+    private final Ingredient ingredient;
+    private final ItemStack result;
+
+    public ItemBrewingRecipe(Identifier id, Ingredient base, Ingredient ingredient, ItemStack result) {
+//        this.id = id;
+//        this.base = base;
+//        this.ingredient = ingredient;
+//        this.result = result;
+//        BrewingRecipeRegistry.registerItemRecipe()
+    }
+
+    public Ingredient getBase() {
+        return this.base;
+    }
+
+    public Ingredient getIngredient() {
+        return this.ingredient;
+    }
+
+
+
+    @Override
+    public ItemStack getResult(DynamicRegistryManager registryManager) {
+        return this.result;
+    }
+
+    @Override
+    public Identifier getId() {
+        return this.id;
+    }
+
+    class Serializer extends RecipeSerializer<ItemBrewingRecipe> {
+
+        @Override
+        public Codec<ItemBrewingRecipe> codec() {
+            return RecordCodecBuilder.create(instance -> instance.group(
+                    Codec.INT.fieldOf("beans_amount").forGetter(CoolBeansClass::getBeansAmount),
+                    Registries.ITEM.getCodec().fieldOf("bean_type").forGetter(CoolBeansClass::getBeanType),
+                    BlockPos.CODEC.listOf().fieldOf("bean_positions").forGetter(CoolBeansClass::getBeanPositions)
+                    // Up to 16 fields can be declared here
+            ).apply(instance, CoolBeansClass::new));;
+        }
+
+        @Override
+        public ItemBrewingRecipe read(PacketByteBuf buf) {
+            return null;
+        }
+
+        @Override
+        public void write(PacketByteBuf buf, ItemBrewingRecipe recipe) {
+
+        }
+    }
+
+    record Recipe(
+            Ingredient base,
+            Ingredient ingredient,
+            ItemStack result
+    ) {
+
+
+
+    }
+
+}

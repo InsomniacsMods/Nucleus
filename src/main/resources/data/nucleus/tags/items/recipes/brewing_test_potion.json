@@ -1,0 +1,7 @@
+{
+    "type": "nucleus:brewing_potion",
+
+    "base": "minecraft:awkward",
+    "ingredient": { "item": "minecraft:stick" },
+    "result": "minecraft:swiftness"
+}
