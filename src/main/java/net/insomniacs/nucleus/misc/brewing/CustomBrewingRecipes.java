@@ -7,7 +7,7 @@ public class CustomBrewingRecipes {
 
 
     public void init() {
-        BrewingRecipeRegistry.registerItemRecipe();
+//        BrewingRecipeRegistry.registerItemRecipe();
     }
 
 }

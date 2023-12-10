@@ -44,7 +44,7 @@ public class ItemBrewingRecipe extends BrewingRecipe {
         return this.id;
     }
 
-    class Serializer extends RecipeSerializer<ItemBrewingRecipe> {
+    class Serializer implements RecipeSerializer<ItemBrewingRecipe> {
 
         @Override
         public Codec<ItemBrewingRecipe> codec() {

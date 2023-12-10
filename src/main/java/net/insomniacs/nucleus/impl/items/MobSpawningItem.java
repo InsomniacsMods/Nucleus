@@ -73,7 +73,7 @@ public class MobSpawningItem extends Item {
         if (!compound.contains("CustomName")) return getEntityType(stack).getName();
         String rawName = compound.getString("CustomName");
 
-        MutableText result = Text.Serializer.fromJson(rawName);
+        MutableText result = Text.Serialization.fromJson(rawName);
         if (result == null) return Text.empty();
         return result.formatted(Formatting.GRAY);
     }
