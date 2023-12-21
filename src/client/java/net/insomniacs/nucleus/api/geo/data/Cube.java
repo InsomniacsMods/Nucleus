@@ -1,12 +1,11 @@
-package net.insomniacs.nucleus.api.geo.modelData;
+package net.insomniacs.nucleus.api.geo.data;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.insomniacs.nucleus.api.util.Vec2i;
-import net.insomniacs.nucleus.api.util.Vec3i;
+import net.insomniacs.nucleus.api.utils.Vec2i;
+import net.insomniacs.nucleus.api.utils.Vec3i;
 import net.minecraft.client.model.Dilation;
 import net.minecraft.client.model.ModelPartBuilder;
-import net.minecraft.client.model.ModelPartData;
 import net.minecraft.client.model.ModelTransform;
 
 public class Cube extends Element {
@@ -20,9 +19,17 @@ public class Cube extends Element {
             Vec2i uvOffset, float inflation, boolean visible, boolean mirror
     ) {
         super();
-        this.origin = origin;
+        this.origin = new Vec3i(
+                origin.x - pivot.x,
+                origin.y - pivot.y,
+                origin.z - pivot.z
+        );
         this.size = size;
-        this.pivot = pivot;
+        this.pivot = new Vec3i(
+                origin.x + pivot.x,
+                origin.y + pivot.y,
+                origin.z + pivot.z
+        );
         this.rotation = rotation;
 
         this.uvOffset = uvOffset;
@@ -46,27 +53,21 @@ public class Cube extends Element {
         return "Cube[]";
     }
 
-    public void appendModelData(ModelPartData parent) {
-        ModelPartBuilder builder = ModelPartBuilder.create()
+    public ModelPartBuilder builder() {
+        return ModelPartBuilder.create()
                 .uv(this.uvOffset.x, this.uvOffset.y)
                 .mirrored(this.mirror)
                 .cuboid("cube",
-                        0, 0, 0,
-//                        this.origin.x, this.origin.y, this.origin.z,
+                        this.origin.x, this.origin.y, this.origin.z,
                         this.size.x, this.size.y, this.size.z, new Dilation(this.inflation)
                 );
-//        ModelTransform transformer = ModelTransform.of(
-//                this.pivot.x, this.pivot.y, this.pivot.z,
-//                this.rotation.x, this.rotation.y, this.rotation.z
-//        );
-        ModelTransform transformer = ModelTransform.of(
-//                0, 0, 0,
-//                this.origin.x, (this.origin.y - 12) * -1, this.origin.z,
-                this.origin.x, this.origin.y, this.origin.z,
-//                this.rotation.x, this.rotation.y, this.rotation.z
-                0, 0, 0
+    }
+
+    public ModelTransform transformer() {
+        return ModelTransform.of(
+                this.pivot.x, this.pivot.y, this.pivot.z,
+                this.rotation.x, this.rotation.y, this.rotation.z
         );
-        parent.addChild("cube", builder, transformer);
     }
 
 }

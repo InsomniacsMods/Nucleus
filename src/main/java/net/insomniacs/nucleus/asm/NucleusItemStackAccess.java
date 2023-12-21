@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.impl.asm;
+package net.insomniacs.nucleus.asm;
 
 import net.insomniacs.nucleus.impl.misc.NucleusTags;
 import net.minecraft.item.ItemStack;

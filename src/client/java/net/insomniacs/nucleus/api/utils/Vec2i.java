@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.api.util;
+package net.insomniacs.nucleus.api.utils;
 
 import com.mojang.serialization.Codec;
 

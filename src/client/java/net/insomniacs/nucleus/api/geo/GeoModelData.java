@@ -1,12 +1,15 @@
-package net.insomniacs.nucleus.api.geo.modelData;
+package net.insomniacs.nucleus.api.geo;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.insomniacs.nucleus.Nucleus;
-import net.minecraft.client.model.*;
+import net.insomniacs.nucleus.api.geo.data.Group;
+import net.insomniacs.nucleus.api.geo.data.Texture;
+import net.minecraft.client.model.ModelData;
+import net.minecraft.client.model.ModelPartData;
+import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,37 +19,28 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public record GeoModelData(
-        List<Group> groups,
-        Texture texture
+    List<Group> groups,
+    Texture texture
 ) {
 
     @Nullable
     public static GeoModelData fromJson(@Nullable Identifier identifier, JsonObject object) {
         Consumer<String> logError = message -> Nucleus.LOGGER.error(String.format("Error loading Entity Model '%s': " + message, identifier));
-        System.out.println(object);
-
-//        if (!element.isJsonObject()) {
-//            logError.accept("Model must be a JSON Object");
-//            return null;
-//        }
-
-        try {
-            return GeoModelData.CODEC.parse(JsonOps.INSTANCE, object).getOrThrow(true, logError);
-        } catch (RuntimeException e) {
-            return null;
-        }
+        return GeoModelData.CODEC.parse(JsonOps.INSTANCE, object).getOrThrow(true, logError);
     }
 
-    public ModelPart toModelPart() {
+    public TexturedModelData toModelPart() {
         ModelData data = new ModelData();
         ModelPartData root = data.getRoot();
         Map<String, ModelPartData> cachedGroups = new HashMap<>();
-        System.out.println("groups: " + this.groups);
         for (Group group : this.groups) {
-            ModelPartData groupData = group.appendModelData(root, cachedGroups);
+            ModelPartData parent;
+            if (group.parent.isEmpty()) parent = root;
+            else parent = cachedGroups.get(group.parent);
+            ModelPartData groupData = group.appendModelData(parent);
             cachedGroups.put(group.name, groupData);
         }
-        return root.createPart(this.texture.width, this.texture.height);
+        return TexturedModelData.of(data, this.texture.width, this.texture.height);
     }
 
     public static final Codec<GeoModelData> CODEC = RecordCodecBuilder.create(instance -> instance.group(

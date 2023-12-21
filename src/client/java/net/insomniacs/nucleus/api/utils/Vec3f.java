@@ -1,12 +1,4 @@
-package net.insomniacs.nucleus.api.util;
-
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.DynamicOps;
-import com.mojang.serialization.codecs.PrimitiveCodec;
-
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+package net.insomniacs.nucleus.api.utils;
 
 public class Vec3f {
     public float x; public float y; public float z;

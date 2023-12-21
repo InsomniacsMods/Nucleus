@@ -2,8 +2,8 @@ package net.insomniacs.nucleus.api.blockbench.modelData;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.insomniacs.nucleus.api.util.Vec2i;
-import net.insomniacs.nucleus.api.util.Vec3i;
+import net.insomniacs.nucleus.api.utils.Vec2i;
+import net.insomniacs.nucleus.api.utils.Vec3i;
 import net.minecraft.client.model.Dilation;
 import net.minecraft.client.model.ModelPartBuilder;
 import net.minecraft.client.model.ModelTransform;

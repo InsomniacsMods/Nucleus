@@ -1,12 +1,12 @@
-package net.insomniacs.nucleus.api.geo.modelData;
+package net.insomniacs.nucleus.api.geo.data;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 public class Texture {
 
-    int width;
-    int height;
+    public int width;
+    public int height;
 
     public Texture(int width, int height) {
         this.width = width;

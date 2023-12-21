@@ -1,6 +1,6 @@
 package net.insomniacs.nucleus.api.blockbench.modelData;
 
-import net.insomniacs.nucleus.api.util.Vec3i;
+import net.insomniacs.nucleus.api.utils.Vec3i;
 import net.minecraft.client.model.ModelPartBuilder;
 
 public abstract class Element {
