@@ -10,12 +10,12 @@ import java.util.Map;
 
 public record GeoAnimation(
         float animationLength,
-        Map<String, BoneAnimation> boneAnimations
+        Map<String, AnimationHandler> boneAnimations
 ) {
 
     public static final Codec<GeoAnimation> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.FLOAT.fieldOf("animation_length").forGetter(null),
-            Codec.unboundedMap(Codec.STRING, BoneAnimation.CODEC).fieldOf("bones").forGetter(null)
+            Codec.unboundedMap(Codec.STRING, AnimationHandler.CODEC).fieldOf("bones").forGetter(null)
     ).apply(instance, GeoAnimation::new));
 
     public Animation toAnimation() {

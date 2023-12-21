@@ -9,7 +9,7 @@ public class Vec3i {
 
     public static Vec3i NONE = new Vec3i(0, 0, 0);
 
-    public Vec3i(int[] xyz) {
+    public Vec3i(int... xyz) {
         this.x = xyz[0];
         this.y = xyz[1];
         this.z = xyz[2];
@@ -29,4 +29,5 @@ public class Vec3i {
             stream -> net.minecraft.util.Util.decodeFixedLengthArray(stream, 3).map(Vec3i::new),
             vec -> IntStream.of(vec.x, vec.y, vec.z)
     ).stable();
+
 }

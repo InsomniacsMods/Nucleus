@@ -9,7 +9,7 @@ public class Vec2i {
 
     public static Vec2i NONE = new Vec2i(0, 0);
 
-    public Vec2i(int[] xyz) {
+    public Vec2i(int... xyz) {
         this.x = xyz[0];
         this.y = xyz[1];
     }
