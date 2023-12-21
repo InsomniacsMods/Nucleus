@@ -1,6 +1,6 @@
-package net.insomniacs.nucleus.api.geo.data;
+package net.insomniacs.nucleus.api.geo_model.data;
 
-import net.insomniacs.nucleus.api.utils.Vec3i;
+import net.insomniacs.nucleus.utils.Vec3i;
 
 public abstract class Element {
     public Vec3i pivot;

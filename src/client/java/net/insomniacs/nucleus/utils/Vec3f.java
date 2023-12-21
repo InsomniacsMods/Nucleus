@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.api.utils;
+package net.insomniacs.nucleus.utils;
 
 public class Vec3f {
     public float x; public float y; public float z;

@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.api.geo.data;
+package net.insomniacs.nucleus.api.geo_model.data;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

@@ -1,12 +1,12 @@
-package net.insomniacs.nucleus.api.geo;
+package net.insomniacs.nucleus.api.geo_model;
 
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.insomniacs.nucleus.Nucleus;
-import net.insomniacs.nucleus.api.geo.data.Group;
-import net.insomniacs.nucleus.api.geo.data.Texture;
+import net.insomniacs.nucleus.api.geo_model.data.Group;
+import net.insomniacs.nucleus.api.geo_model.data.Texture;
 import net.minecraft.client.model.ModelData;
 import net.minecraft.client.model.ModelPartData;
 import net.minecraft.client.model.TexturedModelData;
@@ -25,8 +25,8 @@ public record GeoModelData(
 
     @Nullable
     public static GeoModelData fromJson(@Nullable Identifier identifier, JsonObject object) {
-        Consumer<String> logError = message -> Nucleus.LOGGER.error(String.format("Error loading Entity Model '%s': " + message, identifier));
-        return GeoModelData.CODEC.parse(JsonOps.INSTANCE, object).getOrThrow(true, logError);
+        Consumer<String> logError = message -> Nucleus.LOGGER.error(String.format("Error loading Model '%s': " + message, identifier));
+        return CODEC.parse(JsonOps.INSTANCE, object).getOrThrow(true, logError);
     }
 
     public TexturedModelData toModelPart() {

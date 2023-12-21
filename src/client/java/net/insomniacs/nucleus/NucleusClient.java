@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
-import net.insomniacs.nucleus.api.geo.GeoModelLoader;
+import net.insomniacs.nucleus.api.geo_model.GeoModelLoader;
 import net.insomniacs.nucleus.impl.entities.NucleusEntities;
 import net.insomniacs.nucleus.impl.entities.VilgerEntityModel;
 import net.insomniacs.nucleus.impl.entities.VilgerEntityRenderer;

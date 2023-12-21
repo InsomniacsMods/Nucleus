@@ -1,6 +1,6 @@
 package net.insomniacs.nucleus.impl.entities;
 
-import net.insomniacs.nucleus.api.geo.GeoModelLoader;
+import net.insomniacs.nucleus.api.geo_model.GeoModelLoader;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.VertexConsumer;
