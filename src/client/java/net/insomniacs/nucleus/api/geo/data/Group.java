@@ -38,20 +38,15 @@ public class Group extends Element {
     public ModelPartData appendModelData(ModelPartData parent) {
         ModelPartData data = parent.addChild(
                 this.name,
-                ModelPartBuilder.create(
-//                ).cuboid(
-//                        (float)this.pivot.x /-2, (float)-this.pivot.y/-2, (float)-this.pivot.z/-2,
-//                        0, 0, 0
-                ),
+                ModelPartBuilder.create(),
                 ModelTransform.of(
                         0, 0, 0,
-//                        -this.pivot.x, -this.pivot.y, -this.pivot.z,
                         this.rotation.x, this.rotation.y, this.rotation.z
                 )
         );
         for (int i = 0; i < this.cubes.size(); i++) {
             Cube cube = this.cubes.get(i);
-            data.addChild(this.name+i, cube.builder(), cube.transformer());
+            cube.appendModelData(this.name+i, data);
         }
         return data;
     }

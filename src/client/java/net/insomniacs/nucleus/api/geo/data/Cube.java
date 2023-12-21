@@ -6,6 +6,7 @@ import net.insomniacs.nucleus.api.utils.Vec2i;
 import net.insomniacs.nucleus.api.utils.Vec3i;
 import net.minecraft.client.model.Dilation;
 import net.minecraft.client.model.ModelPartBuilder;
+import net.minecraft.client.model.ModelPartData;
 import net.minecraft.client.model.ModelTransform;
 
 public class Cube extends Element {
@@ -53,20 +54,20 @@ public class Cube extends Element {
         return "Cube[]";
     }
 
-    public ModelPartBuilder builder() {
-        return ModelPartBuilder.create()
-                .uv(this.uvOffset.x, this.uvOffset.y)
-                .mirrored(this.mirror)
-                .cuboid("cube",
-                        this.origin.x, this.origin.y, this.origin.z,
-                        this.size.x, this.size.y, this.size.z, new Dilation(this.inflation)
-                );
-    }
-
-    public ModelTransform transformer() {
-        return ModelTransform.of(
-                this.pivot.x, this.pivot.y, this.pivot.z,
-                this.rotation.x, this.rotation.y, this.rotation.z
+    public void appendModelData(String name, ModelPartData parent) {
+        parent.addChild(
+                name,
+                ModelPartBuilder.create()
+                        .uv(this.uvOffset.x, this.uvOffset.y)
+                        .mirrored(this.mirror)
+                        .cuboid("cube",
+                                this.origin.x, this.origin.y, this.origin.z,
+                                this.size.x, this.size.y, this.size.z, new Dilation(this.inflation)
+                ),
+                ModelTransform.of(
+                        this.pivot.x, this.pivot.y, this.pivot.z,
+                        this.rotation.x, this.rotation.y, this.rotation.z
+                )
         );
     }
 
