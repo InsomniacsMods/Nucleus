@@ -1,11 +1,10 @@
-package net.insomniacs.nucleus.api.geo_anim;
+package net.insomniacs.nucleus.api.geo_animation;
 
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.insomniacs.nucleus.Nucleus;
-import net.insomniacs.nucleus.api.geo_anim.data.GeoAnimation;
 import net.minecraft.client.render.entity.animation.Animation;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;

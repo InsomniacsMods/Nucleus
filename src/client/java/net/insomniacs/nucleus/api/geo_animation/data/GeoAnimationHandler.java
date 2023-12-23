@@ -1,10 +1,7 @@
-package net.insomniacs.nucleus.api.geo_anim.data;
+package net.insomniacs.nucleus.api.geo_animation.data;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.insomniacs.nucleus.api.geo_anim.data.types.BonePosition;
-import net.insomniacs.nucleus.api.geo_anim.data.types.BoneRotation;
-import net.insomniacs.nucleus.api.geo_anim.data.types.BoneScale;
 import net.minecraft.client.render.entity.animation.Keyframe;
 
 import java.util.ArrayList;
@@ -12,16 +9,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AnimationHandler {
+public class GeoAnimationHandler {
 
-    public final Map<Float, BoneRotation> rotations;
-    public final Map<Float, BonePosition> positions;
-    public final Map<Float, BoneScale> scales;
+    public final Map<Float, GeoRotation> rotations;
+    public final Map<Float, GeoPosition> positions;
+    public final Map<Float, GeoScale> scales;
 
-    public AnimationHandler (
-            Map<String, BoneRotation> rotations,
-            Map<String, BonePosition> positions,
-            Map<String, BoneScale> scales
+    public GeoAnimationHandler(
+            Map<String, GeoRotation> rotations,
+            Map<String, GeoPosition> positions,
+            Map<String, GeoScale> scales
     ) {
         this.rotations = remapTimestamps(rotations);
         this.positions = remapTimestamps(positions);
@@ -37,11 +34,11 @@ public class AnimationHandler {
         return result;
     }
 
-    public static final Codec<AnimationHandler> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.unboundedMap(Codec.STRING, BoneRotation.CODEC).fieldOf("rotation").forGetter(null),
-            Codec.unboundedMap(Codec.STRING, BonePosition.CODEC).fieldOf("position").forGetter(null),
-            Codec.unboundedMap(Codec.STRING, BoneScale.CODEC).fieldOf("scale").forGetter(null)
-    ).apply(instance, AnimationHandler::new));
+    public static final Codec<GeoAnimationHandler> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.unboundedMap(Codec.STRING, GeoRotation.CODEC).fieldOf("rotation").forGetter(null),
+            Codec.unboundedMap(Codec.STRING, GeoPosition.CODEC).fieldOf("position").forGetter(null),
+            Codec.unboundedMap(Codec.STRING, GeoScale.CODEC).fieldOf("scale").forGetter(null)
+    ).apply(instance, GeoAnimationHandler::new));
 
     public List<Keyframe> toKeyframes() {
         List<Keyframe> keyframes = new ArrayList<>();

@@ -3,23 +3,16 @@ package net.insomniacs.nucleus.api.geo_model;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import net.fabricmc.fabric.api.resource.SimpleResourceReloadListener;
 import net.insomniacs.nucleus.Nucleus;
-import net.insomniacs.nucleus.api.geo_anim.GeoAnimationData;
-import net.insomniacs.nucleus.api.geo_anim.GeoAnimationLoader;
 import net.insomniacs.nucleus.utils.FiletypeResourceReloadListener;
 import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.resource.Resource;
-import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.profiler.Profiler;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
 public class GeoModelLoader extends FiletypeResourceReloadListener {
 

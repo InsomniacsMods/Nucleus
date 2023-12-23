@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.api.geo_anim;
+package net.insomniacs.nucleus.api.geo_animation;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

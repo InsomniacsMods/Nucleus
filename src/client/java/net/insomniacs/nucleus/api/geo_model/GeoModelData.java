@@ -5,8 +5,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.insomniacs.nucleus.Nucleus;
-import net.insomniacs.nucleus.api.geo_model.data.Group;
-import net.insomniacs.nucleus.api.geo_model.data.Texture;
+import net.insomniacs.nucleus.api.geo_model.data.GeoGroup;
+import net.insomniacs.nucleus.api.geo_model.data.GeoTexture;
 import net.minecraft.client.model.ModelData;
 import net.minecraft.client.model.ModelPartData;
 import net.minecraft.client.model.TexturedModelData;
@@ -19,8 +19,8 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public record GeoModelData(
-    List<Group> groups,
-    Texture texture
+    List<GeoGroup> groups,
+    GeoTexture texture
 ) {
 
     @Nullable
@@ -33,19 +33,19 @@ public record GeoModelData(
         ModelData data = new ModelData();
         ModelPartData root = data.getRoot();
         Map<String, ModelPartData> cachedGroups = new HashMap<>();
-        for (Group group : this.groups) {
+        for (GeoGroup group : this.groups) {
             ModelPartData parent;
-            if (group.parent.isEmpty()) parent = root;
-            else parent = cachedGroups.get(group.parent);
+            if (group.getParent().isEmpty()) parent = root;
+            else parent = cachedGroups.get(group.getParent());
             ModelPartData groupData = group.appendModelData(parent);
-            cachedGroups.put(group.name, groupData);
+            cachedGroups.put(group.getName(), groupData);
         }
         return TexturedModelData.of(data, this.texture.width, this.texture.height);
     }
 
     public static final Codec<GeoModelData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Group.CODEC.listOf().fieldOf("bones").forGetter(GeoModelData::groups),
-            Texture.CODEC.fieldOf("description").forGetter(GeoModelData::texture)
+            GeoGroup.CODEC.listOf().fieldOf("bones").forGetter(GeoModelData::groups),
+            GeoTexture.CODEC.fieldOf("description").forGetter(GeoModelData::texture)
     ).apply(instance, GeoModelData::new));
 
 }
