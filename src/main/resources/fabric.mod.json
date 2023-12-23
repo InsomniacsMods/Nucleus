@@ -46,7 +46,8 @@
             "manic:insight"
         ],
         "loom:injected_interfaces": {
-            "net/minecraft/class_1799": ["net/insomniacs/nucleus/impl/asm/NucleusItemStackAccess"]
+            "net/minecraft/class_1799": ["net/insomniacs/nucleus/asm/NucleusItemStackAccess"],
+            "net/minecraft/class_1299": ["net/insomniacs/nucleus/asm/NucleusEntityTypeAccess"]
         }
     }
 }
