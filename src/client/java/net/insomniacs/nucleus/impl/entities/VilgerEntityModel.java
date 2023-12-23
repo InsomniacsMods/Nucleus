@@ -1,14 +1,19 @@
 package net.insomniacs.nucleus.impl.entities;
 
+import net.insomniacs.nucleus.Nucleus;
+import net.insomniacs.nucleus.api.geo_animation.GeoAnimationLoader;
+import net.insomniacs.nucleus.api.geo_animation.data.GeoAnimationHandler;
 import net.insomniacs.nucleus.api.geo_model.GeoModelLoader;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.entity.animation.Animation;
 import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
-public class VilgerEntityModel extends EntityModel<VilgerEntity> {
+public class VilgerEntityModel extends SinglePartEntityModel<VilgerEntity> {
 
 
     public final ModelPart root;
@@ -22,11 +27,19 @@ public class VilgerEntityModel extends EntityModel<VilgerEntity> {
     }
 
     @Override
-    public void setAngles(VilgerEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {}
+    public void setAngles(VilgerEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+        Animation spinningHeadAnimation = GeoAnimationLoader.getEntity(Nucleus.id("vilger")).get("spin_head");
+        this.updateAnimation(entity.spinningHeadAnimationState, spinningHeadAnimation, animationProgress, 1.0F);
+    }
 
     @Override
     public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
         this.root.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+    }
+
+    @Override
+    public ModelPart getPart() {
+        return this.root;
     }
 
 }

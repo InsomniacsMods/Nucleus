@@ -4,10 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.client.render.entity.animation.Keyframe;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GeoAnimationHandler {
 
@@ -35,9 +32,9 @@ public class GeoAnimationHandler {
     }
 
     public static final Codec<GeoAnimationHandler> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.unboundedMap(Codec.STRING, GeoRotation.CODEC).fieldOf("rotation").forGetter(null),
-            Codec.unboundedMap(Codec.STRING, GeoPosition.CODEC).fieldOf("position").forGetter(null),
-            Codec.unboundedMap(Codec.STRING, GeoScale.CODEC).fieldOf("scale").forGetter(null)
+            Codec.unboundedMap(Codec.STRING, GeoRotation.CODEC).optionalFieldOf("rotation", Collections.emptyMap()).forGetter(null),
+            Codec.unboundedMap(Codec.STRING, GeoPosition.CODEC).optionalFieldOf("position", Collections.emptyMap()).forGetter(null),
+            Codec.unboundedMap(Codec.STRING, GeoScale.CODEC).optionalFieldOf("scale", Collections.emptyMap()).forGetter(null)
     ).apply(instance, GeoAnimationHandler::new));
 
     public List<Keyframe> toKeyframes() {
