@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.4-SNAPSHOT'
+	id 'fabric-loom' version '1.5-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -11,11 +11,6 @@ base {
 }
 
 repositories {
-	// Add repositories to retrieve artifacts from in here.
-	// You should only use this when depending on other mods because
-	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
-	// for more information about repositories.
 
 	maven {
 		name = 'Ladysnake Mods'
@@ -27,13 +22,18 @@ repositories {
 loom {
     splitEnvironmentSourceSets()
 
-	mods {
-		"nucleus" {
-			sourceSet sourceSets.main
-			sourceSet sourceSets.client
-		}
+	runs {
+		client { source = sourceSets.test }
+		server { source = sourceSets.test }
 	}
 
+}
+
+sourceSets.test {
+	runtimeClasspath += sourceSets.main.runtimeClasspath
+	runtimeClasspath += sourceSets.client.runtimeClasspath
+	compileClasspath += sourceSets.main.compileClasspath
+	compileClasspath += sourceSets.client.compileClasspath
 }
 
 dependencies {

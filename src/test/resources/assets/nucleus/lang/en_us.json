@@ -1,0 +1,7 @@
+{
+    "item.nucleus.location_binding_item": "Location Binding Item",
+    "item.nucleus.location_binding_item.location": "%s (%s, %s, %s)",
+    "item.nucleus.mob_spawning_item": "Mob Spawning Item",
+    "item.nucleus.mob_spawning_item.unscented": "No effect",
+    "item.nucleus.mob_spawning_item.description": "Spawns %s"
+}

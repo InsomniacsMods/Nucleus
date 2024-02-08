@@ -1,0 +1,10 @@
+{
+	"schemaVersion": 1,
+	"id": "nucleus-test",
+	"version": "${mod_version}",
+	"environment": "*",
+	"entrypoints": {
+		"main": [ "net.insomniacs.nucleus.test.NucleusTest" ],
+		"client": [ "net.insomniacs.nucleus.test.client.NucleusTestClient" ]
+	}
+}

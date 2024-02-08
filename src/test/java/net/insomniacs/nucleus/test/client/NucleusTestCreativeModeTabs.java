@@ -1,17 +1,16 @@
-package net.insomniacs.nucleus.impl.misc;
+package net.insomniacs.nucleus.test.client;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.insomniacs.nucleus.impl.items.NucleusItems;
+import net.insomniacs.nucleus.test.NucleusTestItems;
 import net.minecraft.item.ItemGroups;
-import net.minecraft.item.Items;
 
-public class NucleusCreativeModeTabs {
+public class NucleusTestCreativeModeTabs {
 
     public static void init() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.OPERATOR).register(entries -> {
             if (!entries.shouldShowOpRestrictedItems()) return;
-            entries.add(NucleusItems.LOCATION_BINDING_ITEM);
-            entries.add(NucleusItems.MOB_SPAWNING_ITEM);
+            entries.add(NucleusTestItems.LOCATION_BINDING_ITEM);
+            entries.add(NucleusTestItems.MOB_SPAWNING_ITEM);
         });
     }
 

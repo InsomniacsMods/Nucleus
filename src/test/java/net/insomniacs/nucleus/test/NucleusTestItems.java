@@ -1,14 +1,16 @@
-package net.insomniacs.nucleus.impl.items;
+package net.insomniacs.nucleus.test;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.insomniacs.nucleus.Nucleus;
+import net.insomniacs.nucleus.impl.items.LocationBindingItem;
+import net.insomniacs.nucleus.impl.items.MobSpawningItem;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 
-public class NucleusItems {
+public class NucleusTestItems {
 
     public static final Item LOCATION_BINDING_ITEM = registerItem("location_binding_item",
             new LocationBindingItem(new FabricItemSettings().maxCount(1)));
