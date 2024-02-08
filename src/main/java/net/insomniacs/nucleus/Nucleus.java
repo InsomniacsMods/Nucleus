@@ -1,6 +1,7 @@
 package net.insomniacs.nucleus;
 
 import net.fabricmc.api.ModInitializer;
+import net.insomniacs.nucleus.impl.recipes.NucleusRecipes;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.Logger;
 
@@ -9,7 +10,9 @@ public class Nucleus implements ModInitializer {
     public static final String API_ID = "nucleus";
 
     @Override
-    public void onInitialize() {}
+    public void onInitialize() {
+        NucleusRecipes.init();
+    }
 
     /**
      * When provided a name it generates a ResourceLocation

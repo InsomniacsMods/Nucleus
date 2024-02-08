@@ -1,7 +1,0 @@
-{
-    "type": "nucleus:brewing_item",
-
-    "base": { "item": "minecraft:stone" },
-    "ingredient": { "item": "minecraft:stick" },
-    "result": { "item": "minecraft:player_head" }
-}
