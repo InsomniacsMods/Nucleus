@@ -1,6 +1,6 @@
 package net.insomniacs.nucleus.impl.mixins.common;
 
-import net.insomniacs.nucleus.impl.asm.NucleusItemStackAccess;
+import net.insomniacs.nucleus.asm.NucleusItemStackAccess;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

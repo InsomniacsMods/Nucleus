@@ -1,0 +1,80 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.idle",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "head",
+					"pivot": [0, 15.05, -2.9],
+					"cubes": [
+						{"origin": [-3.5, 15, -10.5], "size": [7, 4, 7], "uv": [0, 12]},
+						{"origin": [-3.5, 14, -10.5], "size": [7, 1, 0], "uv": [21, 12]}
+					]
+				},
+				{
+					"name": "jaw",
+					"parent": "head",
+					"pivot": [0, 14.75994, -3.2547],
+					"cubes": [
+						{"origin": [-3.5, 13, -10.5], "size": [7, 2, 7], "pivot": [0, 15, -3.5], "rotation": [22.5, 0, 0], "uv": [21, 16]},
+						{"origin": [-3.5, 15, -10.5], "size": [7, 1, 0], "pivot": [0, 15, -3.5], "rotation": [22.5, 0, 0], "uv": [21, 12]}
+					]
+				},
+				{
+					"name": "tongue",
+					"parent": "jaw",
+					"pivot": [0, 15.16703, -4.96768],
+					"rotation": [-6, 0, 0],
+					"cubes": [
+						{"origin": [-2, 15.1, -11.5], "size": [4, 0, 7], "pivot": [-0.5, 15.1, -4.5], "rotation": [22.5, 0, 0], "uv": [29, 0]}
+					]
+				},
+				{
+					"name": "tongue_drop",
+					"parent": "tongue",
+					"pivot": [0, 12.37346, -10.90179],
+					"cubes": [
+						{"origin": [-2, 8.4426, -10.9439], "size": [4, 4, 0], "pivot": [0, 12.37346, -10.90179], "rotation": [22.5, 0, 0], "uv": [36, 7]}
+					]
+				},
+				{
+					"name": "torso",
+					"pivot": [0, 12.58658, 0.1194],
+					"cubes": [
+						{"origin": [-4.5, 13, -4], "size": [9, 3, 9], "pivot": [0, 14.5, -4.5], "rotation": [-22.5, 0, 0], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "tatters",
+					"parent": "torso",
+					"pivot": [0, 11.41852, 4.23626],
+					"cubes": [
+						{"origin": [-3.5, 3.25, 2], "size": [7, 9, 3], "pivot": [0, 12.25, 5], "rotation": [22.5, 0, 0], "uv": [0, 23]}
+					]
+				},
+				{
+					"name": "arm_right",
+					"pivot": [-4, 14, -3],
+					"cubes": [
+						{"origin": [-7, 0, -4], "size": [3, 14, 3], "uv": [32, 25]}
+					]
+				},
+				{
+					"name": "arm_left",
+					"pivot": [4, 14, -3],
+					"cubes": [
+						{"origin": [4, 0, -4], "size": [3, 14, 3], "uv": [20, 25]}
+					]
+				}
+			]
+		}
+	]
+}

@@ -3,10 +3,12 @@
     "package": "net.insomniacs.nucleus.mixin.client",
     "compatibilityLevel": "JAVA_17",
     "client": [
-        "ExampleClientMixin",
         "ItemSpriteRenderingMixin"
     ],
     "injectors": {
         "defaultRequire": 1
-	}
+    },
+    "mixins": [
+        "ModelPartDataAccessor"
+    ]
 }
