@@ -53,7 +53,6 @@ public class GeoAnimationLoader extends FiletypeResourceReloadListener {
 
     @Override
     public void processFiles(Map<Identifier, Resource> files) {
-        System.out.println(files);
         files.forEach((path, resource) -> {
             try {
                 BufferedReader reader = resource.getReader();

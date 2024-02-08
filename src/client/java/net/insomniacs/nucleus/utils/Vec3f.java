@@ -1,19 +1,15 @@
 package net.insomniacs.nucleus.utils;
 
 import com.mojang.serialization.Codec;
+import net.minecraft.util.Util;
 
 import java.util.List;
 
 public class Vec3f {
-    public float x; public float y; public float z;
 
-    public static Vec3f NONE = new Vec3f(0, 0, 0);
-
-    public Vec3f(Float... xyz) {
-        this.x = xyz[0];
-        this.y = xyz[1];
-        this.z = xyz[2];
-    }
+    public float x;
+    public float y;
+    public float z;
 
     public Vec3f(float x, float y, float z) {
         this.x = x;
@@ -21,13 +17,20 @@ public class Vec3f {
         this.z = z;
     }
 
-    public String toString() {
-        return "(" + this.x + ", " + this.y + ", " + this.z + ")";
+    public Vec3f(List<Float> list) {
+        this(list.get(0), list.get(1), list.get(2));
     }
 
-    public static final Codec<Vec3f> CODEC = Codec.FLOAT.listOf().xmap(
-            list -> new Vec3f(list.toArray(Float[]::new)),
-            vec -> List.of(vec.x, vec.y, vec.z)
-    ).stable();
+    public List<Float> spread() {
+        return List.of(x, y, z);
+    }
+
+
+    public static final Codec<Vec3f> CODEC = Codec.FLOAT.listOf().comapFlatMap(
+            (coordinates) -> Util.decodeFixedLengthList(coordinates, 3).map(Vec3f::new),
+            Vec3f::spread
+    );
+
+    public static final Vec3f ZERO = new Vec3f(0, 0, 0);
 
 }

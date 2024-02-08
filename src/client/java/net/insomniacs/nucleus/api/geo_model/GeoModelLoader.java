@@ -73,7 +73,7 @@ public class GeoModelLoader extends FiletypeResourceReloadListener {
         GeoModelData model = GeoModelData.fromJson(path, object);
         if (model == null) return;
 
-        MODELS.put(path, model.toModelPart());
+        MODELS.put(path, model.toModelData());
     }
 
 }

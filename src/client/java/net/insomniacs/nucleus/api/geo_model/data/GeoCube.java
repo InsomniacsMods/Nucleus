@@ -3,46 +3,66 @@ package net.insomniacs.nucleus.api.geo_model.data;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.insomniacs.nucleus.utils.Vec2i;
-import net.insomniacs.nucleus.utils.Vec3f;
-import net.minecraft.client.model.Dilation;
-import net.minecraft.client.model.ModelPartBuilder;
-import net.minecraft.client.model.ModelPartData;
-import net.minecraft.client.model.ModelTransform;
+import net.insomniacs.nucleus.utils.Vec3r;
+import net.minecraft.client.model.*;
+import net.minecraft.util.math.Vec3d;
 
 public record GeoCube (
-        Vec3f origin, Vec3f size,
-        Vec2i uvOffset, float inflation, boolean visible, boolean mirror
+        Vec3d origin, Vec3d size, Vec3d pivot, Vec3r rotation,
+        Vec2i uvOffset, float scale, boolean visible, boolean mirror
 ) {
 
     public static final Codec<GeoCube> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Vec3f.CODEC.fieldOf("origin").forGetter(null),
-            Vec3f.CODEC.fieldOf("size").forGetter(null),
+            Vec3d.CODEC.fieldOf("origin").forGetter(null),
+            Vec3d.CODEC.fieldOf("size").forGetter(null),
+            Vec3d.CODEC.optionalFieldOf("pivot", Vec3d.ZERO).forGetter(null),
+            Vec3r.CODEC.optionalFieldOf("rotation", Vec3r.ZERO).forGetter(null),
 
-            Vec2i.CODEC.optionalFieldOf("uv", Vec2i.NONE).forGetter(null),
+            Vec2i.CODEC.optionalFieldOf("uv", Vec2i.ZERO).forGetter(null),
             Codec.FLOAT.optionalFieldOf("inflate", 0F).forGetter(null),
             Codec.BOOL.optionalFieldOf("visible", true).forGetter(null),
             Codec.BOOL.optionalFieldOf("mirror", false).forGetter(null)
     ).apply(instance, GeoCube::new));
 
-    public String toString() {
-        return "Cube[]";
+
+    public ModelPartBuilder partBuilder(Vec3d parentPivot) {
+
+        Vec3d pivot = this.pivot.subtract(parentPivot);
+        Vec3d to = this.origin.add(this.size);
+        Vec3d offset = new Vec3d(
+                (float)-(pivot.x - to.x),
+                (float)(pivot.y + to.y),
+//                (float)(origin.z + parentPivot.z)
+                (float)-(origin.z + pivot.z)
+        );
+
+        System.out.println("offset:           " + offset);
+
+        return ModelPartBuilder.create()
+                .uv(uvOffset.x, uvOffset.y)
+                .mirrored(mirror)
+                .cuboid("cube",
+                        (float)offset.x, (float)offset.y, (float)offset.z,
+                        (float)size.x, (float)size.y, (float)size.z, new Dilation(scale)
+                );
     }
 
-    public void appendModelData(String name, ModelPartData parent, Vec3f pivot) {
-        parent.addChild(
-                name,
-                ModelPartBuilder.create()
-                        .uv(uvOffset.x, uvOffset.y)
-                        .mirrored(mirror)
-                        .cuboid("cube",
-                                origin.x - pivot.x,
-                                -origin.y - pivot.y - size.y + 24,
-                                origin.z - pivot.z,
-                                size.x, size.y, size.z,
-                                new Dilation(inflation)
-                ),
-                ModelTransform.NONE
+    public ModelTransform partTransform(Vec3d parentPivot) {
+        Vec3d pivot = new Vec3d(
+                -(parentPivot.x - this.pivot.x),
+                // TODO fix this one
+                (this.pivot.y - parentPivot.y + size.y),
+                -(parentPivot.z - this.pivot.z)
         );
+        return ModelTransform.of(
+                (float)pivot.x, (float)pivot.y, (float)pivot.z,
+                (float)rotation.x, (float)rotation.y, (float)rotation.z
+        );
+    }
+
+
+    public String toString() {
+        return "Cube[]";
     }
 
 }

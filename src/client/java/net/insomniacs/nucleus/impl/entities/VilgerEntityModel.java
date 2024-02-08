@@ -26,10 +26,11 @@ public class VilgerEntityModel extends SinglePartEntityModel<VilgerEntity> {
         return GeoModelLoader.getEntity(entityId);
     }
 
+//    public static Animation SPINNING_HEAD_ANIMATION = GeoAnimationLoader.getEntity(Nucleus.id("vilger")).get("spin_head");
+
     @Override
     public void setAngles(VilgerEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-        Animation spinningHeadAnimation = GeoAnimationLoader.getEntity(Nucleus.id("vilger")).get("spin_head");
-        this.updateAnimation(entity.spinningHeadAnimationState, spinningHeadAnimation, animationProgress, 1.0F);
+//        this.updateAnimation(entity.spinningHeadAnimationState, SPINNING_HEAD_ANIMATION, animationProgress);
     }
 
     @Override

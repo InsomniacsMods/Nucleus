@@ -11,12 +11,12 @@ import net.minecraft.client.model.ModelData;
 import net.minecraft.client.model.ModelPartData;
 import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public record GeoModelData(
     List<GeoGroup> groups,
@@ -25,26 +25,25 @@ public record GeoModelData(
 
     @Nullable
     public static GeoModelData fromJson(@Nullable Identifier identifier, JsonObject object) {
-        Consumer<String> logError = message -> Nucleus.LOGGER.error(String.format("Error loading Model '%s': " + message, identifier));
-        return CODEC.parse(JsonOps.INSTANCE, object).getOrThrow(true, logError);
+        return CODEC.parse(JsonOps.INSTANCE, object).getOrThrow(true,
+                message -> Nucleus.LOGGER.error(String.format("Error loading Model '%s': " + message, identifier))
+        );
     }
 
-    public TexturedModelData toModelPart() {
+    public TexturedModelData toModelData() {
         ModelData data = new ModelData();
         ModelPartData root = data.getRoot();
-        Map<String, ModelPartData> cachedGroups = new HashMap<>();
+        Map<String, Pair<ModelPartData, GeoGroup>> cachedGroupData = new HashMap<>();
         for (GeoGroup group : this.groups) {
-            ModelPartData parent;
-            if (group.getParent().isEmpty()) parent = root;
-            else parent = cachedGroups.get(group.getParent());
-            ModelPartData groupData = group.appendModelData(parent);
-            cachedGroups.put(group.getName(), groupData);
+            Pair<ModelPartData, GeoGroup> parentData = cachedGroupData.getOrDefault(group.getParent(), new Pair<>(root, null));
+            ModelPartData groupData = group.createModelData(parentData.getLeft(), parentData.getRight());
+            cachedGroupData.put(group.getName(), new Pair<>(groupData, group));
         }
         return TexturedModelData.of(data, this.texture.width, this.texture.height);
     }
 
     public static final Codec<GeoModelData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            GeoGroup.CODEC.listOf().fieldOf("bones").forGetter(GeoModelData::groups),
+            GeoGroup.CODEC.listOf().optionalFieldOf("bones", List.of()).forGetter(GeoModelData::groups),
             GeoTexture.CODEC.fieldOf("description").forGetter(GeoModelData::texture)
     ).apply(instance, GeoModelData::new));
 

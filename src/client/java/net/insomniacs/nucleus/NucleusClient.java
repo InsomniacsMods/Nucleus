@@ -31,7 +31,7 @@ public class NucleusClient implements ClientModInitializer {
 	}
 
 	public void registerVilger() {
-		Identifier vilgerEntityId = Nucleus.id("vilger");
+		Identifier vilgerEntityId = Nucleus.id("spook");
 		EntityModelLayer vilgerModelLayer = new EntityModelLayer(vilgerEntityId, "main");
 		EntityModelLayerRegistry.registerModelLayer(
 				vilgerModelLayer,
