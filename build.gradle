@@ -21,12 +21,12 @@ repositories {
 
 loom {
     splitEnvironmentSourceSets()
+	accessWidenerPath = file("src/main/resources/nucleus.accesswidener")
 
 	runs {
 		client { source = sourceSets.test }
 		server { source = sourceSets.test }
 	}
-
 }
 
 sourceSets.test {

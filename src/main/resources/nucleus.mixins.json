@@ -1,13 +1,14 @@
 {
-    "required": true,
-    "package": "net.insomniacs.nucleus.impl.mixins.common",
-    "compatibilityLevel": "JAVA_17",
-    "mixins": [
-        "BlockEntityTypeMixin",
-        "ItemStackMixin",
-        "PlayerInventoryMixin"
-    ],
-    "injectors": {
-        "defaultRequire": 1
+	"required": true,
+	"package": "net.insomniacs.nucleus.impl.mixins.common",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"BlockEntityTypeMixin",
+		"BrewingRecipeRegistryMixin",
+		"ItemStackMixin",
+		"PlayerInventoryMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
 	}
 }
