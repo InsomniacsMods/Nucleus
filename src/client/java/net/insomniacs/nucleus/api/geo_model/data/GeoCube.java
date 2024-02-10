@@ -26,17 +26,14 @@ public record GeoCube (
 
 
     public ModelPartBuilder partBuilder(Vec3d parentPivot) {
-
-        Vec3d pivot = this.pivot.subtract(parentPivot);
         Vec3d to = this.origin.add(this.size);
-        Vec3d offset = new Vec3d(
-                (float)-(pivot.x - to.x),
-                (float)(pivot.y + to.y),
-//                (float)(origin.z + parentPivot.z)
-                (float)-(origin.z + pivot.z)
-        );
+        Vec3d pivot = parentPivot.subtract(this.pivot);
 
-        System.out.println("offset:           " + offset);
+        Vec3d offset = new Vec3d(
+                (float)pivot.x - to.x,
+                (float)-origin.y - size.y + pivot.y,
+                (float)origin.z - pivot.z
+        );
 
         return ModelPartBuilder.create()
                 .uv(uvOffset.x, uvOffset.y)
@@ -47,13 +44,11 @@ public record GeoCube (
                 );
     }
 
-    public ModelTransform partTransform(Vec3d parentPivot) {
-        Vec3d pivot = new Vec3d(
-                -(parentPivot.x - this.pivot.x),
-                // TODO fix this one
-                (this.pivot.y - parentPivot.y + size.y),
-                -(parentPivot.z - this.pivot.z)
-        );
+    public ModelTransform partTransform(String name, Vec3d parentPivot) {
+        System.out.println(name);
+        System.out.println(pivot);
+        System.out.println(parentPivot);
+         System.out.println("e");
         return ModelTransform.of(
                 (float)pivot.x, (float)pivot.y, (float)pivot.z,
                 (float)rotation.x, (float)rotation.y, (float)rotation.z

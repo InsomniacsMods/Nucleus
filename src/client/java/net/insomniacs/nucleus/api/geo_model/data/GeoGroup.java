@@ -10,6 +10,7 @@ import net.minecraft.client.model.ModelTransform;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.List;
+import java.util.Objects;
 
 public class GeoGroup {
 
@@ -59,34 +60,38 @@ public class GeoGroup {
     ).apply(instance, GeoGroup::new));
 
     public ModelPartData createModelData(ModelPartData parent, GeoGroup parentGroup) {
-
-        ModelPartData modelData = createModelData(parent, ModelPartBuilder.create(), parentGroup);
-
-        for (int i = 0; i < cubes.size(); i++) {
-            GeoCube cube = cubes.get(i);
-            System.out.println("cube name: " + (name+i));
-            modelData.addChild(
-                    name+i,
-                    cube.partBuilder(pivot),
-                    cube.partTransform(pivot)
-            );
-        }
-
-        return modelData;
-
-    }
-
-    public ModelPartData createModelData(ModelPartData parent, ModelPartBuilder builder, GeoGroup parentGroup) {
         Vec3d pivot = this.pivot;
-        if (parentGroup != null) pivot = pivot.add(parentGroup.pivot);
-        return parent.addChild(
+        if (parentGroup != null) {
+//            pivot = pivot.subtract(new Vec3d(
+//                parent.rotationData.pivotX,
+//                parent.rotationData.pivotY,
+//                parent.rotationData.pivotZ
+//            ));
+            pivot = pivot.subtract(parentGroup.pivot);
+        }
+        pivot.multiply(-1, 1, 1);
+        pivot.add(0, 24, 0);
+
+        ModelPartData modelData = parent.addChild(
                 name,
-                builder,
+                ModelPartBuilder.create(),
                 ModelTransform.of(
                         (float)pivot.x, (float)pivot.y, (float)pivot.z,
                         (float)rotation.x, (float)rotation.y, (float)rotation.z
                 )
         );
+
+        for (int i = 0; i < cubes.size(); i++) {
+            GeoCube cube = cubes.get(i);
+            modelData.addChild(
+                    name+i,
+                    cube.partBuilder(pivot),
+                    cube.partTransform(name+i, pivot)
+            );
+        }
+
+        return modelData;
+
     }
 
 }
