@@ -13,26 +13,31 @@ public record GeoCube (
 ) {
 
     public static final Codec<GeoCube> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Vec3d.CODEC.fieldOf("origin").forGetter(null),
-            Vec3d.CODEC.fieldOf("size").forGetter(null),
-            Vec3d.CODEC.optionalFieldOf("pivot", Vec3d.ZERO).forGetter(null),
-            Vec3r.CODEC.optionalFieldOf("rotation", Vec3r.ZERO).forGetter(null),
+            Vec3d.CODEC.fieldOf("origin").forGetter(GeoCube::origin),
+            Vec3d.CODEC.fieldOf("size").forGetter(GeoCube::size),
+            Vec3d.CODEC.optionalFieldOf("pivot", Vec3d.ZERO).forGetter(GeoCube::pivot),
+            Vec3r.CODEC.optionalFieldOf("rotation", Vec3r.ZERO).forGetter(GeoCube::rotation),
 
-            Vec2i.CODEC.optionalFieldOf("uv", Vec2i.ZERO).forGetter(null),
-            Codec.FLOAT.optionalFieldOf("inflate", 0F).forGetter(null),
-            Codec.BOOL.optionalFieldOf("visible", true).forGetter(null),
-            Codec.BOOL.optionalFieldOf("mirror", false).forGetter(null)
+            Vec2i.CODEC.optionalFieldOf("uv", Vec2i.ZERO).forGetter(GeoCube::uvOffset),
+            Codec.FLOAT.optionalFieldOf("inflate", 0F).forGetter(GeoCube::scale),
+            Codec.BOOL.optionalFieldOf("visible", true).forGetter(GeoCube::visible),
+            Codec.BOOL.optionalFieldOf("mirror", false).forGetter(GeoCube::mirror)
     ).apply(instance, GeoCube::new));
 
+    public void append(ModelPartData modelData, String name) {
+        modelData.addChild(
+                name,
+                getBuilder(pivot),
+                getTransformation(pivot)
+        );
+    }
 
-    public ModelPartBuilder partBuilder(Vec3d parentPivot) {
-        Vec3d to = this.origin.add(this.size);
-        Vec3d pivot = parentPivot.subtract(this.pivot);
-
+    public ModelPartBuilder getBuilder(Vec3d parentPivot) {
         Vec3d offset = new Vec3d(
-                (float)pivot.x - to.x,
-                (float)-origin.y - size.y + pivot.y,
-                (float)origin.z - pivot.z
+                (float)parentPivot.x - (origin.x + size.x),
+                (float)-origin.y - size.y + parentPivot.y,
+//                (float)origin.y - parentPivot.y,
+                (float)origin.z - parentPivot.z
         );
 
         return ModelPartBuilder.create()
@@ -44,11 +49,7 @@ public record GeoCube (
                 );
     }
 
-    public ModelTransform partTransform(String name, Vec3d parentPivot) {
-        System.out.println(name);
-        System.out.println(pivot);
-        System.out.println(parentPivot);
-         System.out.println("e");
+    public ModelTransform getTransformation(Vec3d pivot) {
         return ModelTransform.of(
                 (float)pivot.x, (float)pivot.y, (float)pivot.z,
                 (float)rotation.x, (float)rotation.y, (float)rotation.z

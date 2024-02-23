@@ -33,12 +33,15 @@ public record GeoModelData(
     public TexturedModelData toModelData() {
         ModelData data = new ModelData();
         ModelPartData root = data.getRoot();
-        Map<String, Pair<ModelPartData, GeoGroup>> cachedGroupData = new HashMap<>();
+
+        Map<String, GroupData> cachedGroupData = new HashMap<>();
         for (GeoGroup group : this.groups) {
-            Pair<ModelPartData, GeoGroup> parentData = cachedGroupData.getOrDefault(group.getParent(), new Pair<>(root, null));
-            ModelPartData groupData = group.createModelData(parentData.getLeft(), parentData.getRight());
-            cachedGroupData.put(group.getName(), new Pair<>(groupData, group));
+            GroupData parentData = cachedGroupData.getOrDefault(group.getParent(), new GroupData(root, null));
+            ModelPartData groupData = group.toModelData(parentData.modelData, parentData.groupData);
+            group.addChildren(groupData);
+            cachedGroupData.put(group.getName(), new GroupData(groupData, group));
         }
+
         return TexturedModelData.of(data, this.texture.width, this.texture.height);
     }
 
@@ -46,5 +49,10 @@ public record GeoModelData(
             GeoGroup.CODEC.listOf().optionalFieldOf("bones", List.of()).forGetter(GeoModelData::groups),
             GeoTexture.CODEC.fieldOf("description").forGetter(GeoModelData::texture)
     ).apply(instance, GeoModelData::new));
+
+    record GroupData (
+            ModelPartData modelData,
+            GeoGroup groupData
+    ) {}
 
 }

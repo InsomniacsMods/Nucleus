@@ -2,7 +2,6 @@ package net.insomniacs.nucleus.api.geo_model.data;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.insomniacs.nucleus.mixin.client.ModelPartDataAccessor;
 import net.insomniacs.nucleus.utils.Vec3r;
 import net.minecraft.client.model.ModelPartBuilder;
 import net.minecraft.client.model.ModelPartData;
@@ -10,36 +9,11 @@ import net.minecraft.client.model.ModelTransform;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.List;
-import java.util.Objects;
 
-public class GeoGroup {
-
-    private final String name;
-    private final String parent;
-    private final List<GeoCube> cubes;
-
-    private final Vec3d pivot;
-    private final Vec3r rotation;
-    private final boolean visible;
-
-    public GeoGroup(
-            String name, String parent, List<GeoCube> cubes,
-            Vec3d pivot, Vec3r rotation, boolean visible
-    ) {
-        this.name = name;
-        this.parent = parent;
-        this.cubes = cubes;
-
-        this.pivot = new Vec3d(
-                pivot.x,
-                // TODO make this smaller? .add(0, -24, 0) ?
-                24 - pivot.y,
-                pivot.z
-        );
-        this.rotation = rotation;
-        this.visible = visible;
-    }
-
+public record GeoGroup(
+        String name, String parent, List<GeoCube> cubes,
+        Vec3d pivot, Vec3r rotation, boolean visible
+) {
 
     public String getName() {
         return name;
@@ -59,39 +33,31 @@ public class GeoGroup {
             Codec.BOOL.optionalFieldOf("visible", true).forGetter(null)
     ).apply(instance, GeoGroup::new));
 
-    public ModelPartData createModelData(ModelPartData parent, GeoGroup parentGroup) {
-        Vec3d pivot = this.pivot;
-        if (parentGroup != null) {
-//            pivot = pivot.subtract(new Vec3d(
-//                parent.rotationData.pivotX,
-//                parent.rotationData.pivotY,
-//                parent.rotationData.pivotZ
-//            ));
-            pivot = pivot.subtract(parentGroup.pivot);
-        }
-        pivot.multiply(-1, 1, 1);
-        pivot.add(0, 24, 0);
-
-        ModelPartData modelData = parent.addChild(
+    public ModelPartData toModelData(ModelPartData parent, GeoGroup parentGroup) {
+        return parent.addChild(
                 name,
                 ModelPartBuilder.create(),
-                ModelTransform.of(
-                        (float)pivot.x, (float)pivot.y, (float)pivot.z,
-                        (float)rotation.x, (float)rotation.y, (float)rotation.z
-                )
+                getTransformation(parentGroup)
         );
+    }
 
+    public ModelTransform getTransformation(GeoGroup parent) {
+        Vec3d pivot = this.pivot;
+        if (parent != null) pivot = pivot.subtract(parent.pivot);
+        pivot.multiply(1, -1, 1);
+//        pivot.add(0, 24, 0);
+
+        return ModelTransform.of(
+                (float)pivot.x, (float)pivot.y, (float)pivot.z,
+                (float)rotation.x, (float)rotation.y, (float)rotation.z
+        );
+    }
+
+    public void addChildren(ModelPartData modelData) {
         for (int i = 0; i < cubes.size(); i++) {
             GeoCube cube = cubes.get(i);
-            modelData.addChild(
-                    name+i,
-                    cube.partBuilder(pivot),
-                    cube.partTransform(name+i, pivot)
-            );
+            cube.append(modelData, name+i);
         }
-
-        return modelData;
-
     }
 
 }
