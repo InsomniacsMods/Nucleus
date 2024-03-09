@@ -9,9 +9,15 @@ import net.insomniacs.nucleus.api.geo_animation.GeoAnimationLoader;
 import net.insomniacs.nucleus.api.geo_model.GeoModelLoader;
 import net.insomniacs.nucleus.impl.entities.*;
 import net.insomniacs.nucleus.impl.misc.NucleusCreativeModeTabs;
+import net.minecraft.client.render.entity.EntityRenderer;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.entity.EntityType;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
+
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
 public class NucleusClient implements ClientModInitializer {
 
@@ -33,13 +39,11 @@ public class NucleusClient implements ClientModInitializer {
 		EntityModelLayer vilgerModelLayer = new EntityModelLayer(vilgerEntityId, "main");
 		EntityModelLayerRegistry.registerModelLayer(
 				vilgerModelLayer,
-				() -> VilgerEntityModel.getModelData(vilgerEntityId)
-//				SpookEntityModel::getTexturedModelData
+				() -> GeoModelLoader.getEntity(vilgerEntityId)
 		);
 		EntityRendererRegistry.register(
 				NucleusEntities.VILGER,
 				(context) -> new VilgerEntityRenderer(context, vilgerModelLayer, vilgerEntityId)
-//				(context) -> new SpookEntityRenderer(context, vilgerModelLayer, vilgerEntityId)
 		);
 	}
 

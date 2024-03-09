@@ -24,41 +24,32 @@ public record GeoCube (
             Codec.BOOL.optionalFieldOf("mirror", false).forGetter(GeoCube::mirror)
     ).apply(instance, GeoCube::new));
 
-    public void append(ModelPartData modelData, String name) {
-        modelData.addChild(
-                name,
-                getBuilder(pivot),
-                getTransformation(pivot)
-        );
+    public boolean isSimple() {
+        return sumVec(this.pivot) + sumVec(this.rotation) == 0;
     }
 
-    public ModelPartBuilder getBuilder(Vec3d parentPivot) {
+    public static double sumVec(Vec3d vec) {
+        return vec.x + vec.y + vec.z;
+    }
+
+    public ModelPartBuilder addToBuilder(ModelPartBuilder builder, Vec3d parentPivot) {
         Vec3d offset = new Vec3d(
                 (float)parentPivot.x - (origin.x + size.x),
                 (float)-origin.y - size.y + parentPivot.y,
-//                (float)origin.y - parentPivot.y,
                 (float)origin.z - parentPivot.z
         );
 
-        return ModelPartBuilder.create()
-                .uv(uvOffset.x, uvOffset.y)
-                .mirrored(mirror)
-                .cuboid("cube",
+        return builder.uv(uvOffset.x, uvOffset.y).cuboid(
                         (float)offset.x, (float)offset.y, (float)offset.z,
                         (float)size.x, (float)size.y, (float)size.z, new Dilation(scale)
-                );
+        );
     }
 
-    public ModelTransform getTransformation(Vec3d pivot) {
+    public ModelTransform getTransformation() {
         return ModelTransform.of(
                 (float)pivot.x, (float)pivot.y, (float)pivot.z,
                 (float)rotation.x, (float)rotation.y, (float)rotation.z
         );
-    }
-
-
-    public String toString() {
-        return "Cube[]";
     }
 
 }

@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.insomniacs.nucleus.Nucleus;
+import net.insomniacs.nucleus.api.geo_model.data.GeoCube;
 import net.insomniacs.nucleus.api.geo_model.data.GeoGroup;
 import net.insomniacs.nucleus.api.geo_model.data.GeoTexture;
 import net.minecraft.client.model.ModelData;
@@ -14,6 +15,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Pair;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,10 +38,9 @@ public record GeoModelData(
 
         Map<String, GroupData> cachedGroupData = new HashMap<>();
         for (GeoGroup group : this.groups) {
-            GroupData parentData = cachedGroupData.getOrDefault(group.getParent(), new GroupData(root, null));
+            GroupData parentData = cachedGroupData.getOrDefault(group.parent(), new GroupData(root, null));
             ModelPartData groupData = group.toModelData(parentData.modelData, parentData.groupData);
-            group.addChildren(groupData);
-            cachedGroupData.put(group.getName(), new GroupData(groupData, group));
+            cachedGroupData.put(group.name(), new GroupData(groupData, group));
         }
 
         return TexturedModelData.of(data, this.texture.width, this.texture.height);

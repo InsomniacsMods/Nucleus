@@ -10,16 +10,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 
 public class SpookEntityModel extends EntityModel<VilgerEntity> {
+
 	private final ModelPart head;
 	private final ModelPart torso;
 	private final ModelPart arm_right;
 	private final ModelPart arm_left;
+
 	public SpookEntityModel(ModelPart root) {
         this.head = root.getChild("head");
 		this.torso = root.getChild("torso");
 		this.arm_right = root.getChild("arm_right");
 		this.arm_left = root.getChild("arm_left");
 	}
+
 	public static TexturedModelData getTexturedModelData() {
 		ModelData modelData = new ModelData();
 		ModelPartData modelPartData = modelData.getRoot();
@@ -106,9 +109,11 @@ public class SpookEntityModel extends EntityModel<VilgerEntity> {
 		));
 		return TexturedModelData.of(modelData, 64, 64);
 	}
+
 	@Override
 	public void setAngles(VilgerEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 	}
+
 	@Override
 	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
 		head.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
