@@ -37,7 +37,7 @@ public class NucleusItemPredicates {
 
     }
 
-    private static void registerPredicateProvider(Class<? extends Item> itemClass, String path, ClampedModelPredicateProvider provider) {
+    public static void registerPredicateProvider(Class<? extends Item> itemClass, String path, ClampedModelPredicateProvider provider) {
         if (!ITEM_PREDICATES.containsKey(itemClass)) ITEM_PREDICATES.put(itemClass, new HashMap<>());
 
         Map<String, ClampedModelPredicateProvider> predicates = ITEM_PREDICATES.get(itemClass);
