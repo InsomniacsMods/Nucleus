@@ -1,6 +1,6 @@
 {
 	"schemaVersion": 1,
-	"id": "nucleus-test",
+	"id": "nucleus_test",
 	"version": "dev",
 	"entrypoints": {
 		"main": [ "net.insomniacs.nucleus.test.NucleusTest" ],

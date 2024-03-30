@@ -2,11 +2,14 @@ package net.insomniacs.nucleus;
 
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Nucleus implements ModInitializer {
 
     public static final String API_ID = "nucleus";
+
+    public static final Logger LOGGER = LoggerFactory.getLogger("Nucleus");
 
     @Override
     public void onInitialize() {}

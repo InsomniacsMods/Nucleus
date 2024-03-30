@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.mixin.client;
+package net.insomniacs.nucleus.impl.mixin;
 
 import net.insomniacs.nucleus.api.markers.ItemDisplayMarker;
 import net.minecraft.client.render.VertexConsumerProvider;

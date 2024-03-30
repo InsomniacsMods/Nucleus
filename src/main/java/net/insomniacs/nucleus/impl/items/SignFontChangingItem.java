@@ -42,14 +42,18 @@ public class SignFontChangingItem extends Item implements SignChangingItem {
         return false;
     }
 
-    @SuppressWarnings("all")
     public SignText changeFont(SignText text, ItemStack stack) {
         for (int i = 0; i < 4; i++) {
-            Identifier currentFont = text.getMessage(i, false).getStyle().getFont();
+            Text message = text.getMessage(i, false);
+            if (message.getString().isEmpty()) continue;
+            Identifier currentFont = message.getStyle().getFont();
+            Identifier itemFont = getFont(stack.getOrCreateNbt());
+
             Identifier font;
-            if (currentFont != DEFAULT_FONT) font = DEFAULT_FONT;
-            else getFont(stack.getOrCreateNbt());
-            text = text.withMessage(i, text.getMessage(i, false).copy().styled(t -> t.withFont(this.font)));
+            if (currentFont.equals(itemFont)) font = DEFAULT_FONT;
+            else font = itemFont;
+
+            text = text.withMessage(i, text.getMessage(i, false).copy().styled(t -> t.withFont(font)));
         }
         return text;
     }
@@ -65,14 +69,14 @@ public class SignFontChangingItem extends Item implements SignChangingItem {
         return Text.translatable(fontKey).styled(t -> t.withFont(font));
     }
 
-    public static final Style TEXT_STYLE = Style.EMPTY.withColor(new Color(166, 192, 166).getRGB());
-    public static final Style PART_STYLE = Style.EMPTY.withColor(new Color(123, 191, 123).getRGB());
+//    public static final Style TEXT_STYLE = Style.EMPTY.withColor(new Color(166, 192, 166).getRGB());
+//    public static final Style PART_STYLE = Style.EMPTY.withColor(new Color(123, 191, 123).getRGB());
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         tooltip.add(ScreenTexts.EMPTY);
-        Text button = Text.keybind("key.use").fillStyle(PART_STYLE);
-        Text fontName = getFontName(stack.getOrCreateNbt()).fillStyle(PART_STYLE);
-        tooltip.add(Text.translatable("item.manic.grim_quill.description", button, fontName).fillStyle(TEXT_STYLE.withItalic(true)));
+        Text button = Text.keybind("key.use");
+        Text fontName = getFontName(stack.getOrCreateNbt());
+        tooltip.add(Text.translatable("ui.nucleus.font_changing", button, fontName));
     }
 }

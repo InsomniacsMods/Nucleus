@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.impl.mixins.common;
+package net.insomniacs.nucleus.impl.mixins;
 
 import net.insomniacs.nucleus.impl.misc.NucleusTags;
 import net.minecraft.entity.player.PlayerEntity;

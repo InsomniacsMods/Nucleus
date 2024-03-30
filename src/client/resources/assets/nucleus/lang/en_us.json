@@ -7,5 +7,6 @@
     "dimension.minecraft.the_end": "The End",
 
     "ui.nucleus.when_eaten": "When Eaten:",
-    "ui.nucleus.soulbound": "Soulbound"
+    "ui.nucleus.soulbound": "Soulbound",
+    "ui.nucleus.font_changing": "Use %s on a sign to write in %s"
 }

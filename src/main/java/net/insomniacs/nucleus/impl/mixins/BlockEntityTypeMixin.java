@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.impl.mixins.common;
+package net.insomniacs.nucleus.impl.mixins;
 
 import com.google.common.collect.ImmutableSet;
 import net.insomniacs.nucleus.api.utils.BlockEntityHelper;

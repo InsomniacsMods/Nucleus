@@ -3,9 +3,9 @@ plugins {
 	id 'maven-publish'
 }
 
-base { archivesName = project.mod_id }
 version = mod_version
 group = mod_group
+base { archivesName = mod_id }
 
 repositories {
 	maven {
@@ -15,11 +15,28 @@ repositories {
 }
 
 loom {
-    splitEnvironmentSourceSets()
+	splitEnvironmentSourceSets()
+	accessWidenerPath.set file("src/main/resources/nucleus.accesswidener")
+
+	mods {
+		mod_id {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+		"nucleus_test" {
+			sourceSet sourceSets.test
+		}
+	}
 
 	runs {
-		client { source = sourceSets.test }
-		server { source = sourceSets.test }
+		testClient {
+			client()
+			source sourceSets.test
+		}
+		testServer {
+			server()
+			source sourceSets.test
+		}
 	}
 }
 
@@ -57,4 +74,4 @@ publishing {
 		}
 	}
 }
-build.dependsOn publishToMavenLocal
+tasks.build.finalizedBy publishToMavenLocal

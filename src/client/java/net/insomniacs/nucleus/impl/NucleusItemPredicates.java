@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus;
+package net.insomniacs.nucleus.impl;
 
 import net.insomniacs.nucleus.impl.items.CustomBundleItem;
 import net.insomniacs.nucleus.impl.items.LocationBindingItem;

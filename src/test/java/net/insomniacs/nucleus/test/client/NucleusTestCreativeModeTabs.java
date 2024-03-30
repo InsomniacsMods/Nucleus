@@ -9,7 +9,7 @@ public class NucleusTestCreativeModeTabs {
     public static void init() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.OPERATOR).register(entries -> {
             if (!entries.shouldShowOpRestrictedItems()) return;
-            entries.add(NucleusTestItems.LOCATION_BINDING_ITEM);
+//            entries.add(NucleusTestItems.LOCATION_BINDING_ITEM);
             entries.add(NucleusTestItems.MOB_SPAWNING_ITEM);
         });
     }

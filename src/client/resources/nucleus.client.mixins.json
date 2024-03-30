@@ -1,9 +1,8 @@
 {
     "required": true,
-    "package": "net.insomniacs.nucleus.mixin.client",
+    "package": "net.insomniacs.nucleus.impl.mixin",
     "compatibilityLevel": "JAVA_17",
     "client": [
-        "ExampleClientMixin",
         "ItemSpriteRenderingMixin"
     ],
     "injectors": {

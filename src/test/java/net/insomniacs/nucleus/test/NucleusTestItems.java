@@ -1,26 +1,32 @@
 package net.insomniacs.nucleus.test;
 
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.insomniacs.nucleus.Nucleus;
 import net.insomniacs.nucleus.impl.items.LocationBindingItem;
 import net.insomniacs.nucleus.impl.items.MobSpawningItem;
+import net.insomniacs.nucleus.impl.items.SignFontChangingItem;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.item.ItemGroups;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
+
+import static net.insomniacs.nucleus.test.NucleusTest.REGISTRY;
 
 public class NucleusTestItems {
 
-    public static final Item LOCATION_BINDING_ITEM = registerItem("location_binding_item",
-            new LocationBindingItem(new FabricItemSettings().maxCount(1)));
-    public static final Item MOB_SPAWNING_ITEM = registerItem("mob_spawning_item",
-            new MobSpawningItem(new FabricItemSettings().maxCount(1).food(new FoodComponent.Builder().snack().build()), EntityType.ZOMBIE));
+    public static final Item BASIC = REGISTRY.item("basic_item", Item::new).register().value();
+
+    public static final Item ILLAGER_RUNE = REGISTRY.item("illager_rune",
+            settings -> new SignFontChangingItem(settings, new Identifier("illageralt"), SoundEvents.ITEM_DYE_USE)
+    )
+            .unstackable()
+            .register().value();
+
+    public static final Item LOCATION_BINDING_ITEM = REGISTRY.item("location_binding_item", LocationBindingItem::new)
+            .unstackable()
+            .creativeTab(ItemGroups.OPERATOR)
+            .register().value();
 
     public static void init() {}
-
-    private static Item registerItem(String name, Item item) {
-        return Registry.register(Registries.ITEM, Nucleus.id(name), item);
-    }
 
 }
