@@ -1,0 +1,9 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "nucleus:item/location_binding_item"
+	},
+	"overrides": [
+		{ "predicate": { "has_location": 1.0 }, "model": "nucleus:item/location_binding_item_bound" }
+	]
+}
