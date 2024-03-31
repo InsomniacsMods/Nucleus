@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.api.datagen.providers;
+package net.insomniacs.nucleus.datagen.providers.model;
 
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;

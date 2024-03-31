@@ -12,13 +12,15 @@
         "sources": "https://github.com/FabricMC/fabric-example-mod"
     },
     "license": "CC0-1.0",
-    "environment": "*",
     "entrypoints": {
         "main": [
             "net.insomniacs.nucleus.Nucleus"
         ],
         "client": [
             "net.insomniacs.nucleus.NucleusClient"
+        ],
+        "fabric-datagen": [
+            "net.insomniacs.nucleus.datagen.NucleusDatagen"
         ],
         "cardinal-components": [
             "net.insomniacs.nucleus.impl.components.ComponentInitializer"
@@ -31,6 +33,7 @@
             "environment": "client"
         }
     ],
+    "accessWidener": "nucleus.accesswidener",
     "depends": {
         "fabricloader": ">=0.14.22",
         "minecraft": "~1.20.2",

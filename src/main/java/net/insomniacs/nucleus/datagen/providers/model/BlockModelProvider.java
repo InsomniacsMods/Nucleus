@@ -1,6 +1,6 @@
-package net.insomniacs.nucleus.api.datagen.providers;
+package net.insomniacs.nucleus.datagen.providers.model;
 
-import net.insomniacs.nucleus.api.datagen.providers.template.TemplateProvider;
+import net.insomniacs.nucleus.datagen.providers.template.TemplateProvider;
 import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.TexturedModel;
