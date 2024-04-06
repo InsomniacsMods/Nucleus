@@ -17,10 +17,11 @@
             "net.insomniacs.nucleus.Nucleus"
         ],
         "client": [
-            "net.insomniacs.nucleus.NucleusClient"
+            "net.insomniacs.nucleus.NucleusClient",
+            "net.insomniacs.nucleus.impl.modreg.NucleusModregClient"
         ],
         "fabric-datagen": [
-            "net.insomniacs.nucleus.datagen.NucleusDatagen"
+            "net.insomniacs.nucleus.impl.modreg.datagen.NucleusModregDatagen"
         ],
         "cardinal-components": [
             "net.insomniacs.nucleus.impl.components.ComponentInitializer"

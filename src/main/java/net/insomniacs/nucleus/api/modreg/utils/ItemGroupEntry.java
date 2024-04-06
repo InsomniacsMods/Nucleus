@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.api.modreg;
+package net.insomniacs.nucleus.api.modreg.utils;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;

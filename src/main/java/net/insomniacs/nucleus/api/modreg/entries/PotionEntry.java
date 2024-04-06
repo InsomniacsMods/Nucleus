@@ -1,7 +1,7 @@
 package net.insomniacs.nucleus.api.modreg.entries;
 
 import net.insomniacs.nucleus.Nucleus;
-import net.insomniacs.nucleus.api.modreg.DefaultedModEntry;
+import net.insomniacs.nucleus.api.modreg.ModEntry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.potion.Potion;
@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.function.Function;
 
-public class PotionEntry extends DefaultedModEntry<Potion, PotionEntry.Builder> {
+public class PotionEntry extends ModEntry<PotionEntry, PotionEntry.Builder, StatusEffectInstance, Potion> {
 
     public PotionEntry(Builder settings) {
         super(settings);
@@ -21,7 +21,7 @@ public class PotionEntry extends DefaultedModEntry<Potion, PotionEntry.Builder> 
         return Nucleus.id("potion");
     }
 
-    public static class Builder extends DefaultedModEntry.Builder<Builder, PotionEntry, StatusEffectInstance, Potion> {
+    public static class Builder extends EntryBuilder<Builder, PotionEntry, StatusEffectInstance, Potion> {
 
         public Builder(Identifier id, Function<StatusEffectInstance, Potion> constructor) {
             super(id, constructor, new StatusEffectInstance(StatusEffects.POISON), Registries.POTION);

@@ -2,8 +2,9 @@ package net.insomniacs.nucleus.api.modreg.entries;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.insomniacs.nucleus.Nucleus;
-import net.insomniacs.nucleus.api.modreg.ItemGroupEntry;
-import net.insomniacs.nucleus.api.modreg.DefaultedModEntry;
+import net.insomniacs.nucleus.api.modreg.utils.ItemGroupEntry;
+import net.insomniacs.nucleus.api.modreg.ModEntry;
+import net.insomniacs.nucleus.api.modreg.utils.ItemModelEntry;
 import net.minecraft.data.client.Model;
 import net.minecraft.data.client.Models;
 import net.minecraft.item.*;
@@ -16,28 +17,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class ItemEntry extends DefaultedModEntry<Item, ItemEntry.Builder> {
+@SuppressWarnings("unused")
+public class ItemEntry extends ModEntry<ItemEntry, ItemEntry.Builder, Item.Settings, Item> {
 
     @Override
     public Identifier getType() {
         return Nucleus.id("item");
     }
 
-    public final List<ItemGroupEntry> creativeTabs;
-    public final boolean generateModel;
-    public final Model parentModel;
-
     public ItemEntry(Builder settings) {
         super(settings);
-        this.creativeTabs = settings.creativeTabs;
-        this.generateModel = settings.generateModel;
-        this.parentModel = settings.parentModel;
     }
 
-    public static class Builder extends DefaultedModEntry.Builder<Builder, ItemEntry, Item.Settings, Item> {
+    public List<ItemGroupEntry> getCreativeTabs() {
+        return this.settings.creativeTabs;
+    }
+
+    public ItemModelEntry getModel() {
+        return this.settings.model;
+    };
+
+    public static class Builder extends EntryBuilder<Builder, ItemEntry, Item.Settings, Item> {
 
         public Builder(Identifier id, Function<Item.Settings, Item> constructor) {
             super(id, constructor, new FabricItemSettings(), Registries.ITEM);
+        }
+
+        public Builder(Identifier id) {
+            super(id, new FabricItemSettings(), Registries.ITEM);
         }
 
         @Override
@@ -47,12 +54,10 @@ public class ItemEntry extends DefaultedModEntry<Item, ItemEntry.Builder> {
 
         // Model
 
-        private boolean generateModel = false;
-        private Model parentModel = Models.GENERATED;
+        private ItemModelEntry model;
 
         public Builder model(Model model) {
-            this.generateModel = true;
-            this.parentModel = model;
+            this.model = new ItemModelEntry(model);
             return this;
         }
 
@@ -66,7 +71,7 @@ public class ItemEntry extends DefaultedModEntry<Item, ItemEntry.Builder> {
 
         // Creative Tabs
 
-        private final List<ItemGroupEntry> creativeTabs = new ArrayList<>();
+        protected final List<ItemGroupEntry> creativeTabs = new ArrayList<>();
 
         public Builder creativeTab(RegistryKey<ItemGroup> tab, ItemStack after) {
             creativeTabs.add(new ItemGroupEntry(tab, after));
@@ -107,19 +112,15 @@ public class ItemEntry extends DefaultedModEntry<Item, ItemEntry.Builder> {
         public Builder sword() {
             return tag(ItemTags.SWORDS);
         }
-
         public Builder axe() {
             return tag(ItemTags.AXES);
         }
-
         public Builder hoe() {
             return tag(ItemTags.HOES);
         }
-
         public Builder pickaxe() {
             return tag(ItemTags.PICKAXES);
         }
-
         public Builder shovel() {
             return tag(ItemTags.SHOVELS);
         }
