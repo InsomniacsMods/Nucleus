@@ -4,8 +4,11 @@ import net.insomniacs.nucleus.api.modreg.entries.ItemEntry;
 import net.insomniacs.nucleus.impl.items.LocationBindingItem;
 import net.insomniacs.nucleus.impl.items.SignFontChangingItem;
 import net.minecraft.item.*;
+import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
+
+import java.util.List;
 
 import static net.insomniacs.nucleus.test.NucleusTest.REGISTRY;
 
@@ -14,6 +17,12 @@ public class NucleusTestItems {
     public static final ItemEntry BASIC = REGISTRY.item("basic_item", Item::new)
             .translate("Basic Item")
             .defaultModel()
+            .register();
+
+    public static final ItemEntry CRAFTABLE_ITEM = REGISTRY.item("basic_craftable", Item::new)
+            .translate()
+            .defaultModel()
+            .shapelessRecipe(Items.STONE, Items.STICK, Items.STONE)
             .register();
 
     public static final ItemEntry ILLAGER_RUNE = REGISTRY.item("illager_rune",

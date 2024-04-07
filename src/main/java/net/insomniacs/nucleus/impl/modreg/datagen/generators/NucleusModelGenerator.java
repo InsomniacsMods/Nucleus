@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.impl.modreg.datagen.providers;
+package net.insomniacs.nucleus.impl.modreg.datagen.generators;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -8,16 +8,13 @@ import net.insomniacs.nucleus.api.modreg.entries.BlockEntry;
 import net.insomniacs.nucleus.api.modreg.entries.ItemEntry;
 import net.insomniacs.nucleus.api.modreg.utils.BlockModelEntry;
 import net.insomniacs.nucleus.api.modreg.utils.ItemModelEntry;
-import net.minecraft.block.Block;
 import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.BlockStateVariantMap;
 import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.client.VariantsBlockStateSupplier;
 import net.minecraft.util.Identifier;
 
-public class NucleusModelProvider extends FabricModelProvider {
+public class NucleusModelGenerator extends FabricModelProvider {
 
-    public NucleusModelProvider(FabricDataOutput output) {
+    public NucleusModelGenerator(FabricDataOutput output) {
         super(output);
     }
 

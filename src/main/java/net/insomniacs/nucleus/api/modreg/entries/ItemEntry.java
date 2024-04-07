@@ -1,5 +1,6 @@
 package net.insomniacs.nucleus.api.modreg.entries;
 
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.insomniacs.nucleus.Nucleus;
 import net.insomniacs.nucleus.api.modreg.utils.ItemGroupEntry;
@@ -7,22 +8,29 @@ import net.insomniacs.nucleus.api.modreg.ModEntry;
 import net.insomniacs.nucleus.api.modreg.utils.ItemModelEntry;
 import net.minecraft.data.client.Model;
 import net.minecraft.data.client.Models;
+import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.*;
+import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 
 @SuppressWarnings("unused")
 public class ItemEntry extends ModEntry<ItemEntry, ItemEntry.Builder, Item.Settings, Item> {
 
+    public static final Identifier TYPE = Nucleus.id("item");
+
     @Override
     public Identifier getType() {
-        return Nucleus.id("item");
+        return TYPE;
     }
 
     public ItemEntry(Builder settings) {
@@ -35,7 +43,11 @@ public class ItemEntry extends ModEntry<ItemEntry, ItemEntry.Builder, Item.Setti
 
     public ItemModelEntry getModel() {
         return this.settings.model;
-    };
+    }
+
+    public List<CraftingRecipeJsonBuilder> getRecipes() {
+        return this.settings.recipes;
+    }
 
     public static class Builder extends EntryBuilder<Builder, ItemEntry, Item.Settings, Item> {
 
@@ -123,6 +135,50 @@ public class ItemEntry extends ModEntry<ItemEntry, ItemEntry.Builder, Item.Setti
         }
         public Builder shovel() {
             return tag(ItemTags.SHOVELS);
+        }
+
+        // Recipes
+
+        private final List<CraftingRecipeJsonBuilder> recipes = new ArrayList<>();
+
+        public Builder addRecipe(CraftingRecipeJsonBuilder recipe) {
+            this.recipes.add(recipe);
+            return this;
+        }
+
+        public Builder shapedRecipe(RecipeCategory category, List<String> pattern, HashMap<Character, ItemConvertible> ingredients) {
+            var recipe = ShapedRecipeJsonBuilder.create(category, null);
+
+            pattern.forEach(recipe::pattern);
+            ingredients.forEach(recipe::input);
+            ingredients.values().forEach(ingredient ->
+                    recipe.criterion(FabricRecipeProvider.hasItem(ingredient), FabricRecipeProvider.conditionsFromItem(ingredient))
+            );
+
+            return addRecipe(recipe);
+        }
+
+        public Builder shapedRecipe(List<String> pattern, HashMap<Character, ItemConvertible> ingredients) {
+            return shapedRecipe(RecipeCategory.MISC, pattern, ingredients);
+        }
+
+        public Builder shapelessRecipe(RecipeCategory category, List<ItemConvertible> ingredients) {
+            var recipe = ShapelessRecipeJsonBuilder.create(category, null);
+
+            ingredients.forEach(recipe::input);
+            ingredients.forEach(ingredient ->
+                    recipe.criterion(FabricRecipeProvider.hasItem(ingredient), FabricRecipeProvider.conditionsFromItem(ingredient))
+            );
+
+            return addRecipe(recipe);
+        }
+
+        public Builder shapelessRecipe(List<ItemConvertible> ingredients) {
+            return shapelessRecipe(RecipeCategory.MISC, ingredients);
+        }
+
+        public Builder shapelessRecipe(ItemConvertible... ingredients) {
+            return shapelessRecipe(List.of(ingredients));
         }
 
     }

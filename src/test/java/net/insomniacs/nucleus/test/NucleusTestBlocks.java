@@ -26,6 +26,14 @@ public class NucleusTestBlocks {
             .defaultItem()
             .register();
 
+    public static final BlockEntry STONE = REGISTRY.block("basic_stone", Block::new)
+            .dropsSelf()
+            .requiresPickaxe()
+            .model()
+            .translate()
+            .defaultItem()
+            .register();
+
     public static final BlockEntry STUPID = REGISTRY.block("stupid", Block::new)
             .drops(Items.ACACIA_PLANKS)
             .translate()

@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.impl.modreg.datagen.providers;
+package net.insomniacs.nucleus.impl.modreg.datagen.generators;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
@@ -8,9 +8,9 @@ import net.insomniacs.nucleus.api.modreg.entries.BlockEntry;
 import net.insomniacs.nucleus.api.modreg.utils.BlockLootTableEntry;
 import net.minecraft.item.ItemConvertible;
 
-public class NucleusLootTableProvider extends FabricBlockLootTableProvider {
+public class NucleusLootTableGenerator extends FabricBlockLootTableProvider {
 
-    public NucleusLootTableProvider(FabricDataOutput dataOutput) {
+    public NucleusLootTableGenerator(FabricDataOutput dataOutput) {
         super(dataOutput);
     }
 

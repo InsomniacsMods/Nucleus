@@ -22,6 +22,14 @@ public class ModRegistry {
         return ENTRIES;
     }
 
+    @SuppressWarnings("unchecked")
+    public static <T extends ModEntry<?, ?, ?, ?>> List<T> getEntries(Identifier type) {
+        return ENTRIES.stream()
+                .filter(entry -> entry.getType().equals(type))
+                .map(entry -> (T)entry)
+                .toList();
+    }
+
     public static void addEntry(ModEntry<?,?,?,?> entry) {
         ENTRIES.add(0, entry);
     }
