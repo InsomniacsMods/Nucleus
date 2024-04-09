@@ -16,11 +16,7 @@ public class NucleusLootTableGenerator extends FabricBlockLootTableProvider {
 
     @Override
     public void generate() {
-        ModRegistry.getEntries()
-                .stream()
-                .filter(entry -> entry.getType().equals(Nucleus.id("block")))
-                .map(entry -> (BlockEntry)entry)
-                .forEach(this::processBlock);
+        ModRegistry.<BlockEntry>getEntries("block").forEach(this::processBlock);
     }
 
     private void processBlock(BlockEntry entry) {
@@ -30,7 +26,6 @@ public class NucleusLootTableGenerator extends FabricBlockLootTableProvider {
         ItemConvertible item;
         if (drops.generateSelf && entry.getItem() != null) item = entry.getItem().value();
         else item = drops.item;
-        System.out.println(item);
         addDrop(entry.value(), drops(item));
     }
 

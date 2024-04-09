@@ -1,12 +1,11 @@
 package net.insomniacs.nucleus.api.modreg.entries;
 
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.insomniacs.nucleus.Nucleus;
-import net.insomniacs.nucleus.api.modreg.ModEntry;
+import net.insomniacs.nucleus.api.modreg.SettingsModEntry;
 import net.insomniacs.nucleus.api.modreg.utils.BlockLootTableEntry;
 import net.insomniacs.nucleus.api.modreg.utils.BlockModelEntry;
 import net.insomniacs.nucleus.api.modreg.utils.BlockRenderLayers;
-import net.insomniacs.nucleus.api.modreg.utils.ItemGroupEntry;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -16,36 +15,28 @@ import net.minecraft.data.client.Model;
 import net.minecraft.data.client.Models;
 import net.minecraft.data.client.TextureKey;
 import net.minecraft.data.client.TextureMap;
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
-import net.minecraft.item.*;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.Registry;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
 import java.util.function.UnaryOperator;
 
-public class BlockEntry extends ModEntry<BlockEntry, BlockEntry.Builder, Block.Settings, Block> {
-
-	public static final Identifier TYPE = Nucleus.id("block");
+public class BlockEntry extends SettingsModEntry<BlockEntry, BlockEntry.Builder, Block.Settings, Block> {
 
 	@Override
-	public @NotNull Identifier getType() {
-		return TYPE;
+	public Registry<Block> getRegistry() {
+		return Registries.BLOCK;
 	}
 
 	@Nullable
@@ -63,13 +54,9 @@ public class BlockEntry extends ModEntry<BlockEntry, BlockEntry.Builder, Block.S
 		return this.item;
 	}
 
-	;
-
 	public BlockModelEntry getModel() {
 		return this.settings.model;
 	}
-
-	;
 
 	public BlockLootTableEntry getDrops() {
 		return this.settings.drops;
@@ -79,10 +66,19 @@ public class BlockEntry extends ModEntry<BlockEntry, BlockEntry.Builder, Block.S
 		return this.settings.renderLayers;
 	}
 
-	public static class Builder extends EntryBuilder<Builder, BlockEntry, Block.Settings, Block> {
+	public static class Builder extends SettingsModEntry.EntryBuilder<Builder, BlockEntry, Block.Settings, Block> {
 
-		public Builder(Identifier id, Function<Block.Settings, Block> constructor) {
-			super(id, constructor, AbstractBlock.Settings.create(), Registries.BLOCK);
+		public Builder(Identifier id, Function<AbstractBlock.Settings, Block> constructor) {
+			super(id, constructor);
+		}
+
+		public Builder(Identifier id) {
+			super(id);
+		}
+
+		@Override
+		protected Block.Settings generateSettings() {
+			return FabricBlockSettings.create();
 		}
 
 		@Override

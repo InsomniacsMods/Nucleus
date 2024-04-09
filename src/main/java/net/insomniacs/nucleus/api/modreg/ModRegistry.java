@@ -3,8 +3,10 @@ package net.insomniacs.nucleus.api.modreg;
 import net.insomniacs.nucleus.api.modreg.utils.CustomRegistrySupplier;
 import net.insomniacs.nucleus.api.modreg.entries.ItemEntry;
 import net.insomniacs.nucleus.api.modreg.entries.BlockEntry;
+import net.insomniacs.nucleus.api.modreg.utils.SettingCustomRegistrySupplier;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 
@@ -16,21 +18,25 @@ import java.util.function.Function;
 
 public class ModRegistry {
 
-    private static final List<ModEntry<?,?,?,?>> ENTRIES = new LinkedList<>();
+    private static final List<ModEntry<?,?,?>> ENTRIES = new LinkedList<>();
 
-    public static List<ModEntry<?,?,?,?>> getEntries() {
+    public static List<ModEntry<?,?,?>> getEntries() {
         return ENTRIES;
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends ModEntry<?, ?, ?, ?>> List<T> getEntries(Identifier type) {
+    public static <T extends ModEntry<?,?,?>> List<T> getEntries(Identifier type) {
         return ENTRIES.stream()
                 .filter(entry -> entry.getType().equals(type))
                 .map(entry -> (T)entry)
                 .toList();
     }
 
-    public static void addEntry(ModEntry<?,?,?,?> entry) {
+    public static <T extends ModEntry<?,?,?>> List<T> getEntries(String type) {
+        return getEntries(new Identifier(type));
+    }
+
+    public static void addEntry(ModEntry<?,?,?> entry) {
         ENTRIES.add(0, entry);
     }
 
@@ -48,8 +54,12 @@ public class ModRegistry {
         return new BlockEntry.Builder(new Identifier(modID, id), constructor);
     }
 
-    public <B, S, T> CustomRegistrySupplier<B, S, T> custom(BiFunction<Identifier, Function<S, T>, B> builderConstructor) {
+    public <B, T> CustomRegistrySupplier<B, T> custom(Function<Identifier, B> builderConstructor) {
         return new CustomRegistrySupplier<>(builderConstructor, modID);
+    }
+
+    public <B, S, T> SettingCustomRegistrySupplier<B, S, T> custom(BiFunction<Identifier, Function<S, T>, B> builderConstructor) {
+        return new SettingCustomRegistrySupplier<>(builderConstructor, modID);
     }
 
 }

@@ -16,12 +16,11 @@ public class NucleusBlockTagGenerator extends FabricTagProvider.BlockTagProvider
 
 	@Override
 	protected void configure(RegistryWrapper.WrapperLookup lookup) {
-		ModRegistry.<BlockEntry>getEntries(BlockEntry.TYPE)
-				.forEach(this::processBlock);
+		ModRegistry.<BlockEntry>getEntries("block").forEach(this::processBlock);
 	}
 
 	private void processBlock(BlockEntry entry) {
-		entry.tags.forEach(tag ->
+		entry.getTags().forEach(tag ->
 				getOrCreateTagBuilder(tag).add(entry.value())
 		);
 	}

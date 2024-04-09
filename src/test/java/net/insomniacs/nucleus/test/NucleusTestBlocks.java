@@ -62,10 +62,10 @@ public class NucleusTestBlocks {
             .register();
 
 
-    public static final CustomRegistrySupplier<PotionEntry.Builder, StatusEffectInstance, Potion> POTION_REGISTRY =
-            REGISTRY.custom(PotionEntry.Builder::new);
+//    public static final CustomRegistrySupplier<PotionEntry.Builder, Potion> POTION_REGISTRY =
+//            REGISTRY.custom(PotionEntry.Builder::new);
 
-    public static final Potion test = POTION_REGISTRY.create("test", Potion::new).register().value();
+//    public static final Potion test = POTION_REGISTRY.create("test").register().value();
 
 
 

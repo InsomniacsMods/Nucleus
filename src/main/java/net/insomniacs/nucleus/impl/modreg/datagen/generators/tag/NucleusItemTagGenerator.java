@@ -16,12 +16,11 @@ public class NucleusItemTagGenerator extends FabricTagProvider.ItemTagProvider {
 
 	@Override
 	protected void configure(RegistryWrapper.WrapperLookup lookup) {
-		ModRegistry.<ItemEntry>getEntries(ItemEntry.TYPE)
-				.forEach(this::processItem);
+		ModRegistry.<ItemEntry>getEntries("item").forEach(this::processItem);
 	}
 
 	private void processItem(ItemEntry entry) {
-		entry.tags.forEach(tag ->
+		entry.getTags().forEach(tag ->
 				getOrCreateTagBuilder(tag).add(entry.value())
 		);
 	}

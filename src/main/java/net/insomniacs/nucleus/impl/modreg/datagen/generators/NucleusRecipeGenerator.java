@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.insomniacs.nucleus.api.modreg.ModRegistry;
 import net.insomniacs.nucleus.api.modreg.entries.ItemEntry;
 import net.minecraft.data.server.recipe.RecipeExporter;
+import net.minecraft.util.Identifier;
 
 public class NucleusRecipeGenerator extends FabricRecipeProvider {
 
@@ -14,7 +15,7 @@ public class NucleusRecipeGenerator extends FabricRecipeProvider {
 
 	@Override
 	public void generate(RecipeExporter generator) {
-		ModRegistry.<ItemEntry>getEntries(ItemEntry.TYPE)
+		ModRegistry.<ItemEntry>getEntries("item")
 				.forEach(entry -> processItem(generator, entry));
 	}
 

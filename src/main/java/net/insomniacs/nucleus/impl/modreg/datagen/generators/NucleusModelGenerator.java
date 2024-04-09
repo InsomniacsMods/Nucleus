@@ -2,7 +2,6 @@ package net.insomniacs.nucleus.impl.modreg.datagen.generators;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.insomniacs.nucleus.Nucleus;
 import net.insomniacs.nucleus.api.modreg.ModRegistry;
 import net.insomniacs.nucleus.api.modreg.entries.BlockEntry;
 import net.insomniacs.nucleus.api.modreg.entries.ItemEntry;
@@ -20,11 +19,7 @@ public class NucleusModelGenerator extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator generator) {
-        ModRegistry.getEntries()
-                .stream()
-                .filter(entry -> entry.getType().equals(Nucleus.id("block")))
-                .map(entry -> (BlockEntry)entry)
-                .forEach(entry -> processBlock(generator, entry));
+        ModRegistry.<BlockEntry>getEntries("block").forEach(entry -> processBlock(generator, entry));
     }
 
     private void processBlock(BlockStateModelGenerator generator, BlockEntry entry) {
@@ -34,16 +29,12 @@ public class NucleusModelGenerator extends FabricModelProvider {
             var blockStates = BlockStateModelGenerator.createSingletonBlockState(entry.value(), identifier);
             generator.blockStateCollector.accept(blockStates);
         }
-        if (model.generateItem) generator.registerParentedItemModel(entry.value(), entry.getId().withPrefixedPath("block/").withSuffixedPath(model.itemParentSuffix));
+        if (model.generateItem) generator.registerParentedItemModel(entry.value(), entry.id().withPrefixedPath("block/").withSuffixedPath(model.itemParentSuffix));
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator generator) {
-        ModRegistry.getEntries()
-                .stream()
-                .filter(entry -> entry.getType().equals(Nucleus.id("item")))
-                .map(entry -> (ItemEntry)entry)
-                .forEach(entry -> processItem(generator, entry));
+        ModRegistry.<ItemEntry>getEntries("item").forEach(entry -> processItem(generator, entry));
     }
 
     private void processItem(ItemModelGenerator generator, ItemEntry entry) {

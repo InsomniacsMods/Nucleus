@@ -3,8 +3,8 @@ package net.insomniacs.nucleus.api.modreg.entries;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.insomniacs.nucleus.Nucleus;
+import net.insomniacs.nucleus.api.modreg.SettingsModEntry;
 import net.insomniacs.nucleus.api.modreg.utils.ItemGroupEntry;
-import net.insomniacs.nucleus.api.modreg.ModEntry;
 import net.insomniacs.nucleus.api.modreg.utils.ItemModelEntry;
 import net.minecraft.data.client.Model;
 import net.minecraft.data.client.Models;
@@ -14,6 +14,7 @@ import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.*;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
@@ -24,13 +25,11 @@ import java.util.List;
 import java.util.function.Function;
 
 @SuppressWarnings("unused")
-public class ItemEntry extends ModEntry<ItemEntry, ItemEntry.Builder, Item.Settings, Item> {
-
-    public static final Identifier TYPE = Nucleus.id("item");
+public class ItemEntry extends SettingsModEntry<ItemEntry, ItemEntry.Builder, Item.Settings, Item> {
 
     @Override
-    public Identifier getType() {
-        return TYPE;
+    public Registry<Item> getRegistry() {
+        return Registries.ITEM;
     }
 
     public ItemEntry(Builder settings) {
@@ -49,14 +48,19 @@ public class ItemEntry extends ModEntry<ItemEntry, ItemEntry.Builder, Item.Setti
         return this.settings.recipes;
     }
 
-    public static class Builder extends EntryBuilder<Builder, ItemEntry, Item.Settings, Item> {
+    public static class Builder extends SettingsModEntry.EntryBuilder<Builder, ItemEntry, Item.Settings, Item> {
 
         public Builder(Identifier id, Function<Item.Settings, Item> constructor) {
-            super(id, constructor, new FabricItemSettings(), Registries.ITEM);
+            super(id, constructor);
         }
 
         public Builder(Identifier id) {
-            super(id, new FabricItemSettings(), Registries.ITEM);
+            super(id);
+        }
+
+        @Override
+        protected Item.Settings generateSettings() {
+            return new FabricItemSettings();
         }
 
         @Override

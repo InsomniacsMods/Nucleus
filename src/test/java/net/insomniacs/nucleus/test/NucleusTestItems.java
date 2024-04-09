@@ -22,7 +22,7 @@ public class NucleusTestItems {
     public static final ItemEntry CRAFTABLE_ITEM = REGISTRY.item("basic_craftable", Item::new)
             .translate()
             .defaultModel()
-            .shapelessRecipe(Items.STONE, Items.STICK, Items.STONE)
+//            .shapelessRecipe(Items.STONE, Items.STICK, Items.STONE)
             .register();
 
     public static final ItemEntry ILLAGER_RUNE = REGISTRY.item("illager_rune",

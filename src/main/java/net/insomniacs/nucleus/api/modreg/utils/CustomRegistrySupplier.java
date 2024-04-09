@@ -5,10 +5,10 @@ import net.minecraft.util.Identifier;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public record CustomRegistrySupplier<B, S, T>(BiFunction<Identifier, Function<S, T>, B> builderConstructor, String modID) {
+public record CustomRegistrySupplier<Builder, Type>(Function<Identifier, Builder> builderConstructor, String modID) {
 
-    public B create(String id, Function<S, T> constructor) {
-        return builderConstructor.apply(new Identifier(modID, id), constructor);
+    public Builder create(String id) {
+        return builderConstructor.apply(new Identifier(modID, id));
     }
 
 }

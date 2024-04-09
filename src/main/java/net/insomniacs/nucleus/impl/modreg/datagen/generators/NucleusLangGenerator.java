@@ -13,13 +13,15 @@ public class NucleusLangGenerator extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(TranslationBuilder generator) {
-        ModRegistry.getEntries().forEach(entry -> processEntry(generator, entry));
+        ModRegistry.getEntries()
+                .stream()
+                .filter(ModEntry::isTranslated)
+                .forEach(entry -> processEntry(generator, entry));
     }
 
-    private void processEntry(TranslationBuilder generator, ModEntry<?,?,?,?> entry) {
-        if (!entry.translate) return;
-        String id = entry.getId().toTranslationKey(entry.getType().getPath());
-        generator.add(id, entry.translatedName);
+    private void processEntry(TranslationBuilder generator, ModEntry<?,?,?> entry) {
+        String id = entry.id().toTranslationKey(entry.getType().getPath());
+        generator.add(id, entry.getTranslatedName());
     }
 
 }

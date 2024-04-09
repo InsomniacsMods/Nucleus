@@ -6,25 +6,31 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.potion.Potion;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 import java.util.function.Function;
 
-public class PotionEntry extends ModEntry<PotionEntry, PotionEntry.Builder, StatusEffectInstance, Potion> {
+public class PotionEntry extends ModEntry<PotionEntry, PotionEntry.Builder, Potion> {
+
+    @Override
+    public Registry<Potion> getRegistry() {
+        return Registries.POTION;
+    }
+
+    @Override
+    protected Potion generateValue() {
+        return new Potion();
+    }
 
     public PotionEntry(Builder settings) {
         super(settings);
     }
 
-    @Override
-    public Identifier getType() {
-        return Nucleus.id("potion");
-    }
+    public static class Builder extends ModEntry.EntryBuilder<Builder, PotionEntry, Potion> {
 
-    public static class Builder extends EntryBuilder<Builder, PotionEntry, StatusEffectInstance, Potion> {
-
-        public Builder(Identifier id, Function<StatusEffectInstance, Potion> constructor) {
-            super(id, constructor, new StatusEffectInstance(StatusEffects.POISON), Registries.POTION);
+        public Builder(Identifier id) {
+            super(id);
         }
 
         @Override

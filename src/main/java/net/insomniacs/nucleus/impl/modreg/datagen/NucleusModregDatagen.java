@@ -20,6 +20,7 @@ public class NucleusModregDatagen implements DataGeneratorEntrypoint {
         pack.addProvider(NucleusLootTableGenerator::new);
         pack.addProvider(NucleusRecipeGenerator::new);
 
+        // TODO maybe replace with a generic generator? idk how to right now
         pack.addProvider(NucleusItemTagGenerator::new);
         pack.addProvider(NucleusBlockTagGenerator::new);
     }
