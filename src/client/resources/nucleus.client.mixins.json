@@ -3,7 +3,8 @@
 	"package": "net.insomniacs.nucleus.impl.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"client": [
-		"ItemSpriteRenderingMixin"
+		"ItemSpriteRenderingMixin",
+		"MinecraftClientMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

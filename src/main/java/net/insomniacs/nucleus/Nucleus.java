@@ -1,6 +1,7 @@
 package net.insomniacs.nucleus;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +28,8 @@ public class Nucleus implements ModInitializer {
         return getLocation(name);
     }
 
-    public static Logger getDebugLogger() {
-        return null;
+    public static boolean isModLoaded(String mod) {
+        return FabricLoader.getInstance().isModLoaded(mod);
     }
 
 }

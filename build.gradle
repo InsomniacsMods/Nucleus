@@ -32,6 +32,7 @@ loom {
 			sourceSet sourceSets.client
 		}
 		"nucleus_test" {
+			sourceSet sourceSets.client
 			sourceSet sourceSets.test
 		}
 	}
@@ -39,10 +40,10 @@ loom {
 
 sourceSets {
 	test {
-		runtimeClasspath += sourceSets.main.runtimeClasspath
-		compileClasspath += sourceSets.main.compileClasspath
-		runtimeClasspath += sourceSets.client.runtimeClasspath
-		compileClasspath += sourceSets.client.compileClasspath
+		compileClasspath += main.compileClasspath
+		runtimeClasspath += main.runtimeClasspath
+		compileClasspath += client.compileClasspath
+		runtimeClasspath += client.runtimeClasspath
 	}
 }
 
