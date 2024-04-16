@@ -48,8 +48,6 @@ public class SplashTextLoader implements SimpleFileLoader {
     }
 
     public void addSplashes(Identifier identifier, JsonElement element) {
-        System.out.println("mmmm");
-        System.out.println(identifier);
         if (!element.isJsonObject()) {
             Nucleus.LOGGER.error(String.format("Unable to load splash file: '%s', file must be an object containing splash text data", identifier));
             return;

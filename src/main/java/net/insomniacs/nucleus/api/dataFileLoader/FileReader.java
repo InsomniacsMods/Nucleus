@@ -3,9 +3,15 @@ package net.insomniacs.nucleus.api.dataFileLoader;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -17,6 +23,17 @@ public class FileReader<
 		Value
 > {
 
+	public record FilePath(
+			String basePath,
+			Function<Identifier, Boolean> predicate
+	) {
+
+		public static FilePath simple(String path) {
+			return new FilePath(path, p -> true);
+		}
+
+	}
+
 	private final Function<BufferedReader, Value> bufferReader;
 
 	public FileReader(Function<BufferedReader, Value> reader) {
@@ -24,7 +41,7 @@ public class FileReader<
 	}
 
 	private final HashMap<Identifier, Consumer<Value>> getFiles = new HashMap<>();
-	private final HashMap<String, BiConsumer<Identifier, Value>> findFiles = new HashMap<>();
+	private final HashMap<FilePath, BiConsumer<Identifier, Value>> findFiles = new HashMap<>();
 
 	void load(ResourceManager manager) {
 		getFiles.forEach((id, consumer) -> getFile(manager, id, consumer));
@@ -39,8 +56,8 @@ public class FileReader<
 		consumer.accept(value);
 	}
 
-	private void findFiles(ResourceManager manager, String path, BiConsumer<Identifier, Value> consumer) {
-		Map<Identifier, Resource> resources = manager.findResources(path, p -> true);
+	private void findFiles(ResourceManager manager, FilePath path, BiConsumer<Identifier, Value> consumer) {
+		Map<Identifier, Resource> resources = manager.findResources(path.basePath(), path.predicate::apply);
 
 		resources.forEach((identifier, resource) -> {
 			Value value = fromResource(resource);
@@ -59,8 +76,27 @@ public class FileReader<
 		getFiles.put(file, consumer);
 	}
 
-	public void find(String file, BiConsumer<Identifier, Value> consumer) {
-		findFiles.put(file, consumer);
+	public void find(String path, BiConsumer<Identifier, Value> consumer) {
+		findFiles.put(FilePath.simple(path), consumer);
 	}
+
+	public void findAll(String basePath, Function<Identifier, Boolean> predicate, BiConsumer<Identifier, Value> consumer) {
+		findFiles.put(new FilePath(basePath, predicate), consumer);
+	}
+
+	public void findAllMatching(String basePath, String glob, BiConsumer<Identifier, Value> consumer) {
+		findAll(basePath, identifier -> pathMatches(identifier, glob), consumer);
+	}
+
+	public void findAllMatching(String glob, BiConsumer<Identifier, Value> consumer) {
+		findAllMatching("", glob, consumer);
+	}
+
+	private boolean pathMatches(Identifier id, String glob) {
+		PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:"+glob);
+		Path path = Paths.get(id.getPath());
+		return matcher.matches(path);
+	}
+
 
 }

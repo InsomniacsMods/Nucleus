@@ -26,8 +26,6 @@ public record SplashTextGroup (
 	}
 
 	public Stream<SplashText> getTexts() {
-		System.out.println("AAAAAA");
-		System.out.println(texts);
 		Stream<SplashText> result = texts.stream();
 		if (defaultStyle != Style.EMPTY) result = result.map(text -> text.setStyle(defaultStyle));
 		return result;

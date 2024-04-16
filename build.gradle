@@ -22,24 +22,17 @@ fabricApi {
 	configureDataGeneration()
 }
 
+
 loom {
 	splitEnvironmentSourceSets()
 	accessWidenerPath = file("src/main/resources/nucleus.accesswidener")
-
-	mods {
-		mod_id {
-			sourceSet sourceSets.main
-			sourceSet sourceSets.client
-		}
-		"nucleus_test" {
-			sourceSet sourceSets.client
-			sourceSet sourceSets.test
-		}
+	mixin {
+		useLegacyMixinAp = false
 	}
 }
 
 sourceSets {
-	test {
+	testmod {
 		compileClasspath += main.compileClasspath
 		runtimeClasspath += main.runtimeClasspath
 		compileClasspath += client.compileClasspath
@@ -48,22 +41,25 @@ sourceSets {
 }
 
 loom {
+
+//	mods {
+//		"nucleus" {
+//			sourceSet sourceSets.main
+//			sourceSet sourceSets.client
+//		}
+//		"testmod" {
+//			sourceSet sourceSets.test
+//		}
+//	}
+
 	runs {
 		client {
-			source sourceSets.test
+			name = "Test Client"
+			source sourceSets.testmod
 		}
 		server {
-			source sourceSets.test
-		}
-		datagen {
-			inherit server
-			name "Data Generation"
-			vmArg "-Dfabric-api.datagen"
-			vmArg "-Dfabric-api.datagen.output-dir=${file("src/main/generated")}"
-			vmArg "-Dfabric-api.datagen.modid=${mod_id}"
-			runDir "build/datagen"
-
-			ideConfigGenerated true
+			name = "Test Server"
+			source sourceSets.testmod
 		}
 	}
 }
@@ -80,6 +76,9 @@ dependencies {
 	modLocalRuntime "maven.modrinth:modmenu:${modmenu_version}"
 	modLocalRuntime "maven.modrinth:sodium:mc${minecraft_version}-${sodium_version}"
 	modLocalRuntime "maven.modrinth:chrysalis:${chrysalis_version}"
+
+	testmodImplementation sourceSets.main.output
+	testmodImplementation sourceSets.client.output
 }
 
 processResources {

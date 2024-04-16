@@ -30,7 +30,6 @@ public class MobSpawningItem extends Item {
     public EntityType<?> getEntityType(ItemStack stack) {
         NbtCompound nbt = stack.getOrCreateNbt();
         NbtCompound compound = getEntityNbt(nbt);
-        System.out.println(compound);
         if (!compound.contains("id")) return this.entity;
 
         return EntityType.get(compound.getString("id")).orElse(this.entity);
