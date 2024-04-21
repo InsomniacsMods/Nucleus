@@ -7,7 +7,7 @@ import net.minecraft.util.StringIdentifiable;
 public enum InterpolationType implements StringIdentifiable {
 
 	LINEAR("linear", Transformation.Interpolations.LINEAR),
-	CUBIC("cubic", Transformation.Interpolations.CUBIC);
+	CUBIC("catmullrom", Transformation.Interpolations.CUBIC);
 
 	public static final Codec<InterpolationType> CODEC = StringIdentifiable.createCodec(InterpolationType::values);
 
