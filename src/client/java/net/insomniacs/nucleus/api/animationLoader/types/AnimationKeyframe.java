@@ -7,7 +7,6 @@ import net.insomniacs.nucleus.api.animationLoader.util.VectorCodec;
 import net.insomniacs.nucleus.api.utils.CodecUtils;
 import net.minecraft.client.render.entity.animation.AnimationHelper;
 import net.minecraft.client.render.entity.animation.Keyframe;
-import net.minecraft.util.math.Vec3d;
 import org.joml.Vector3f;
 
 public record AnimationKeyframe (
@@ -24,7 +23,7 @@ public record AnimationKeyframe (
 
 	public static final Codec<AnimationKeyframe> SIMPLE_CODEC = VectorCodec.CODEC.xmap(AnimationKeyframe::simple, AnimationKeyframe::post);
 
-	public static final Codec<AnimationKeyframe> CODEC = CodecUtils.combine(ADVANCED_CODEC, SIMPLE_CODEC);
+	public static final Codec<AnimationKeyframe> CODEC = CodecUtils.merge(ADVANCED_CODEC, SIMPLE_CODEC);
 
 	public static AnimationKeyframe simple(Vector3f vector) {
 		// TODO if animation is too smooth, replace default for cubic

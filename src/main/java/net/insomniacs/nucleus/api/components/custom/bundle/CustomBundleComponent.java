@@ -33,6 +33,10 @@ public class CustomBundleComponent {
 		this(capacity, contents, 0);
 	}
 
+	public float getBundleOccupancy() {
+		return (float)occupancy / capacity;
+	}
+
 	public int getItemOccupancy(ItemStack stack) {
 		return 1;
 	}

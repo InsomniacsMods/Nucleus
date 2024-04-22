@@ -19,8 +19,8 @@
         "client": [
             "net.insomniacs.nucleus.NucleusClient"
         ],
-        "!!!cardinal-components": [
-			"net.insomniacs.nucleus.impl.components.misc.ComponentInitializer"
+        "fabric-datagen": [
+            "net.insomniacs.nucleus.NucleusDatagen"
         ]
     },
     "mixins": [
@@ -40,10 +40,6 @@
     "suggests": {},
 
     "custom": {
-        "!!!cardinal-components": [
-            "manic:sanity",
-            "manic:insight"
-        ],
         "loom:injected_interfaces": {}
     }
 }

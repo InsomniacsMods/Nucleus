@@ -6,6 +6,7 @@ import net.insomniacs.nucleus.api.utils.BundleItemSoundGroup;
 import net.insomniacs.nucleus.api.content.NucleusSoundEvents;
 import net.minecraft.client.item.TooltipType;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.BundleItem;
@@ -22,11 +23,16 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class TestBundleItem extends BundleItem {
+public class CustomBundleItem extends BundleItem {
+
+	public static float getAmountFilled(ItemStack stack, World w, LivingEntity e, int s) {
+		var component = getComponent(stack);
+		return component.getBundleOccupancy();
+	}
 
 	public BundleItemSoundGroup soundGroup;
 
-	public TestBundleItem(Settings settings, BundleItemSoundGroup soundGroup) {
+	public CustomBundleItem(Settings settings, BundleItemSoundGroup soundGroup) {
 		super(settings);
 		this.soundGroup = soundGroup;
 	}
@@ -34,13 +40,6 @@ public class TestBundleItem extends BundleItem {
 	public static CustomBundleComponent getComponent(ItemStack stack) {
 		return stack.getOrDefault(NucleusComponents.BUNDLE_CONTENTS, CustomBundleComponent.EMPTY);
 	}
-
-	// Functions
-
-//	public static float getAmountFilled(ItemStack stack) {
-//		var component = getComponent(stack);
-//		return component.getOccupancy().floatValue();
-//	}
 
 	// Override
 
@@ -112,7 +111,7 @@ public class TestBundleItem extends BundleItem {
 
 	// Sound
 
-	public TestBundleItem(Settings settings) {
+	public CustomBundleItem(Settings settings) {
 		this(settings, NucleusSoundEvents.BUNDLE_ITEM);
 	}
 

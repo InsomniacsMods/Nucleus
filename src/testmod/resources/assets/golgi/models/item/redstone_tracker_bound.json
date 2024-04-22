@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "golgi:item/location_binding_item_bound"
+	}
+}

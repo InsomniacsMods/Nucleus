@@ -7,7 +7,7 @@ import java.util.Iterator;
 
 public class CodecUtils {
 
-	public static <Type> Codec<Type> combine(
+	public static <Type> Codec<Type> merge(
 			Codec<Type> codec1,
 			Codec<Type> codec2
 	) {
@@ -21,12 +21,12 @@ public class CodecUtils {
 	}
 
 	@SafeVarargs
-	public static <Type> Codec<Type> combine(
+	public static <Type> Codec<Type> merge(
 			Codec<Type>... codecs
 	) {
 		Iterator<Codec<Type>> iterator = Arrays.stream(codecs).iterator();
 		Codec<Type> base = iterator.next();
-		while (iterator.hasNext()) base = combine(base, iterator.next());
+		while (iterator.hasNext()) base = merge(base, iterator.next());
 		return base;
 	}
 

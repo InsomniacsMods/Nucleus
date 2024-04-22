@@ -1,0 +1,9 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "golgi:item/redstone_tracker"
+	},
+	"overrides": [
+		{ "predicate": { "has_location": 1.0 }, "model": "golgi:item/redstone_tracker_bound" }
+	]
+}

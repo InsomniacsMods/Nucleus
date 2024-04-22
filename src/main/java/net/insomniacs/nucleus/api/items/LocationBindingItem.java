@@ -3,8 +3,7 @@ package net.insomniacs.nucleus.api.items;
 import net.insomniacs.nucleus.api.components.custom.LocationBindingComponent;
 import net.insomniacs.nucleus.api.components.NucleusComponents;
 import net.insomniacs.nucleus.api.utils.Location;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.FoodComponent;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
@@ -20,7 +19,7 @@ import net.minecraft.world.World;
 
 public class LocationBindingItem extends Item {
 
-    public static float hasLocationPredicate(ItemStack stack) {
+    public static float getLocationPredicate(ItemStack stack, World w, LivingEntity e, int s) {
         return hasLocation(stack) ? 1 : 0;
     }
 

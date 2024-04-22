@@ -1,9 +1,14 @@
 {
 	"schemaVersion": 1,
-	"id": "testmod",
+	"id": "golgi",
+	"name": "Golgi",
 	"version": "dev",
 	"entrypoints": {
-		"main": [ "net.insomniacs.nucleus.test.NucleusTest" ],
-		"client": [ "net.insomniacs.nucleus.test.client.NucleusTestClient" ]
+		"main": [
+			"net.insomniacs.golgi.Golgi"
+		],
+		"client": [
+			"net.insomniacs.golgi.client.GolgiClient"
+		]
 	}
 }
