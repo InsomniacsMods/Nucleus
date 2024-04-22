@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.impl.misc;
+package net.insomniacs.nucleus.api.utils;
 
 import net.minecraft.sound.SoundEvent;
 

@@ -1,9 +1,8 @@
 package net.insomniacs.nucleus.impl.items;
 
-import net.insomniacs.nucleus.impl.misc.BundleItemSoundGroup;
-import net.insomniacs.nucleus.impl.misc.NucleusSoundEvents;
-import net.insomniacs.nucleus.impl.misc.NucleusTags;
-import net.minecraft.client.item.TooltipContext;
+import net.insomniacs.nucleus.api.utils.BundleItemSoundGroup;
+import net.insomniacs.nucleus.impl.content.NucleusSoundEvents;
+import net.insomniacs.nucleus.impl.content.NucleusTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
@@ -25,7 +24,6 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;

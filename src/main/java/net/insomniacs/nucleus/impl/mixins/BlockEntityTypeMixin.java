@@ -28,4 +28,5 @@ public abstract class BlockEntityTypeMixin implements BlockEntityHelper {
             this.blocks = Set.copyOf(tempList);
         }
     }
+
 }

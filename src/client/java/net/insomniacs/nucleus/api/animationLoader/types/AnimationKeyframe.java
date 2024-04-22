@@ -32,16 +32,11 @@ public record AnimationKeyframe (
 	}
 
 	public Keyframe toKeyframe(float time) {
-		System.out.println(post);
-		System.out.println("[" + post.x + post.y + post.z + "]");
-		var test = new Keyframe(
+		return new Keyframe(
 				time,
 				AnimationHelper.createRotationalVector(post.x, post.y, post.z),
 				interpolation.getType()
 		);
-		System.out.println(test);
-		System.out.println(test.target());
-		return test;
 	}
 
 }

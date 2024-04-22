@@ -1,6 +1,6 @@
 plugins {
-	id 'fabric-loom' version '1.6-SNAPSHOT'
-	id 'maven-publish'
+	id "fabric-loom" version "1.6-SNAPSHOT"
+	id "maven-publish"
 }
 
 version = mod_version
@@ -13,7 +13,7 @@ repositories {
 		content { includeGroup "maven.modrinth" }
 	}
 	maven {
-		url 'https://maven.ladysnake.org/releases'
+		url "https://maven.ladysnake.org/releases"
 		content { includeGroup "dev.onyxstudios.cardinal-components-api" }
 	}
 }
@@ -71,8 +71,8 @@ dependencies {
 //	modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}+${minecraft_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
-	include modApi("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}")
-	include modApi("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}")
+//	include modApi("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}")
+//	include modApi("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}")
 
 //	modLocalRuntime "maven.modrinth:modmenu:${modmenu_version}"
 //	modLocalRuntime "maven.modrinth:sodium:mc${minecraft_version}-${sodium_version}"

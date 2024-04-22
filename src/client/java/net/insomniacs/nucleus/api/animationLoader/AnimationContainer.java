@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.UnboundedMapCodec;
-import net.insomniacs.nucleus.Nucleus;
 import net.insomniacs.nucleus.api.animationLoader.types.AnimationData;
 import net.minecraft.client.render.entity.animation.Animation;
 
@@ -39,7 +38,7 @@ public class AnimationContainer {
 
 	public static AnimationContainer fromJson(JsonElement data) {
 		JsonObject animations = data.getAsJsonObject().getAsJsonObject("animations");
-		return CODEC.parse(JsonOps.INSTANCE, animations).getOrThrow(true, Nucleus.LOGGER::error);
+		return CODEC.parse(JsonOps.INSTANCE, animations).getOrThrow();
 	}
 
 }

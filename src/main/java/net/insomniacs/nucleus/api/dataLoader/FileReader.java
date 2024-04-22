@@ -1,10 +1,8 @@
-package net.insomniacs.nucleus.api.dataFileLoader;
+package net.insomniacs.nucleus.api.dataLoader;
 
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.io.BufferedReader;
 import java.io.IOException;

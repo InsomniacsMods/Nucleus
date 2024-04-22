@@ -1,7 +1,6 @@
 package net.insomniacs.nucleus.impl;
 
-import net.insomniacs.nucleus.impl.items.CustomBundleItem;
-import net.insomniacs.nucleus.impl.items.LocationBindingItem;
+import net.insomniacs.nucleus.api.items.LocationBindingItem;
 import net.minecraft.client.item.ClampedModelPredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.world.ClientWorld;
@@ -23,14 +22,14 @@ public class NucleusItemPredicates {
         registerPredicateProvider(
             LocationBindingItem.class,
             "has_location",
-            (ItemStack stack, ClientWorld world, LivingEntity entity, int seed) -> LocationBindingItem.hasLocation(stack)
+            (ItemStack stack, ClientWorld world, LivingEntity entity, int seed) -> LocationBindingItem.hasLocationPredicate(stack)
         );
 
-        registerPredicateProvider(
-                CustomBundleItem.class,
-                "filled",
-                (ItemStack stack, ClientWorld world, LivingEntity entity, int seed) -> CustomBundleItem.getAmountFilled(stack)
-        );
+//        registerPredicateProvider(
+//                CustomBundleItem.class,
+//                "filled",
+//                (ItemStack stack, ClientWorld world, LivingEntity entity, int seed) -> CustomBundleItem.getAmountFilled(stack)
+//        );
 
         Registries.ITEM.forEach(NucleusItemPredicates::registerPredicateProvider);
         ITEM_PREDICATES.clear();

@@ -1,37 +1,36 @@
 package net.insomniacs.nucleus.impl.mixins;
 
-import net.insomniacs.nucleus.impl.asm.NucleusItemStackAccess;
-import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.player.PlayerEntity;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
+import net.insomniacs.nucleus.api.components.NucleusComponents;
+import net.minecraft.client.item.TooltipType;
+import net.minecraft.component.DataComponentType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.TooltipAppender;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.awt.*;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
-public abstract class ItemStackMixin {
+public class ItemStackMixin {
 
-    @Inject(method = "getTooltip", at = @At("RETURN"), cancellable = true)
-    private void manicSoulboundTooltip(PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir) {
-        List<Text> texts = cir.getReturnValue();
-        addSoulboundTooltip(texts);
-        cir.setReturnValue(texts);
-    }
+	@Shadow
+	private <T extends TooltipAppender> void appendTooltip(DataComponentType<T> componentType, Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type) {}
 
-    @Unique
-    private static final int SOULBOUND_COLOR = Color.decode("#A9CCCA").getRGB();
-
-    @Unique
-    public void addSoulboundTooltip(List<Text> texts) {
-        if (!((NucleusItemStackAccess)this).isSoulbound()) return;
-        Text text = Text.translatable("ui.nucleus.soulbound").styled(style -> style.withItalic(true).withColor(SOULBOUND_COLOR));
-        texts.add(text);
-    }
+	@ModifyReturnValue(at = @At("RETURN"), method = "getTooltip")
+	public List<Text> modifyGetTooltip(List<Text> original, @Local(argsOnly = true) Item.TooltipContext context, @Local(argsOnly = true) TooltipType type) {
+		var index = new AtomicInteger(1);
+		Consumer<Text> appender = text -> original.add(index.getAndIncrement(), text);
+		appendTooltip(NucleusComponents.SOULBOUND, context, appender, type);
+		appendTooltip(NucleusComponents.BOUND_LOCATION, context, appender, type);
+		appendTooltip(NucleusComponents.FONT_CHANGING, context, appender, type);
+		return original;
+	}
 
 }

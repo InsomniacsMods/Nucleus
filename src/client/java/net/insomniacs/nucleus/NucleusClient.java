@@ -13,7 +13,7 @@ public class NucleusClient implements ClientModInitializer {
 	public void onInitializeClient() {
 
 		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(SplashTextLoader.INSTANCE);
-		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(NucleusAnimationLoader.INSTANCE);
+//		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(NucleusAnimationLoader.INSTANCE);
 		NucleusItemPredicates.registerPredicates();
 
 	}

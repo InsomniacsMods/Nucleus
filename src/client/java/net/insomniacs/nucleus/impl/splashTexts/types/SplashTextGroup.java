@@ -21,8 +21,7 @@ public record SplashTextGroup (
 	).apply(instance, SplashTextGroup::new));
 
 	public static SplashTextGroup fromJson(JsonObject array) {
-		return CODEC.parse(JsonOps.INSTANCE, array)
-				.getOrThrow(true, Nucleus.LOGGER::error);
+		return CODEC.parse(JsonOps.INSTANCE, array).getOrThrow();
 	}
 
 	public Stream<SplashText> getTexts() {

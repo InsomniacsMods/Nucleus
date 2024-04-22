@@ -2,10 +2,7 @@ package net.insomniacs.nucleus.api.animationLoader;
 
 import com.google.gson.JsonElement;
 import net.insomniacs.nucleus.Nucleus;
-import net.insomniacs.nucleus.api.animationLoader.types.AnimationData;
-import net.insomniacs.nucleus.api.dataFileLoader.SimpleFileLoader;
-import net.insomniacs.nucleus.impl.splashTexts.SplashTextLoader;
-import net.minecraft.client.render.entity.animation.Animation;
+import net.insomniacs.nucleus.api.dataLoader.SimpleFileLoader;
 import net.minecraft.entity.EntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.resource.ResourceManager;
@@ -18,7 +15,7 @@ public class NucleusAnimationLoader implements SimpleFileLoader {
 
 	@Override
 	public Identifier getFabricId() {
-		return Nucleus.id("entity_animations");
+		return Nucleus.of("entity_animations");
 	}
 	public static final NucleusAnimationLoader INSTANCE = new NucleusAnimationLoader();
 
@@ -47,7 +44,6 @@ public class NucleusAnimationLoader implements SimpleFileLoader {
 				path.split("animations/")[1].split(".animation.json")[0]
 		);
 		addEntry(entityID, AnimationContainer.fromJson(data));
-		System.out.println(getEntry(entityID));
 	}
 
 }

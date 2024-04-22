@@ -1,5 +1,6 @@
-package net.insomniacs.nucleus.impl.misc;
+package net.insomniacs.nucleus.api.content;
 
+import net.insomniacs.nucleus.api.utils.BundleItemSoundGroup;
 import net.minecraft.sound.SoundEvents;
 
 public class NucleusSoundEvents {

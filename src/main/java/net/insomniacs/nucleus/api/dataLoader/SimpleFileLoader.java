@@ -1,10 +1,9 @@
-package net.insomniacs.nucleus.api.dataFileLoader;
+package net.insomniacs.nucleus.api.dataLoader;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import net.fabricmc.fabric.api.resource.SimpleResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 
 import java.io.BufferedReader;
