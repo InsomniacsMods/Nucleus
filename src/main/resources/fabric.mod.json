@@ -19,8 +19,8 @@
         "client": [
             "net.insomniacs.nucleus.NucleusClient"
         ],
-        "cardinal-components": [
-            "net.insomniacs.nucleus.impl.components.ComponentInitializer"
+        "fabric-datagen": [
+            "net.insomniacs.nucleus.NucleusDatagen"
         ]
     },
     "mixins": [
@@ -31,21 +31,15 @@
         }
     ],
     "accessWidener": "nucleus.accesswidener",
+    "_minecraft": "${minecraft_version}",
     "depends": {
-        "fabricloader": ">=0.14.22",
-        "minecraft": "~1.20.2",
-        "java": ">=17",
-        "fabric-api": "*"
+        "java": ">=21",
+        "fabricloader": ">=${fabric_loader_version}",
+        "fabric-api": ">=${fabric_version}"
     },
     "suggests": {},
 
     "custom": {
-        "cardinal-components": [
-            "manic:sanity",
-            "manic:insight"
-        ],
-        "loom:injected_interfaces": {
-            "net/minecraft/class_1799": ["net/insomniacs/nucleus/impl/asm/NucleusItemStackAccess"]
-        }
+        "loom:injected_interfaces": {}
     }
 }

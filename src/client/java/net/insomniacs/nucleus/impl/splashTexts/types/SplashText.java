@@ -11,7 +11,7 @@ import static net.insomniacs.nucleus.impl.splashTexts.types.SimpleSplashText.SIM
 
 public interface SplashText {
 
-    Codec<SplashText> CODEC = Codecs.either(ADVANCED_CODEC, SIMPLE_CODEC).xmap(Either::orThrow, null);
+    Codec<SplashText> CODEC = Codec.either(ADVANCED_CODEC, SIMPLE_CODEC).xmap(Either::orThrow, null);
 
 
     default int getWeight() { return 1; }

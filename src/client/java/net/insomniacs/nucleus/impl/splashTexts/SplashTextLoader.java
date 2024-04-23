@@ -3,7 +3,7 @@ package net.insomniacs.nucleus.impl.splashTexts;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.insomniacs.nucleus.Nucleus;
-import net.insomniacs.nucleus.api.dataFileLoader.SimpleFileLoader;
+import net.insomniacs.nucleus.api.dataLoader.SimpleFileLoader;
 import net.insomniacs.nucleus.impl.splashTexts.types.SimpleSplashText;
 import net.insomniacs.nucleus.impl.splashTexts.types.SplashText;
 import net.insomniacs.nucleus.impl.splashTexts.types.SplashTextGroup;
@@ -18,7 +18,7 @@ public class SplashTextLoader implements SimpleFileLoader {
 
     @Override
     public Identifier getFabricId() {
-        return Nucleus.id("splashes");
+        return Nucleus.of("splashes");
     }
 
     public static final SplashTextLoader INSTANCE = new SplashTextLoader();

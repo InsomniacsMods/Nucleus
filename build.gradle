@@ -1,6 +1,6 @@
 plugins {
-	id 'fabric-loom' version '1.5-SNAPSHOT'
-	id 'maven-publish'
+	id "fabric-loom" version "1.6-SNAPSHOT"
+	id "maven-publish"
 }
 
 version = mod_version
@@ -12,16 +12,11 @@ repositories {
 		url "https://api.modrinth.com/maven"
 		content { includeGroup "maven.modrinth" }
 	}
-	maven {
-		url 'https://maven.ladysnake.org/releases'
-		content { includeGroup "dev.onyxstudios.cardinal-components-api" }
-	}
 }
 
 fabricApi {
 	configureDataGeneration()
 }
-
 
 loom {
 	splitEnvironmentSourceSets()
@@ -32,36 +27,55 @@ loom {
 }
 
 sourceSets {
+	datagen {
+		compileClasspath += main.compileClasspath
+		runtimeClasspath += main.runtimeClasspath
+	}
+	main {
+		compileClasspath += datagen.compileClasspath
+		runtimeClasspath += datagen.runtimeClasspath
+		compileClasspath += datagen.output
+		runtimeClasspath += datagen.output
+	}
 	testmod {
+		compileClasspath += main.compileClasspath
+		runtimeClasspath += main.runtimeClasspath
+	}
+	testmodClient {
 		compileClasspath += main.compileClasspath
 		runtimeClasspath += main.runtimeClasspath
 		compileClasspath += client.compileClasspath
 		runtimeClasspath += client.runtimeClasspath
+
+		compileClasspath += testmod.compileClasspath
+		runtimeClasspath += testmod.runtimeClasspath
 	}
 }
 
 loom {
 
-//	mods {
-//		"nucleus" {
-//			sourceSet sourceSets.main
-//			sourceSet sourceSets.client
-//		}
-//		"testmod" {
-//			sourceSet sourceSets.test
-//		}
-//	}
+	mods {
+		"nucleus" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+		"golgi" {
+			sourceSet sourceSets.testmod
+			sourceSet sourceSets.testmodClient
+		}
+	}
 
 	runs {
 		client {
 			name = "Test Client"
-			source sourceSets.testmod
+			source sourceSets.testmodClient
 		}
 		server {
 			name = "Test Server"
 			source sourceSets.testmod
 		}
 	}
+
 }
 
 dependencies {
@@ -70,12 +84,9 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}+${minecraft_version}"
 
-	include modApi("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinal_components_version}")
-	include modApi("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinal_components_version}")
-
 	modLocalRuntime "maven.modrinth:modmenu:${modmenu_version}"
 	modLocalRuntime "maven.modrinth:sodium:mc${minecraft_version}-${sodium_version}"
-	modLocalRuntime "maven.modrinth:chrysalis:${chrysalis_version}"
+//	modLocalRuntime "maven.modrinth:chrysalis:${chrysalis_version}"
 
 	testmodImplementation sourceSets.main.output
 	testmodImplementation sourceSets.client.output
