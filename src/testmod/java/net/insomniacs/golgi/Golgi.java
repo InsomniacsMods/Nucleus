@@ -1,6 +1,7 @@
 package net.insomniacs.golgi;
 
 import net.fabricmc.api.ModInitializer;
+import net.insomniacs.nucleus.impl.recipes.NucleusRecipes;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,7 @@ public class Golgi implements ModInitializer {
     public void onInitialize() {
         GolgiItems.init();
         GolgiBlocks.init();
-        GolgiRecipeTypes.init();
+        NucleusRecipes.init();
     }
 
 }

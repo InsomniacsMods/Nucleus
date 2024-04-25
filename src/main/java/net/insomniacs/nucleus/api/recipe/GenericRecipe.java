@@ -1,20 +1,26 @@
-package net.insomniacs.golgi.test;
+package net.insomniacs.nucleus.api.recipe;
 
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.world.World;
 
-public interface LoadedRecipe extends GenericRecipe {
+public interface GenericRecipe extends Recipe<Inventory> {
 
 	@Override
 	default boolean matches(Inventory inventory, World world) {
-		return true;
+		return false;
 	}
 
 	@Override
 	default ItemStack craft(Inventory inventory, RegistryWrapper.WrapperLookup lookup) {
 		return null;
+	}
+
+	@Override
+	default boolean fits(int width, int height) {
+		return false;
 	}
 
 	@Override

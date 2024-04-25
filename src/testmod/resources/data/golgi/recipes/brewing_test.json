@@ -1,7 +1,7 @@
 {
-    "type": "nucleus:brewing",
+    "type": "nucleus:brewing_potion",
 
     "base": "minecraft:awkward",
-    "ingredient": { "item": "minecraft:stick" },
+    "ingredient": { "tag": "minecraft:wool" },
     "result": "minecraft:swiftness"
 }

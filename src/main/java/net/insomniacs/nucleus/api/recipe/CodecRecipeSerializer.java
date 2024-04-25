@@ -1,4 +1,4 @@
-package net.insomniacs.golgi.test;
+package net.insomniacs.nucleus.api.recipe;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.network.RegistryByteBuf;
