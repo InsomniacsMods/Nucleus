@@ -40,10 +40,6 @@ sourceSets {
 	testmod {
 		compileClasspath += main.compileClasspath
 		runtimeClasspath += main.runtimeClasspath
-	}
-	testmodClient {
-		compileClasspath += main.compileClasspath
-		runtimeClasspath += main.runtimeClasspath
 		compileClasspath += client.compileClasspath
 		runtimeClasspath += client.runtimeClasspath
 
@@ -54,21 +50,20 @@ sourceSets {
 
 loom {
 
-	mods {
-		"nucleus" {
-			sourceSet sourceSets.main
-			sourceSet sourceSets.client
-		}
-		"golgi" {
-			sourceSet sourceSets.testmod
-			sourceSet sourceSets.testmodClient
-		}
-	}
+//	mods {
+//		"nucleus" {
+//			sourceSet sourceSets.main
+//			sourceSet sourceSets.client
+//		}
+//		"golgi" {
+//			sourceSet sourceSets.testmod
+//		}
+//	}
 
 	runs {
 		client {
 			name = "Test Client"
-			source sourceSets.testmodClient
+			source sourceSets.testmod
 		}
 		server {
 			name = "Test Server"

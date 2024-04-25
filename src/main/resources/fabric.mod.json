@@ -31,13 +31,12 @@
         }
     ],
     "accessWidener": "nucleus.accesswidener",
-    "_minecraft": "${minecraft_version}",
     "depends": {
         "java": ">=21",
+        "minecraft": "${minecraft_version}",
         "fabricloader": ">=${fabric_loader_version}",
         "fabric-api": ">=${fabric_version}"
     },
-    "suggests": {},
 
     "custom": {
         "loom:injected_interfaces": {}
