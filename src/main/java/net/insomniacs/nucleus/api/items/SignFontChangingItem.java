@@ -23,8 +23,12 @@ public class SignFontChangingItem extends Item implements SignChangingItem {
         this.sound = sound;
     }
 
+    public static FontChangingComponent getComponent(ItemStack stack) {
+        return stack.getOrDefault(NucleusComponents.FONT_CHANGING, FontChangingComponent.EMPTY);
+    }
+
     public static Identifier getFont(ItemStack stack) {
-        return stack.getOrDefault(NucleusComponents.FONT_CHANGING, FontChangingComponent.EMPTY).font();
+        return getComponent(stack).font();
     }
 
     public static boolean hasFont(ItemStack stack) {

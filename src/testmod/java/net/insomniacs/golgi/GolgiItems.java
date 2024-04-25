@@ -23,7 +23,7 @@ public class GolgiItems {
             "illager_rune",
             new SignFontChangingItem(
                     new Item.Settings()
-                            .component(NucleusComponents.FONT_CHANGING, new FontChangingComponent(new Identifier("minecraft:illageralt"), true)),
+                            .component(NucleusComponents.FONT_CHANGING, new FontChangingComponent(new Identifier("minecraft", "illageralt"), true)),
                     SoundEvents.ITEM_DYE_USE
             )
     );
