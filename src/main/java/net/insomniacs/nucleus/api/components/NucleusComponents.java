@@ -17,8 +17,6 @@ import java.util.function.UnaryOperator;
 
 public class NucleusComponents {
 
-	public static void init() {}
-
 	public static final DataComponentType<SoulboundComponent> SOULBOUND = register("soulbound",
 			SoulboundComponent.CODEC
 	);
@@ -34,6 +32,16 @@ public class NucleusComponents {
 	public static final DataComponentType<CustomBundleComponent> BUNDLE_CONTENTS = register("bundle_contents",
 			CustomBundleComponent.CODEC
 	);
+
+
+	public static void init() {
+		ComponentTooltipRegistry.register(
+				NucleusComponents.SOULBOUND,
+				NucleusComponents.BOUND_LOCATION,
+				NucleusComponents.FONT_CHANGING
+		);
+	}
+
 
 	public static <T> DataComponentType<T> register(String id, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
 		return Registry.register(
