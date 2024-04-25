@@ -1,5 +1,5 @@
 {
-    "type": "nucleus:brewing_potion",
+    "type": "nucleus:brewing",
 
     "base": "minecraft:awkward",
     "ingredient": { "item": "minecraft:stick" },

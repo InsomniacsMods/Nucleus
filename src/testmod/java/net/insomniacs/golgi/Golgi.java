@@ -18,6 +18,7 @@ public class Golgi implements ModInitializer {
     public void onInitialize() {
         GolgiItems.init();
         GolgiBlocks.init();
+        GolgiRecipeTypes.init();
     }
 
 }
