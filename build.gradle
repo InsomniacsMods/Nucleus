@@ -50,15 +50,15 @@ sourceSets {
 
 loom {
 
-//	mods {
-//		"nucleus" {
-//			sourceSet sourceSets.main
-//			sourceSet sourceSets.client
-//		}
-//		"golgi" {
-//			sourceSet sourceSets.testmod
-//		}
-//	}
+	mods {
+		"nucleus" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+		"golgi" {
+			sourceSet sourceSets.testmod
+		}
+	}
 
 	runs {
 		client {

@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.TooltipAppender;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 import java.util.function.Consumer;
@@ -31,14 +32,14 @@ public record FontChangingComponent(
 
 	public Text getTooltip() {
 		Text useButton = Text.keybind("key.use");
-		return Text.translatable("ui.nucleus.font_changing", useButton, getFontNameStyled());
+		return Text.translatable("item.nucleus.font_changing", useButton, getFontNameStyled()).formatted(Formatting.GRAY);
 	}
 
-	private MutableText getFontName() {
+	public MutableText getFontName() {
 		return Text.translatable(font.toTranslationKey("font"));
 	}
 
-	private MutableText getFontNameStyled() {
+	public MutableText getFontNameStyled() {
 		return getFontName().styled(t -> t.withFont(font));
 	}
 

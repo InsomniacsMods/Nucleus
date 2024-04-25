@@ -53,7 +53,16 @@ public class LocationBindingItem extends Item {
         Location location = new Location(pos, worldKey);
         if (getLocation(stack).equals(location)) return ActionResult.FAIL;
 
-        stack.set(NucleusComponents.BOUND_LOCATION, LocationBindingComponent.simple(location));
+        PlayerEntity player = context.getPlayer();
+        if (player == null) {
+            stack.set(NucleusComponents.BOUND_LOCATION, LocationBindingComponent.simple(location));
+        } else {
+            stack.decrement(1);
+            ItemStack newStack = stack.copyWithCount(1);
+            newStack.set(NucleusComponents.BOUND_LOCATION, LocationBindingComponent.simple(location));
+            context.getPlayer().giveItemStack(newStack);
+        }
+
         return ActionResult.SUCCESS;
     }
 

@@ -7,8 +7,7 @@
     "dimension.minecraft.the_nether": "The Nether",
     "dimension.minecraft.the_end": "The End",
 
-    "item.nucleus.when_eaten": "When Eaten:",
     "item.nucleus.soulbound": "Soulbound",
     "item.nucleus.font_changing": "Use %s on a sign to write in %s",
-    "item.nucleus.bound_location": "%s (%i, %i, %i)"
+    "item.nucleus.bound_location": "%s (%d, %d, %d)"
 }
