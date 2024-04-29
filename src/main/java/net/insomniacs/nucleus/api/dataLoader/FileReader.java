@@ -78,16 +78,16 @@ public class FileReader<
 		findFiles.put(FilePath.simple(path), consumer);
 	}
 
-	public void findAll(String basePath, Function<Identifier, Boolean> predicate, BiConsumer<Identifier, Value> consumer) {
+	public void findMatching(String basePath, Function<Identifier, Boolean> predicate, BiConsumer<Identifier, Value> consumer) {
 		findFiles.put(new FilePath(basePath, predicate), consumer);
 	}
 
-	public void findAllMatching(String basePath, String glob, BiConsumer<Identifier, Value> consumer) {
-		findAll(basePath, identifier -> pathMatches(identifier, glob), consumer);
+	public void findGlob(String basePath, String glob, BiConsumer<Identifier, Value> consumer) {
+		findMatching(basePath, identifier -> pathMatches(identifier, glob), consumer);
 	}
 
-	public void findAllMatching(String glob, BiConsumer<Identifier, Value> consumer) {
-		findAllMatching("", glob, consumer);
+	public void findGlob(String glob, BiConsumer<Identifier, Value> consumer) {
+		findGlob("", glob, consumer);
 	}
 
 	private boolean pathMatches(Identifier id, String glob) {

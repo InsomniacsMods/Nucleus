@@ -8,22 +8,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AnimationTimeline {
+public record AnimationTimeline(
+		Map<Float, AnimationKeyframe> timeline
+) {
 
 	public static final Codec<AnimationTimeline> CODEC = Codec.unboundedMap(
 			Codec.STRING, AnimationKeyframe.CODEC
-	).flatComapMap(AnimationTimeline::new, null);
+	).flatComapMap(AnimationTimeline::simple, null);
 
-
-	private final Map<Float, AnimationKeyframe> timeline;
-
-	public AnimationTimeline(Map<String, AnimationKeyframe> timeline) {
-		this.timeline = new HashMap<>();
+	public static AnimationTimeline simple(Map<String, AnimationKeyframe> timeline) {
+		Map<Float, AnimationKeyframe> result = new HashMap<>();
 		timeline.forEach(
-				(time, animation) -> this.timeline.put(Float.valueOf(time), animation)
+				(time, animation) -> result.put(Float.valueOf(time), animation)
 		);
+		return new AnimationTimeline(result);
 	}
-
 
 	public Keyframe[] getKeyframes() {
 		List<Keyframe> result = new ArrayList<>();

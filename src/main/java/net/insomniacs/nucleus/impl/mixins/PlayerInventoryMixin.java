@@ -1,6 +1,6 @@
 package net.insomniacs.nucleus.impl.mixins;
 
-import net.insomniacs.nucleus.api.components.NucleusComponents;
+import net.insomniacs.nucleus.impl.components.NucleusComponents;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;

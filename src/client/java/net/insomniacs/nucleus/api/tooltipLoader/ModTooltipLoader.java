@@ -36,15 +36,11 @@ public class ModTooltipLoader implements SimpleFileLoader {
 
 	@Override
 	public void init(DataFileLoader loader, ResourceManager manager) {
-		loader.json().findAllMatching("texts/tooltip.json", this::readTooltipFile);
+		loader.json().find("texts/tooltip.json", this::readTooltipFile);
 	}
 
 	public void readTooltipFile(Identifier id, JsonElement data) {
-		System.out.println("AAAAAAAAA");
-		System.out.println(id);
-		System.out.println(data);
 		Text text = TextCodecs.CODEC.parse(JsonOps.INSTANCE, data.getAsJsonObject()).getOrThrow();
-		System.out.println(text);
 		if (!text.getString().isEmpty()) addTooltip(id.getNamespace(), text);
 	}
 

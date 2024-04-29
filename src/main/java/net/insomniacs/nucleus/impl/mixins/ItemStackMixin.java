@@ -2,8 +2,7 @@ package net.insomniacs.nucleus.impl.mixins;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.insomniacs.nucleus.api.components.ComponentTooltipRegistry;
-import net.insomniacs.nucleus.api.components.NucleusComponents;
+import net.insomniacs.nucleus.impl.components.ComponentTooltipRegistry;
 import net.minecraft.client.item.TooltipType;
 import net.minecraft.component.DataComponentType;
 import net.minecraft.item.Item;

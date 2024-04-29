@@ -3,6 +3,7 @@ package net.insomniacs.nucleus.api.animationLoader;
 import com.google.gson.JsonElement;
 import net.insomniacs.nucleus.Nucleus;
 import net.insomniacs.nucleus.api.dataLoader.SimpleFileLoader;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.resource.ResourceManager;
@@ -19,10 +20,30 @@ public class NucleusAnimationLoader implements SimpleFileLoader {
 	}
 	public static final NucleusAnimationLoader INSTANCE = new NucleusAnimationLoader();
 
-	private static final Map<Identifier, AnimationContainer> ANIMATIONS = new HashMap<>();
+	private final Map<Identifier, AnimationContainer> animations;
+	private NucleusAnimationLoader() {
+		this.animations = new HashMap<>();
+	}
+
+	@Override
+	public void init(DataFileLoader loader, ResourceManager manager) {
+		loader.json().findGlob("animations", "**/*.animation.json", this::parseAnimationFile);
+	}
+
+	public void parseAnimationFile(Identifier id, JsonElement data) {
+		Identifier finalId = id.withPath(path ->
+				path.split("animations/")[1].split(".animation.json")[0]
+		);
+		AnimationContainer container = AnimationContainer.fromJson(data);
+		addEntry(finalId, container);
+	}
+
+	public static void addEntry(Identifier id, AnimationContainer container) {
+		INSTANCE.animations.put(id, container);
+	}
 
 	public static AnimationContainer getEntry(Identifier id) {
-		return ANIMATIONS.get(id);
+		return INSTANCE.animations.get(id);
 	}
 
 	public static AnimationContainer getEntity(EntityType<?> entity) {
@@ -30,20 +51,9 @@ public class NucleusAnimationLoader implements SimpleFileLoader {
 		return getEntry(id);
 	}
 
-	public static void addEntry(Identifier id, AnimationContainer container) {
-		ANIMATIONS.put(id, container);
-	}
-
-	@Override
-	public void init(DataFileLoader loader, ResourceManager manager) {
-		loader.json().findAllMatching("animations", "**/*.animation.json", this::readAnimationFile);
-	}
-
-	public void readAnimationFile(Identifier id, JsonElement data) {
-		Identifier entityID = id.withPath(path ->
-				path.split("animations/")[1].split(".animation.json")[0]
-		);
-		addEntry(entityID, AnimationContainer.fromJson(data));
+	public static AnimationContainer getBlock(Block block) {
+		Identifier id = Registries.BLOCK.getId(block).withPrefixedPath("block/");
+		return getEntry(id);
 	}
 
 }

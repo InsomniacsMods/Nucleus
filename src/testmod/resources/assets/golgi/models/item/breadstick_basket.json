@@ -1,0 +1,9 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "golgi:item/breadstick_basket"
+	},
+	"overrides": [
+		{ "predicate": { "filled": 0.0000001 }, "model": "golgi:item/breadstick_basket_filled" }
+	]
+}

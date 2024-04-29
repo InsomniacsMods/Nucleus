@@ -2,11 +2,8 @@ package net.insomniacs.nucleus;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import net.insomniacs.nucleus.api.components.NucleusComponents;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
+import net.insomniacs.nucleus.impl.components.NucleusComponents;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

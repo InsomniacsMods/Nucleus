@@ -13,12 +13,10 @@ import java.util.Map;
 
 public class AnimationContainer {
 
-	public static final UnboundedMapCodec<String, AnimationData> MAP_CODEC = Codec.unboundedMap(
+	public static final Codec<AnimationContainer> CODEC = Codec.unboundedMap(
 			Codec.STRING,
 			AnimationData.CODEC
-	);
-
-	public static final Codec<AnimationContainer> CODEC = MAP_CODEC.flatComapMap(AnimationContainer::new, null);
+	).flatComapMap(AnimationContainer::new, null);
 
 
 	private final Map<String, Animation> animations = new HashMap<>();
@@ -27,18 +25,18 @@ public class AnimationContainer {
 		animations.forEach(this::addAnimation);
 	}
 
-	public Animation getAnimation(String name) {
-		return animations.get(name);
+	public static AnimationContainer fromJson(JsonElement data) {
+		JsonObject animations = data.getAsJsonObject().getAsJsonObject("animations");
+		return CODEC.parse(JsonOps.INSTANCE, animations).getOrThrow();
 	}
+
 
 	private void addAnimation(String name, AnimationData data) {
 		this.animations.put(name, data.toAnimation());
 	}
 
-
-	public static AnimationContainer fromJson(JsonElement data) {
-		JsonObject animations = data.getAsJsonObject().getAsJsonObject("animations");
-		return CODEC.parse(JsonOps.INSTANCE, animations).getOrThrow();
+	public Animation getAnimation(String name) {
+		return animations.get(name);
 	}
 
 }

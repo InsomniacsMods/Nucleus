@@ -18,13 +18,19 @@ public record AnimationTransformation(
 	).flatComapMap(AnimationTransformation::new, null);
 
 	public List<Transformation> getTransformations() {
-		List<Transformation> result = new ArrayList<>();
-		transformations.forEach((transformation, timeline) -> {
-			Keyframe[] frames = timeline.getKeyframes();
-			Transformation value = new Transformation(transformation.getType(), frames);
-			result.add(value);
-		});
-		return result;
+		return transformations.entrySet()
+				.stream()
+				.map(this::fromEntry)
+				.toList();
+	}
+
+	private Transformation fromEntry(Map.Entry<TransformationType, AnimationTimeline> entry) {
+		return fromData(entry.getKey(), entry.getValue());
+	}
+
+	private Transformation fromData(TransformationType transformation, AnimationTimeline timeline) {
+		Keyframe[] frames = timeline.getKeyframes();
+		return new Transformation(transformation.getType(), frames);
 	}
 
 }

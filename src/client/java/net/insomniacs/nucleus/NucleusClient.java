@@ -2,6 +2,7 @@ package net.insomniacs.nucleus;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.insomniacs.nucleus.api.animationLoader.NucleusAnimationLoader;
 import net.insomniacs.nucleus.api.items.CustomBundleItem;
 import net.insomniacs.nucleus.api.items.LocationBindingItem;
 import net.insomniacs.nucleus.api.tooltipLoader.ModTooltipLoader;
@@ -15,7 +16,7 @@ public class NucleusClient implements ClientModInitializer {
 	public void onInitializeClient() {
 
 		NucleusItemPredicates.addProvider(LocationBindingItem.class, "has_location", LocationBindingItem::getLocationPredicate);
-		NucleusItemPredicates.addProvider(CustomBundleItem.class, "filled", CustomBundleItem::getAmountFilled);
+		NucleusItemPredicates.addProvider(CustomBundleItem.class, "filled", CustomBundleItem::getOccupancyPredicate);
 
 		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(SplashTextLoader.INSTANCE);
 		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(ModTooltipLoader.INSTANCE);

@@ -1,6 +1,7 @@
 package net.insomniacs.golgi;
 
-import net.insomniacs.nucleus.api.components.NucleusComponents;
+import net.insomniacs.golgi.custom.BreadstickBasket;
+import net.insomniacs.nucleus.impl.components.NucleusComponents;
 import net.insomniacs.nucleus.api.components.custom.FontChangingComponent;
 import net.insomniacs.nucleus.api.items.LocationBindingItem;
 import net.insomniacs.nucleus.api.items.SignFontChangingItem;
@@ -26,6 +27,11 @@ public class GolgiItems {
                             .component(NucleusComponents.FONT_CHANGING, new FontChangingComponent(new Identifier("minecraft", "illageralt"), true)),
                     SoundEvents.ITEM_DYE_USE
             )
+    );
+
+    public static final Item BREADSTICK_BASKET = REGISTRY.item(
+            "breadstick_basket",
+            new BreadstickBasket(new Item.Settings().unstackable())
     );
 
 }

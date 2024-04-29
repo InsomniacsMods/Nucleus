@@ -13,14 +13,14 @@ public enum TransformationType implements StringIdentifiable {
 	public static final Codec<TransformationType> CODEC = StringIdentifiable.createCodec(TransformationType::values);
 
 	private final String name;
-	private final Transformation.Target target;
+	private final Transformation.Target transformation;
 
 	TransformationType(
 			String name,
 			Transformation.Target target
 	) {
 		this.name = name;
-		this.target = target;
+		this.transformation = target;
 	}
 
 	@Override
@@ -29,6 +29,6 @@ public enum TransformationType implements StringIdentifiable {
 	}
 
 	public Transformation.Target getType() {
-		return target;
+		return transformation;
 	}
 }

@@ -2,7 +2,7 @@ package net.insomniacs.nucleus.api.utils;
 
 import net.minecraft.sound.SoundEvent;
 
-public record BundleItemSoundGroup (float volume, float pitch, SoundEvent addSound, SoundEvent removeSound, SoundEvent dropSound) {
+public record BundleSoundGroup(float volume, float pitch, SoundEvent addSound, SoundEvent removeSound, SoundEvent dropSound) {
 
     @Override
     public float volume() {

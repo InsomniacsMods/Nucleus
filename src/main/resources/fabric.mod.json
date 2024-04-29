@@ -1,17 +1,19 @@
 {
     "schemaVersion": 1,
-    "id": "nucleus",
     "version": "${version}",
-    "name": "Nucleus API",
-    "description": "Standard hooks for insomniacs mod implementation",
+
+    "id": "nucleus",
+    "name": "Nucleus",
+    "description": "W.I.P.",
     "authors": [
-        "dragoncommands"
+        "The Insomniacs"
     ],
     "contact": {
         "homepage": "https://fabricmc.net/",
         "sources": "https://github.com/FabricMC/fabric-example-mod"
     },
     "license": "CC0-1.0",
+
     "entrypoints": {
         "main": [
             "net.insomniacs.nucleus.Nucleus"
@@ -31,14 +33,16 @@
         }
     ],
     "accessWidener": "nucleus.accesswidener",
+
+    "custom": {
+        "loom:injected_interfaces": {
+            "net/minecraft/class_1792\u0024class_1793": ["net/insomniacs/nucleus/asm/NucleusItemSettings"]
+        }
+    },
+
     "depends": {
         "java": ">=21",
         "minecraft": "${minecraft_version}",
-        "fabricloader": ">=${fabric_loader_version}",
         "fabric-api": ">=${fabric_version}"
-    },
-
-    "custom": {
-        "loom:injected_interfaces": {}
     }
 }
