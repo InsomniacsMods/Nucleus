@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.impl.mixins;
+package net.insomniacs.nucleus.mixins;
 
 import net.insomniacs.nucleus.impl.components.NucleusComponents;
 import net.minecraft.entity.player.PlayerInventory;

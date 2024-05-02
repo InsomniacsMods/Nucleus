@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.api.components.custom;
+package net.insomniacs.nucleus.api.components;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

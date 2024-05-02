@@ -3,10 +3,7 @@ package net.insomniacs.nucleus.impl.components;
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
 import net.insomniacs.nucleus.Nucleus;
-import net.insomniacs.nucleus.api.components.BundleComponent;
-import net.insomniacs.nucleus.api.components.custom.FontChangingComponent;
-import net.insomniacs.nucleus.api.components.custom.LocationBindingComponent;
-import net.insomniacs.nucleus.api.components.custom.SoulboundComponent;
+import net.insomniacs.nucleus.api.components.*;
 import net.minecraft.component.DataComponentType;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
@@ -31,6 +28,10 @@ public class NucleusComponents {
 
 	public static final DataComponentType<FontChangingComponent> FONT_CHANGING = register("font_changing",
 			FontChangingComponent.CODEC
+	);
+
+	public static final DataComponentType<InfoTooltipComponent> INFO = register("info",
+			InfoTooltipComponent.CODEC
 	);
 
 

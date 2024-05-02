@@ -1,7 +1,7 @@
 package net.insomniacs.nucleus.api.items;
 
+import net.insomniacs.nucleus.api.components.FontChangingComponent;
 import net.insomniacs.nucleus.impl.components.NucleusComponents;
-import net.insomniacs.nucleus.api.components.custom.FontChangingComponent;
 import net.minecraft.block.entity.SignBlockEntity;
 import net.minecraft.block.entity.SignText;
 import net.minecraft.entity.player.PlayerEntity;

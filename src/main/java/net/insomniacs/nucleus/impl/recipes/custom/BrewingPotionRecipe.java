@@ -27,7 +27,7 @@ public record BrewingPotionRecipe(Potion base, Ingredient ingredient, Potion res
 
 	@Override
 	public RecipeType<?> getType() {
-		return NucleusRecipes.BREWING;
+		return NucleusRecipes.BREWING_POTION;
 	}
 
 	@Override

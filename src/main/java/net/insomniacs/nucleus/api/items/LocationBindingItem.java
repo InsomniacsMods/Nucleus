@@ -1,6 +1,6 @@
 package net.insomniacs.nucleus.api.items;
 
-import net.insomniacs.nucleus.api.components.custom.LocationBindingComponent;
+import net.insomniacs.nucleus.api.components.LocationBindingComponent;
 import net.insomniacs.nucleus.impl.components.NucleusComponents;
 import net.insomniacs.nucleus.api.utils.Location;
 import net.minecraft.entity.LivingEntity;

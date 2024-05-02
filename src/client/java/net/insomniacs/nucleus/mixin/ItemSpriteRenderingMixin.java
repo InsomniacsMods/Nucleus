@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.impl.mixin;
+package net.insomniacs.nucleus.mixin;
 
 import net.insomniacs.nucleus.api.markers.ItemDisplayMarker;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -29,7 +29,7 @@ public class ItemSpriteRenderingMixin {
     @Final @Shadow private ItemModels models;
 
     @Inject(method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V", at = @At("HEAD"))
-    private void nucleus$renderItemInject(ItemStack itemStack, ModelTransformationMode itemDisplayContext, boolean bl, MatrixStack poseStack, VertexConsumerProvider multiBufferSource, int i, int j, BakedModel bakedModel, CallbackInfo ci) {
+    private void renderItemInject(ItemStack itemStack, ModelTransformationMode itemDisplayContext, boolean bl, MatrixStack poseStack, VertexConsumerProvider multiBufferSource, int i, int j, BakedModel bakedModel, CallbackInfo ci) {
 
         if(itemStack.getItem() instanceof ItemDisplayMarker && Nucleus$getInventoryModel(itemDisplayContext, itemStack.getItem()) != null) {
             bakedModel = this.models.getModelManager().getModel(Nucleus$getInventoryModel(itemDisplayContext, itemStack.getItem()));

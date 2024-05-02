@@ -1,6 +1,6 @@
 package net.insomniacs.nucleus.impl.items;
 
-import net.insomniacs.nucleus.api.utils.BundleSoundGroup;
+import net.insomniacs.nucleus.api.sound.BundleSoundGroup;
 import net.insomniacs.nucleus.impl.content.NucleusSoundEvents;
 import net.insomniacs.nucleus.impl.content.NucleusTags;
 import net.minecraft.entity.Entity;

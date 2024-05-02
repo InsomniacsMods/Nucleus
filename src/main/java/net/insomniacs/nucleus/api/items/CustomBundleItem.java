@@ -2,12 +2,11 @@ package net.insomniacs.nucleus.api.items;
 
 import net.insomniacs.nucleus.api.components.BundleComponent;
 import net.insomniacs.nucleus.api.content.NucleusSoundEvents;
-import net.insomniacs.nucleus.api.utils.BundleSoundGroup;
+import net.insomniacs.nucleus.api.sound.BundleSoundGroup;
 import net.insomniacs.nucleus.impl.components.NucleusComponents;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.client.item.TooltipType;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.screen.slot.Slot;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.ClickType;
@@ -110,7 +108,7 @@ public abstract class CustomBundleItem extends BundleItem {
 		builder.updateBundle(stack);
 
 		items.forEach(s -> player.dropItem(s, true));
-		this.playDropContentsSound(player);
+		soundGroup.playDropSound(player);
 		player.incrementStat(Stats.USED.getOrCreateStat(this));
 		return TypedActionResult.success(stack, world.isClient());
 	}
@@ -127,12 +125,12 @@ public abstract class CustomBundleItem extends BundleItem {
 		stack = builder.addItem(stack);
 		if (stack.isEmpty()) return;
 
-		this.playInsertSound(player);
+		soundGroup.playAddSound(player);
 	}
 
 	public void removeFromBundle(PlayerEntity player, BundleComponent.Builder builder, Slot slot) {
 		ItemStack removedStack = builder.removeFirst();
-		this.playRemoveOneSound(player);
+		soundGroup.playRemoveSound(player);
 		if (removedStack.isEmpty()) return;
 
 		ItemStack addedItem = slot.insertStack(removedStack);
@@ -143,7 +141,7 @@ public abstract class CustomBundleItem extends BundleItem {
 		ItemStack removedStack = builder.removeFirst();
 		if (removedStack == null) return;
 
-		this.playRemoveOneSound(player);
+		soundGroup.playRemoveSound(player);
 		cursor.set(removedStack);
 	}
 
@@ -181,23 +179,5 @@ public abstract class CustomBundleItem extends BundleItem {
 	}
 
 	//
-
-	// Sound
-
-	private void playRemoveOneSound(Entity entity) {
-		playSound(entity, soundGroup.removeSound());
-	}
-
-	private void playInsertSound(Entity entity) {
-		playSound(entity, soundGroup.addSound());
-	}
-
-	private void playDropContentsSound(Entity entity) {
-		playSound(entity, soundGroup.dropSound());
-	}
-
-	private void playSound(Entity entity, SoundEvent sound) {
-		entity.playSound(sound, soundGroup.volume(), soundGroup.pitch() + entity.getWorld().getRandom().nextFloat() * 0.4F);
-	}
 
 }

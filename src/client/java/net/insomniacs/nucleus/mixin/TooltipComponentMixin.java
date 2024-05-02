@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.impl.mixin;
+package net.insomniacs.nucleus.mixin;
 
 import net.insomniacs.nucleus.api.items.CustomBundleTooltipData;
 import net.insomniacs.nucleus.impl.tooltip.CustomBundleTooltipComponent;

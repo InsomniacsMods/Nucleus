@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 
 public class NucleusRecipes {
 
-	public static final RecipeType<BrewingPotionRecipe> BREWING = register("brewing_potion", BrewingPotionRecipe.SERIALIZER);
+	public static final RecipeType<BrewingPotionRecipe> BREWING_POTION = register("brewing_potion", BrewingPotionRecipe.SERIALIZER);
 
 
 	public static void init() {}

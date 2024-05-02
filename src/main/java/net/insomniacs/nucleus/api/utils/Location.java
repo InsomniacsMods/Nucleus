@@ -7,7 +7,10 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public record Location(BlockPos pos, RegistryKey<World> worldKey) {
+public record Location (
+        BlockPos pos,
+        RegistryKey<World> worldKey
+) {
 
     public static final Location ZERO = new Location(
             new BlockPos(0, 0, 0),

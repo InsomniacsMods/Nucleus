@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.impl.components;
+package net.insomniacs.nucleus.api.components;
 
 import net.minecraft.component.DataComponentType;
 import net.minecraft.item.TooltipAppender;
