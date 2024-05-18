@@ -16,7 +16,7 @@ public class DateUtils {
 	);
 
 	public static boolean isToday(LocalDate date) {
-		return date == today();
+		return today().equals(date);
 	}
 
 	public static LocalDate today() {

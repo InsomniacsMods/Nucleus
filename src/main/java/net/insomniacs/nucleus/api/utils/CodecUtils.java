@@ -11,8 +11,8 @@ import java.util.Iterator;
 public class CodecUtils {
 
 	public static <Type> Codec<Type> merge(
-			Codec<Type> codec1,
-			Codec<Type> codec2
+			Codec<? extends Type> codec1,
+			Codec<? extends Type> codec2
 	) {
 		return Codec.either(codec1, codec2).flatComapMap(
 				either -> {
@@ -24,11 +24,12 @@ public class CodecUtils {
 	}
 
 	@SafeVarargs
+	@SuppressWarnings("unchecked")
 	public static <Type> Codec<Type> merge(
-			Codec<Type>... codecs
+			Codec<? extends Type>... codecs
 	) {
-		Iterator<Codec<Type>> iterator = Arrays.stream(codecs).iterator();
-		Codec<Type> base = iterator.next();
+		Iterator<Codec<? extends Type>> iterator = Arrays.stream(codecs).iterator();
+		Codec<Type> base = (Codec<Type>)iterator.next();
 		while (iterator.hasNext()) base = merge(base, iterator.next());
 		return base;
 	}

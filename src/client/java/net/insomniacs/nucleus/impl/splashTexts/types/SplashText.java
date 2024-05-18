@@ -1,22 +1,19 @@
 package net.insomniacs.nucleus.impl.splashTexts.types;
 
-import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
+import net.insomniacs.nucleus.api.utils.CodecUtils;
 import net.minecraft.client.gui.screen.SplashTextRenderer;
 import net.minecraft.text.Style;
-import net.minecraft.util.dynamic.Codecs;
 
 import static net.insomniacs.nucleus.impl.splashTexts.types.AdvancedSplashText.ADVANCED_CODEC;
 import static net.insomniacs.nucleus.impl.splashTexts.types.SimpleSplashText.SIMPLE_CODEC;
 
 public interface SplashText {
 
-    Codec<SplashText> CODEC = Codec.either(ADVANCED_CODEC, SIMPLE_CODEC).xmap(Either::orThrow, null);
+    Codec<SplashText> CODEC = CodecUtils.merge(ADVANCED_CODEC, SIMPLE_CODEC);
 
-
-    default int getWeight() { return 1; }
-    default boolean validate() { return true; }
-
+    int getWeight();
+    boolean validate();
     SplashTextRenderer renderer();
     SplashText setStyle(Style style);
 

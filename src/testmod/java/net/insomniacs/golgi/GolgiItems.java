@@ -1,8 +1,8 @@
 package net.insomniacs.golgi;
 
 import net.insomniacs.golgi.custom.BreadstickBasket;
+import net.insomniacs.nucleus.api.components.FontChangingComponent;
 import net.insomniacs.nucleus.impl.components.NucleusComponents;
-import net.insomniacs.nucleus.api.components.custom.FontChangingComponent;
 import net.insomniacs.nucleus.api.items.LocationBindingItem;
 import net.insomniacs.nucleus.api.items.SignFontChangingItem;
 import net.minecraft.item.Item;

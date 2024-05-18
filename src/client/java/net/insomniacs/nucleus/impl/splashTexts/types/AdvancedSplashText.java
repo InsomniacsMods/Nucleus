@@ -9,6 +9,7 @@ import net.insomniacs.nucleus.impl.splashTexts.util.TextProcessor;
 import net.minecraft.client.gui.screen.SplashTextRenderer;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 import net.minecraft.text.TextCodecs;
 import net.minecraft.util.dynamic.Codecs;
 
@@ -17,13 +18,13 @@ import java.util.function.UnaryOperator;
 
 public class AdvancedSplashText implements SplashText {
 
-    public MutableText text;
-    public final int weight;
-    public final String mod;
-    public final LocalDate date;
+    private MutableText text;
+    private final int weight;
+    private final String mod;
+    private final LocalDate date;
 
     public AdvancedSplashText(
-            MutableText text,
+            Text text,
             Integer weight,
             String mod,
             LocalDate date
@@ -39,6 +40,14 @@ public class AdvancedSplashText implements SplashText {
         return weight;
     }
 
+    @Override
+    @SuppressWarnings("RedundantIfStatement")
+    public boolean validate() {
+        if (!DateUtils.isToday(this.date)) return false;
+        if (!Nucleus.isModLoaded(this.mod)) return false;
+        return true;
+    }
+
     public AdvancedSplashText(MutableText text) {
         this(text, 1, "minecraft", DateUtils.today());
     }
@@ -47,24 +56,12 @@ public class AdvancedSplashText implements SplashText {
         this.text = operator.apply(this.text);
     }
 
-    public static Codec<MutableText> MUTABLE_TEXT_CODEC = TextCodecs.CODEC.flatComapMap(
-            text -> (MutableText)text, null
-    );
-
     public static final Codec<AdvancedSplashText> ADVANCED_CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            MUTABLE_TEXT_CODEC.fieldOf("text").forGetter(null),
+            TextCodecs.CODEC.fieldOf("text").forGetter(null),
             Codecs.rangedInt(1, 128).optionalFieldOf("weight", 1).forGetter(null),
             Codec.STRING.optionalFieldOf("mod", "minecraft").forGetter(null),
             DateUtils.CODEC.optionalFieldOf("date", DateUtils.today()).forGetter(null)
     ).apply(instance, AdvancedSplashText::new));
-
-    @Override
-    @SuppressWarnings("RedundantIfStatement")
-    public boolean validate() {
-        if (!DateUtils.isToday(this.date)) return false;
-        if (!Nucleus.isModLoaded(this.mod)) return false;
-        return true;
-    }
 
     @Override
     public SplashTextRenderer renderer() {
@@ -79,7 +76,7 @@ public class AdvancedSplashText implements SplashText {
 
     @Override
     public String toString() {
-        return "SplashText["+this.text.getString()+"]";
+        return "AdvancedSplashText["+this.text.getString()+"]";
     }
 
 }

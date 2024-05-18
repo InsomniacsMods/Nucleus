@@ -1,5 +1,8 @@
 {
+	"default_style": {
+		"color": "#c5f542", "font": "minecraft:five"
+	},
 	"entries": [
-		{"text": "A", "weight": 20}
+		"Golgi!"
 	]
 }

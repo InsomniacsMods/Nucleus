@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.insomniacs.nucleus.Nucleus;
 import net.minecraft.text.Style;
 
 import java.util.List;
