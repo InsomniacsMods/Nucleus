@@ -42,6 +42,8 @@ sourceSets {
 		runtimeClasspath += main.runtimeClasspath
 		compileClasspath += client.compileClasspath
 		runtimeClasspath += client.runtimeClasspath
+		compileClasspath += datagen.compileClasspath
+		runtimeClasspath += datagen.runtimeClasspath
 
 		compileClasspath += testmod.compileClasspath
 		runtimeClasspath += testmod.runtimeClasspath
@@ -61,6 +63,10 @@ loom {
 	}
 
 	runs {
+		datagen {
+			name = "Test Data Generation"
+			source sourceSets.testmod
+		}
 		client {
 			name = "Test Client"
 			source sourceSets.testmod

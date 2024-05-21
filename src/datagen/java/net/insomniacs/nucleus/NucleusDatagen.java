@@ -9,7 +9,7 @@ public class NucleusDatagen implements DataGeneratorEntrypoint {
 
 	@Override
 	public void onInitializeDataGenerator(FabricDataGenerator generator) {
-		new NucleusDataGenerator("minecraft", generator).generate();
+		new NucleusDataGenerator("golgi", generator).generate();
 	}
 
 }

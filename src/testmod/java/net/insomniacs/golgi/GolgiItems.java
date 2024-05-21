@@ -1,6 +1,7 @@
 package net.insomniacs.golgi;
 
 import net.insomniacs.golgi.custom.BreadstickBasket;
+import net.insomniacs.nucleus.api.annotations.Translate;
 import net.insomniacs.nucleus.api.components.FontChangingComponent;
 import net.insomniacs.nucleus.impl.components.NucleusComponents;
 import net.insomniacs.nucleus.api.items.LocationBindingItem;
@@ -15,6 +16,7 @@ public class GolgiItems {
 
     public static void init() {}
 
+    @Translate(name="AAAAAAAA")
     public static final Item REDSTONE_TRACKER = REGISTRY.item(
             "redstone_tracker",
             new LocationBindingItem(new Item.Settings())
