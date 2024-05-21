@@ -1,6 +1,7 @@
 package net.insomniacs.nucleus.api;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.insomniacs.nucleus.impl.NucleusModelProvider;
 import net.insomniacs.nucleus.impl.utility.IDMapper;
 import net.insomniacs.nucleus.impl.NucleusLanguageProvider;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -31,7 +32,7 @@ public record NucleusDataGenerator(String modID, FabricDataGenerator generator, 
         var idMap = IDMapper.mapAnnotations(clazzes);
 
         pack.addProvider((a,b) -> new NucleusLanguageProvider(a,b, this));
-        pack.addProvider((a,b) -> new NucleusLanguageProvider(a,b, this));
+        pack.addProvider((a,b) -> new NucleusModelProvider(a, this));
 
     }
 
