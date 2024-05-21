@@ -1,8 +1,6 @@
-package net.insomniacs.golgi.custom;
+package net.insomniacs.golgi.content.block;
 
-import com.google.common.collect.ImmutableSet;
 import net.minecraft.block.Oxidizable;
-import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Property;
 
 import java.util.*;

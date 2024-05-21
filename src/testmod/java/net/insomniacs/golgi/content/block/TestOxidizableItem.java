@@ -1,6 +1,5 @@
-package net.insomniacs.golgi.custom;
+package net.insomniacs.golgi.content.block;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 
 public class TestOxidizableItem extends BlockItem {

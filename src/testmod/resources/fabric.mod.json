@@ -9,6 +9,9 @@
 		],
 		"client": [
 			"net.insomniacs.golgi.client.GolgiClient"
+		],
+		"fabric-datagen": [
+			"net.insomniacs.golgi.GolgiDatagen"
 		]
 	}
 }

@@ -1,4 +1,4 @@
-package net.insomniacs.golgi.custom;
+package net.insomniacs.golgi.content.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -7,14 +7,10 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BlockStateComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContextParameterSet;
-import net.minecraft.registry.Registries;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.util.Util;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TestOxidizableBlock extends Block {
 

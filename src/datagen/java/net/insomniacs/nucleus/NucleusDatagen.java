@@ -8,8 +8,6 @@ import net.insomniacs.nucleus.impl.NucleusLanguageProvider;
 public class NucleusDatagen implements DataGeneratorEntrypoint {
 
 	@Override
-	public void onInitializeDataGenerator(FabricDataGenerator generator) {
-		new NucleusDataGenerator("golgi", generator).generate();
-	}
+	public void onInitializeDataGenerator(FabricDataGenerator generator) {}
 
 }

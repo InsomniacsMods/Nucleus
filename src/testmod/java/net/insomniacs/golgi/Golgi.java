@@ -1,6 +1,8 @@
 package net.insomniacs.golgi;
 
 import net.fabricmc.api.ModInitializer;
+import net.insomniacs.golgi.registry.GolgiBlocks;
+import net.insomniacs.golgi.registry.GolgiItems;
 import net.insomniacs.golgi.test.ModRegistry;
 import net.insomniacs.nucleus.impl.recipes.NucleusRecipes;
 import net.minecraft.util.Identifier;

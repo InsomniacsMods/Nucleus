@@ -1,4 +1,4 @@
-package net.insomniacs.golgi.custom;
+package net.insomniacs.golgi.content.item;
 
 import net.insomniacs.nucleus.api.items.CustomBundleItem;
 import net.minecraft.item.ItemStack;

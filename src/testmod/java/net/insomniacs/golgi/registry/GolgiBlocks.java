@@ -1,4 +1,4 @@
-package net.insomniacs.golgi;
+package net.insomniacs.golgi.registry;
 
 public class GolgiBlocks {
 
