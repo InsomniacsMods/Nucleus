@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.impl.utility;
+package net.insomniacs.nucleus.datagen.impl.utility;
 
 import net.minecraft.util.Identifier;
 
@@ -6,7 +6,6 @@ import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public final class IDMapper {
 

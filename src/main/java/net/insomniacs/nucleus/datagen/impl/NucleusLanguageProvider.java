@@ -1,10 +1,10 @@
-package net.insomniacs.nucleus.impl;
+package net.insomniacs.nucleus.datagen.impl;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.insomniacs.nucleus.api.NucleusDataGenerator;
-import net.insomniacs.nucleus.api.annotations.Translate;
-import net.insomniacs.nucleus.impl.utility.ProviderUtils;
+import net.insomniacs.nucleus.datagen.api.NucleusDataGenerator;
+import net.insomniacs.nucleus.datagen.api.annotations.Translate;
+import net.insomniacs.nucleus.datagen.impl.utility.ProviderUtils;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -13,9 +13,7 @@ import net.minecraft.util.Util;
 
 import java.util.concurrent.CompletableFuture;
 
-import static net.insomniacs.nucleus.impl.utility.AnnotationUtils.getAnnotation;
-import static net.insomniacs.nucleus.impl.utility.ProviderUtils.streamAllRegistries;
-import static net.minecraft.util.Util.createTranslationKey;
+import static net.insomniacs.nucleus.datagen.impl.utility.AnnotationUtils.getAnnotation;
 
 public class NucleusLanguageProvider extends FabricLanguageProvider {
 

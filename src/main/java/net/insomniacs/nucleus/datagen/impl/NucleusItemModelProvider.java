@@ -1,6 +1,6 @@
-package net.insomniacs.nucleus.impl;
+package net.insomniacs.nucleus.datagen.impl;
 
-import net.insomniacs.nucleus.api.annotations.ItemModel;
+import net.insomniacs.nucleus.datagen.api.annotations.ItemModel;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Model;
 import net.minecraft.data.client.Models;
@@ -11,7 +11,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.ItemTags;
 
-import static net.insomniacs.nucleus.impl.utility.AnnotationUtils.getAnnotation;
+import static net.insomniacs.nucleus.datagen.impl.utility.AnnotationUtils.getAnnotation;
 
 public class NucleusItemModelProvider {
 

@@ -1,6 +1,6 @@
-package net.insomniacs.nucleus.impl.utility;
+package net.insomniacs.nucleus.datagen.impl.utility;
 
-import net.insomniacs.nucleus.api.NucleusDataGenerator;
+import net.insomniacs.nucleus.datagen.api.NucleusDataGenerator;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.entry.RegistryEntry;

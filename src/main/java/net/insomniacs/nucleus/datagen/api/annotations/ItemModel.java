@@ -1,4 +1,4 @@
-package net.insomniacs.nucleus.api.annotations;
+package net.insomniacs.nucleus.datagen.api.annotations;
 
 import net.minecraft.data.client.Models;
 

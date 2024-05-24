@@ -1,9 +1,7 @@
-package net.insomniacs.nucleus;
+package net.insomniacs.nucleus.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.insomniacs.nucleus.api.NucleusDataGenerator;
-import net.insomniacs.nucleus.impl.NucleusLanguageProvider;
 
 public class NucleusDatagen implements DataGeneratorEntrypoint {
 

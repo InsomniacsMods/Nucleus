@@ -1,9 +1,9 @@
-package net.insomniacs.nucleus.api;
+package net.insomniacs.nucleus.datagen.api;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.insomniacs.nucleus.impl.NucleusModelProvider;
-import net.insomniacs.nucleus.impl.utility.IDMapper;
-import net.insomniacs.nucleus.impl.NucleusLanguageProvider;
+import net.insomniacs.nucleus.datagen.impl.NucleusLanguageProvider;
+import net.insomniacs.nucleus.datagen.impl.NucleusModelProvider;
+import net.insomniacs.nucleus.datagen.impl.utility.IDMapper;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 

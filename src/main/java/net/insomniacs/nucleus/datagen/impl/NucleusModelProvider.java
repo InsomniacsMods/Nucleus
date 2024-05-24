@@ -1,9 +1,9 @@
-package net.insomniacs.nucleus.impl;
+package net.insomniacs.nucleus.datagen.impl;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.insomniacs.nucleus.api.NucleusDataGenerator;
-import net.insomniacs.nucleus.impl.utility.ProviderUtils;
+import net.insomniacs.nucleus.datagen.api.NucleusDataGenerator;
+import net.insomniacs.nucleus.datagen.impl.utility.ProviderUtils;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 

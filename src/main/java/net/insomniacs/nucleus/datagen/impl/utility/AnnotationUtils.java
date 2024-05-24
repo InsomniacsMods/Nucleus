@@ -1,9 +1,6 @@
-package net.insomniacs.nucleus.impl.utility;
-
-import net.insomniacs.nucleus.api.annotations.Translate;
+package net.insomniacs.nucleus.datagen.impl.utility;
 
 import java.lang.annotation.Annotation;
-import java.util.Optional;
 
 /**
  * A class that exists to provide a more functional way to use Annotations.

@@ -27,26 +27,13 @@ loom {
 }
 
 sourceSets {
-	datagen {
-		compileClasspath += main.compileClasspath
-		runtimeClasspath += main.runtimeClasspath
-	}
-	main {
-		compileClasspath += datagen.compileClasspath
-		runtimeClasspath += datagen.runtimeClasspath
-		compileClasspath += datagen.output
-		runtimeClasspath += datagen.output
-	}
 	testmod {
+		compileClasspath += testmod.compileClasspath
+		runtimeClasspath += testmod.runtimeClasspath
 		compileClasspath += main.compileClasspath
 		runtimeClasspath += main.runtimeClasspath
 		compileClasspath += client.compileClasspath
 		runtimeClasspath += client.runtimeClasspath
-		compileClasspath += datagen.compileClasspath
-		runtimeClasspath += datagen.runtimeClasspath
-
-		compileClasspath += testmod.compileClasspath
-		runtimeClasspath += testmod.runtimeClasspath
 	}
 }
 
@@ -58,6 +45,8 @@ loom {
 			sourceSet sourceSets.client
 		}
 		"golgi" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
 			sourceSet sourceSets.testmod
 		}
 	}
