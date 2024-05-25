@@ -4,7 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.insomniacs.golgi.registry.GolgiBlocks;
 import net.insomniacs.golgi.registry.GolgiItems;
-import net.insomniacs.nucleus.api.NucleusDataGenerator;
+import net.insomniacs.nucleus.datagen.api.NucleusDataGenerator;
 
 import java.util.List;
 

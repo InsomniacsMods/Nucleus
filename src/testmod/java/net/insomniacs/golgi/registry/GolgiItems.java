@@ -1,7 +1,7 @@
 package net.insomniacs.golgi.registry;
 
 import net.insomniacs.golgi.content.item.BreadstickBasket;
-import net.insomniacs.nucleus.api.annotations.Translate;
+import net.insomniacs.nucleus.datagen.api.annotations.Translate;
 import net.insomniacs.nucleus.api.components.FontChangingComponent;
 import net.insomniacs.nucleus.impl.components.NucleusComponents;
 import net.insomniacs.nucleus.api.items.LocationBindingItem;
