@@ -1,6 +1,7 @@
 package net.insomniacs.golgi.registry;
 
 import net.insomniacs.golgi.content.item.BreadstickBasket;
+import net.insomniacs.nucleus.datagen.api.annotations.DatagenExempt;
 import net.insomniacs.nucleus.datagen.api.annotations.Translate;
 import net.insomniacs.nucleus.api.components.FontChangingComponent;
 import net.insomniacs.nucleus.impl.components.NucleusComponents;
@@ -12,6 +13,7 @@ import net.minecraft.util.Identifier;
 
 import static net.insomniacs.golgi.Golgi.REGISTRY;
 
+@SuppressWarnings("unused")
 public class GolgiItems {
 
     public static void init() {}
@@ -22,6 +24,7 @@ public class GolgiItems {
             new LocationBindingItem(new Item.Settings())
     );
 
+    @DatagenExempt(DatagenExempt.Exemption.TRANSLATE)
     public static final Item ILLAGER_RUNE = REGISTRY.item(
             "illager_rune",
             new SignFontChangingItem(
