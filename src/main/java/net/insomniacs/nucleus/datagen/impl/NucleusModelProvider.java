@@ -54,9 +54,7 @@ public class NucleusModelProvider extends FabricModelProvider {
             var value = (Block) registryEntry.value();
             var blockClazz = value.getClass();
 
-            var exemptionAnnotation = getAnnotation(blockClazz, DatagenExempt.class);
-
-            if (isExempt(exemptionAnnotation)) return;
+            if (isExempt(blockClazz)) return;
 
             blockStateModelGenerator.registerSimpleCubeAll(value);
         });
@@ -70,14 +68,13 @@ public class NucleusModelProvider extends FabricModelProvider {
             var itemClazz = value.getClass();
 
             var modelAnnotation = getAnnotation(itemClazz, ModelOverride.class);
-            var exemptionAnnotation = getAnnotation(itemClazz, DatagenExempt.class);
 
-            if (isExempt(exemptionAnnotation)) return;
+            if (isExempt(itemClazz)) return;
 
             // Optional chaining jumpscare
             var model = getModelFromAnnotation(modelAnnotation)
                     .orElse(getModelFromInheritance(itemClazz)
-                            .orElse(Models.HANDHELD));
+                            .orElse(Models.GENERATED));
 
            itemModelGenerator.register(value, model);
         });
@@ -119,8 +116,9 @@ public class NucleusModelProvider extends FabricModelProvider {
     }
 
     // I *WISH* i could put methods in annotations. That way annotations could just hold this function for me.
-    boolean isExempt(DatagenExempt annotation) {
-        return AnnotationUtils.isExempt(annotation, DatagenExempt.Exemption.MODEL);
+    boolean isExempt(Class<?> clazz) {
+        var exemptionAnnotation = getAnnotation(clazz, DatagenExempt.class);
+        return AnnotationUtils.isExempt(exemptionAnnotation, DatagenExempt.Exemption.MODEL);
     }
 
     // FUCK IT WE BALL, IM MAKING THE MULTI-FOLD THING.
