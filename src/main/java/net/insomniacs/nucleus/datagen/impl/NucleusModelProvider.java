@@ -112,13 +112,10 @@ public class NucleusModelProvider extends FabricModelProvider {
                 .map(classModelMap::get).findFirst();
     }
 
-    // I *WISH* i could put methods in annotations. That way annotations could just hold this function for me.
     boolean isExempt(Class<?> clazz) {
-        var exemptionAnnotation = getAnnotation(clazz, DatagenExempt.class);
-        return AnnotationUtils.isExempt(exemptionAnnotation, DatagenExempt.Exemption.MODEL);
+        return AnnotationUtils.isExempt(clazz, DatagenExempt.Exemption.MODEL);
     }
 
-    // FUCK IT WE BALL, IM MAKING THE MULTI-FOLD THING.
     @SuppressWarnings("unused")
     sealed interface TypeContainer<T> {
         record Single<T>(T element) implements TypeContainer<T> { }

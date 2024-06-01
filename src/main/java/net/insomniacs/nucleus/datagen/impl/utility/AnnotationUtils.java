@@ -15,7 +15,9 @@ public final class AnnotationUtils {
         return entry.getAnnotation(annotation);
     }
 
-    public static boolean isExempt(DatagenExempt annotation, DatagenExempt.Exemption exemption) {
+    public static boolean isExempt(Class<?> clazz, DatagenExempt.Exemption exemption) {
+        var annotation = getAnnotation(clazz, DatagenExempt.class);
+
         for (var entry : annotation.value()) if (entry == exemption || entry == DatagenExempt.Exemption.ALL) {
             return true;
         }
