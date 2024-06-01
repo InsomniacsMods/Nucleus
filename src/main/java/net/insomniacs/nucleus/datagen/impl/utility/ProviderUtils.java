@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class ProviderUtils {
@@ -35,6 +36,16 @@ public class ProviderUtils {
                             .filter(dataGenerator::filterMod)
                             .forEach(entryRef -> entryConsumer.accept(registry, entryRef));
                 });
+    }
+
+    public static <T> void streamRegistry(
+            Registry<T> registry,
+            NucleusDataGenerator dataGenerator,
+            Consumer<RegistryEntry.Reference<T>> entryConsumer
+    ) {
+        registry.streamEntries()
+                .filter(dataGenerator::filterMod)
+                .forEach(entryConsumer);
     }
 
 }

@@ -6,7 +6,7 @@ import net.insomniacs.nucleus.datagen.api.NucleusDataGenerator;
 import net.insomniacs.nucleus.datagen.api.annotations.DatagenExempt;
 import net.insomniacs.nucleus.datagen.api.annotations.ModelOverride;
 import net.insomniacs.nucleus.datagen.impl.utility.AnnotationUtils;
-import net.minecraft.block.Block;
+import net.insomniacs.nucleus.datagen.impl.utility.ProviderUtils;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Model;
@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import static net.insomniacs.nucleus.datagen.impl.utility.AnnotationUtils.getAnnotation;
-import static net.insomniacs.nucleus.datagen.impl.utility.ProviderUtils.streamAllRegistries;
 
 //@ItemModel(model = "CUBE")
 public class NucleusModelProvider extends FabricModelProvider {
@@ -49,9 +48,8 @@ public class NucleusModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        streamAllRegistries(generator, (registry, registryEntry) -> {
-            if (!registry.equals(Registries.BLOCK)) return;
-            var value = (Block) registryEntry.value();
+        ProviderUtils.streamRegistry(Registries.BLOCK, generator, block -> {
+            var value = block.value();
             var blockClazz = value.getClass();
 
             if (isExempt(blockClazz)) return;
@@ -62,9 +60,8 @@ public class NucleusModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        streamAllRegistries(generator, (registry, registryEntry) -> {
-            if (!registry.equals(Registries.ITEM)) return;
-            var value = (Item) registryEntry.value(); // We know it at minimum extends item.
+        ProviderUtils.streamRegistry(Registries.ITEM, generator, item -> {
+            var value = item.value(); // We know it at minimum extends item.
             var itemClazz = value.getClass();
 
             var modelAnnotation = getAnnotation(itemClazz, ModelOverride.class);
@@ -76,7 +73,7 @@ public class NucleusModelProvider extends FabricModelProvider {
                     .orElse(getModelFromInheritance(itemClazz)
                             .orElse(Models.GENERATED));
 
-           itemModelGenerator.register(value, model);
+            itemModelGenerator.register(value, model);
         });
     }
 
