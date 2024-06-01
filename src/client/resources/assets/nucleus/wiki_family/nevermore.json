@@ -1,0 +1,25 @@
+{
+	"id": "nevermore",
+	"namespace": [
+		"manic",
+		"sanguine",
+		"jolted",
+		"far_reaches",
+		"monster_roster",
+		"not_so_simple"
+	],
+	"wikis": [
+		{
+			"article_url": "https://nevermore.wiki.gg/wiki/?search=%s",
+			"mw_api_url": "https://nevermore.wiki.gg/api.php",
+			"random_article": "Special:RandomPage",
+			"language": {
+				"wiki_language": "en",
+				"main": true,
+				"default": "en_us",
+				"regex": "^en_.*",
+				"exclude": null
+			}
+		}
+	]
+}
