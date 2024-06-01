@@ -16,7 +16,7 @@ public class ProviderUtils {
 
     public static <T> String parseID(Identifier id) {
         return Arrays
-                .stream(id.getPath().split("_"))
+                .stream(id.getPath().split("([_.])")) // match either _ or .
                 .map(ProviderUtils::makeUpperCase)
                 .collect(Collectors.joining(" "));
     }

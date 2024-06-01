@@ -39,7 +39,6 @@ public class NucleusLanguageProvider extends FabricLanguageProvider {
 
 		String translationKey = Util.createTranslationKey(registry.getKey().getValue().getPath(), id);
 		String translation;
-		System.out.println(annotation);
 		if (annotation != null) translation = annotation.name();
 		else translation = ProviderUtils.parseID(id);
 

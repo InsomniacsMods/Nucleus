@@ -22,7 +22,7 @@
             "net.insomniacs.nucleus.NucleusClient"
         ],
         "fabric-datagen": [
-            "net.insomniacs.nucleus.NucleusDatagen"
+            "net.insomniacs.nucleus.datagen.NucleusDatagen"
         ]
     },
     "mixins": [
