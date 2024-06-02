@@ -12,6 +12,7 @@ public class GolgiDatagen implements DataGeneratorEntrypoint {
 
 	@Override
 	public void onInitializeDataGenerator(FabricDataGenerator generator) {
+		Golgi.LOGGER.info("FOO");
 		new NucleusDataGenerator("golgi", generator, List.of(GolgiItems.class, GolgiBlocks.class)).generate();
 	}
 

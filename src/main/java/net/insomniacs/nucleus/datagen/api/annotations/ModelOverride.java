@@ -10,5 +10,4 @@ public @interface ModelOverride {
     String model() default "HANDHELD";
     // This is used within the common namespace and client, so I went with the: reflective option.
     Class<?> modelHome() default Models.class;
-    //
 }
