@@ -28,8 +28,6 @@ loom {
 
 sourceSets {
 	testmod {
-		compileClasspath += testmod.compileClasspath
-		runtimeClasspath += testmod.runtimeClasspath
 		compileClasspath += main.compileClasspath
 		runtimeClasspath += main.runtimeClasspath
 		compileClasspath += client.compileClasspath
@@ -45,8 +43,6 @@ loom {
 			sourceSet sourceSets.client
 		}
 		"golgi" {
-			sourceSet sourceSets.main
-			sourceSet sourceSets.client
 			sourceSet sourceSets.testmod
 		}
 	}
