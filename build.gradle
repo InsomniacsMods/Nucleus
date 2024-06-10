@@ -4,7 +4,7 @@ plugins {
 }
 
 version = mod_version
-group = mod_group
+group = maven_group
 base { archivesName = mod_id }
 
 repositories {

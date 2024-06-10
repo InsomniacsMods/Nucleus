@@ -19,24 +19,27 @@ public class GolgiItems {
     public static void init() {}
 
     @Translate(name="AAAAAAAA")
-    public static final Item REDSTONE_TRACKER = REGISTRY.item(
-            "redstone_tracker",
-            new LocationBindingItem(new Item.Settings())
+    public static final Item REDSTONE_TRACKER = REGISTRY.item("redstone_tracker",
+            LocationBindingItem::new
+    );
+
+    private static final FontChangingComponent ILLAGER_RUNE_FONT = new FontChangingComponent(
+            new Identifier("minecraft", "illageralt"),
+            true
     );
 
     @DatagenExempt(DatagenExempt.Exemption.TRANSLATE)
-    public static final Item ILLAGER_RUNE = REGISTRY.item(
-            "illager_rune",
+    public static final Item ILLAGER_RUNE = REGISTRY.item("illager_rune", settings ->
             new SignFontChangingItem(
-                    new Item.Settings()
-                            .component(NucleusComponents.FONT_CHANGING, new FontChangingComponent(new Identifier("minecraft", "illageralt"), true)),
+                    settings.component(NucleusComponents.FONT_CHANGING, ILLAGER_RUNE_FONT),
                     SoundEvents.ITEM_DYE_USE
             )
     );
 
-    public static final Item BREADSTICK_BASKET = REGISTRY.item(
-            "breadstick_basket",
-            new BreadstickBasket(new Item.Settings().unstackable())
+    public static final Item BREADSTICK_BASKET = REGISTRY.item("breadstick_basket", settings ->
+            new BreadstickBasket(
+                    settings.unstackable()
+            )
     );
 
 }

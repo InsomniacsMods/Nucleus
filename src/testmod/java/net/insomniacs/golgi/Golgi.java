@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 import net.insomniacs.golgi.registry.GolgiBlocks;
 import net.insomniacs.golgi.registry.GolgiItems;
 import net.insomniacs.golgi.test.ModRegistry;
+import net.insomniacs.golgi.test.envelope.EnvelopeAPI;
 import net.insomniacs.nucleus.impl.recipes.NucleusRecipes;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -24,6 +25,8 @@ public class Golgi implements ModInitializer {
         GolgiItems.init();
         GolgiBlocks.init();
         NucleusRecipes.init();
+
+        EnvelopeAPI.registerMod(MOD_ID);
     }
 
 }
