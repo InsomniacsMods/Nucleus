@@ -10,5 +10,10 @@
 
     "item.nucleus.soulbound": "Soulbound",
     "item.nucleus.font_changing": "Use %s on a sign to write in %s",
-    "item.nucleus.bound_location": "%s (%d, %d, %d)"
+    "item.nucleus.bound_location": "%s (%d, %d, %d)",
+
+    "options.cape.texture": "Cape Style",
+
+    "cape.nucleus.test": "Test",
+    "cape.nucleus.fancy": "Fancy"
 }

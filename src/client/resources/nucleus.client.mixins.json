@@ -6,10 +6,12 @@
 		"defaultRequire": 1
 	},
 	"client": [
-		"AbstractClientPlayerEntityMixin",
 		"ItemSpriteRenderingMixin",
 		"ItemStackMixin",
 		"MinecraftClientMixin",
-		"TooltipComponentMixin"
+		"TooltipComponentMixin",
+		"custom_capes.AbstractClientPlayerEntityMixin",
+		"custom_capes.GameOptionsMixin",
+		"custom_capes.SkinOptionsScreenMixin"
 	]
 }

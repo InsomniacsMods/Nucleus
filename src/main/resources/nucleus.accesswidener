@@ -1,3 +1,4 @@
 accessWidener v2 named
 
 extendable class net/minecraft/component/type/BundleContentsComponent
+accessible class net/minecraft/client/option/GameOptions$Visitor
