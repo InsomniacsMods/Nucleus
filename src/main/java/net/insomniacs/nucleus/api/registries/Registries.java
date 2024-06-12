@@ -1,9 +1,8 @@
 package net.insomniacs.nucleus.api.registries;
 
+import net.insomniacs.nucleus.Nucleus;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
-
-import static net.insomniacs.nucleus.Nucleus.getLocation;
 
 public class Registries {
 
@@ -16,7 +15,7 @@ public class Registries {
      * @param <T> typeof key
      */
     public static <T> RegistryKey<Registry<T>> getKey(String name) {
-        return RegistryKey.ofRegistry(getLocation(name));
+        return RegistryKey.ofRegistry(Nucleus.of(name));
     }
 
 }

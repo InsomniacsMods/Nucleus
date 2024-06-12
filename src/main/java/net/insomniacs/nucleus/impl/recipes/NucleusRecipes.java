@@ -11,10 +11,10 @@ import net.minecraft.util.Identifier;
 
 public class NucleusRecipes {
 
-	public static final RecipeType<BrewingPotionRecipe> BREWING_POTION = register("brewing_potion", BrewingPotionRecipe.SERIALIZER);
-
-
 	public static void init() {}
+
+
+	public static final RecipeType<BrewingPotionRecipe> BREWING_POTION = register("brewing_potion", BrewingPotionRecipe.SERIALIZER);
 
 
 	static <T extends Recipe<?>> RecipeType<T> register(String path, RecipeSerializer<T> serializer) {

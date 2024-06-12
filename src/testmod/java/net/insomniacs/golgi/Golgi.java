@@ -24,7 +24,6 @@ public class Golgi implements ModInitializer {
     public void onInitialize() {
         GolgiItems.init();
         GolgiBlocks.init();
-        NucleusRecipes.init();
 
         EnvelopeAPI.registerMod(MOD_ID);
     }

@@ -42,9 +42,6 @@ loom {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
-		"golgi" {
-			sourceSet sourceSets.testmod
-		}
 	}
 
 	runs {
