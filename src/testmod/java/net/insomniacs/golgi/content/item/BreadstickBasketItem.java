@@ -4,9 +4,9 @@ import net.insomniacs.nucleus.api.items.CustomBundleItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-public class BreadstickBasket extends CustomBundleItem {
+public class BreadstickBasketItem extends CustomBundleItem {
 
-	public BreadstickBasket(Settings settings) {
+	public BreadstickBasketItem(Settings settings) {
 		super(settings, 127);
 	}
 

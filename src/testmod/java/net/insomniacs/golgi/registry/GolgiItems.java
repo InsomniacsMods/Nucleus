@@ -1,6 +1,6 @@
 package net.insomniacs.golgi.registry;
 
-import net.insomniacs.golgi.content.item.BreadstickBasket;
+import net.insomniacs.golgi.content.item.BreadstickBasketItem;
 import net.insomniacs.nucleus.datagen.api.annotations.DatagenExempt;
 import net.insomniacs.nucleus.datagen.api.annotations.Translate;
 import net.insomniacs.nucleus.api.components.FontChangingComponent;
@@ -37,7 +37,7 @@ public class GolgiItems {
     );
 
     public static final Item BREADSTICK_BASKET = REGISTRY.item("breadstick_basket", settings ->
-            new BreadstickBasket(
+            new BreadstickBasketItem(
                     settings.unstackable()
             )
     );
