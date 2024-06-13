@@ -36,7 +36,7 @@ public class NucleusRecipeProvider extends RecipeProvider {
             var shapelessRecipes = getAnnotation(value, ShapelessRecipes.class);
             var id = new Identifier(item.getIdAsString());
 
-            for (var i = 0; i < shapedRecipes.value().length; i++) {
+            if (shapedRecipes != null) for (var i = 0; i < shapedRecipes.value().length; i++) {
                 var shapedRecipe = shapedRecipes.value()[i];
                 var builder = ShapedRecipeJsonBuilder
                         .create(shapedRecipe.category(), value);
@@ -51,13 +51,15 @@ public class NucleusRecipeProvider extends RecipeProvider {
                     );
                 }
 
+                id = id.withPrefixedPath("shaped/");
+
                 if (shapedRecipes.value().length > 1)
                     builder.offerTo(exporter, id.withSuffixedPath("_" + i));
                 else
                     builder.offerTo(exporter);
             }
 
-            for (int i = 0; i < shapelessRecipes.value().length; i++) {
+            if (shapelessRecipes != null) for (int i = 0; i < shapelessRecipes.value().length; i++) {
                 var shapelessRecipe = shapelessRecipes.value()[i];
                 var builder = ShapelessRecipeJsonBuilder
                         .create(shapelessRecipe.category(), value);
@@ -72,8 +74,7 @@ public class NucleusRecipeProvider extends RecipeProvider {
                     );
                 }
 
-                if (shapedRecipes.value().length > 1)
-                    id.withPrefixedPath("shapeless_");
+                id = id.withPrefixedPath("shapeless/");
 
                 if (shapelessRecipes.value().length > 1)
                     builder.offerTo(exporter, id.withSuffixedPath("_" + i));

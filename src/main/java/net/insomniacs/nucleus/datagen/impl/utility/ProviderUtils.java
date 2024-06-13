@@ -53,13 +53,18 @@ public class ProviderUtils {
     @SuppressWarnings("unchecked")
     public static <T> Optional<? extends Registry<T>> getRegistry(T clazzType) {
         return Registries.REGISTRIES
-            .streamEntries().map(RegistryEntry.Reference::value)
-            .filter(registry -> {
-                var inputClazz = clazzType.getClass();
-                var parameterClazz = (Class<?>)
-                        ((ParameterizedType) registry.getClass().getGenericSuperclass())
-                                .getActualTypeArguments()[0];
-                return parameterClazz.equals(inputClazz) || parameterClazz.isAssignableFrom(inputClazz);
-        }).map(registryCapture -> (Registry<T>) registryCapture).findFirst(); // Give the compiler a middle finger. I know what this should be and i am RIGHT.
+                .streamEntries().map(RegistryEntry.Reference::value)
+                .filter(registry -> {
+                    var inputClazz = clazzType.getClass();
+                    var superClazz = registry.getClass().getGenericSuperclass();
+                    if (superClazz instanceof Registry<?> registryClazz) {
+                        var parameterClazz = (Class<?>)((ParameterizedType)registryClazz).getActualTypeArguments()[0].getClass();
+                        return parameterClazz.equals(inputClazz) || parameterClazz.isAssignableFrom(inputClazz);
+                    }
+                    return false;
+                })
+                .map(registryCapture -> (Registry<T>) registryCapture)
+                .findFirst(); // Give the compiler a middle finger. I know what this should be and i am RIGHT.
     }
+
 }
