@@ -1,5 +1,6 @@
 package net.insomniacs.nucleus.datagen.impl;
 
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.insomniacs.nucleus.datagen.api.NucleusDataGenerator;
 import net.insomniacs.nucleus.datagen.impl.annotations.ShapedRecipes;
 import net.insomniacs.nucleus.datagen.impl.annotations.ShapelessRecipes;
@@ -24,7 +25,6 @@ public class NucleusRecipeProvider extends RecipeProvider {
 
     public NucleusRecipeProvider(DataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookupFuture, NucleusDataGenerator generator) {
         super(output, registryLookupFuture);
-
         this.dataGenerator = generator;
     }
 
@@ -43,7 +43,13 @@ public class NucleusRecipeProvider extends RecipeProvider {
                 var patterns = shapedRecipe.pattern().split("\n");
 
                 for (var pattern : patterns) builder.pattern(pattern);
-                for (var pair : getPairs(shapedRecipe.inputs())) builder.input(pair.input(), pair.item());
+                for (var pair : getPairs(shapedRecipe.inputs())) {
+                    builder.input(pair.input(), pair.item());
+                    builder.criterion(
+                            FabricRecipeProvider.getRecipeName(pair.item),
+                            FabricRecipeProvider.conditionsFromItem(pair.item)
+                    );
+                }
 
                 if (shapedRecipes.value().length > 1)
                     builder.offerTo(exporter, id.withSuffixedPath("_" + i));
@@ -58,7 +64,12 @@ public class NucleusRecipeProvider extends RecipeProvider {
 
                 for (var itemId : shapelessRecipe.input().split(",")) {
                     var itemInput = Registries.ITEM.get(new Identifier(itemId));
+
                     builder.input(itemInput);
+                    builder.criterion(
+                            FabricRecipeProvider.getRecipeName(itemInput),
+                            FabricRecipeProvider.conditionsFromItem(itemInput)
+                    );
                 }
 
                 if (shapedRecipes.value().length > 1)
