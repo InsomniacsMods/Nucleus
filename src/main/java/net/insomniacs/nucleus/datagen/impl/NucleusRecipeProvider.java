@@ -46,7 +46,7 @@ public class NucleusRecipeProvider extends RecipeProvider {
                 for (var pair : getPairs(shapedRecipe.inputs())) {
                     builder.input(pair.input(), pair.item());
                     builder.criterion(
-                            FabricRecipeProvider.getRecipeName(pair.item),
+                            FabricRecipeProvider.hasItem(pair.item),
                             FabricRecipeProvider.conditionsFromItem(pair.item)
                     );
                 }
@@ -67,7 +67,7 @@ public class NucleusRecipeProvider extends RecipeProvider {
 
                     builder.input(itemInput);
                     builder.criterion(
-                            FabricRecipeProvider.getRecipeName(itemInput),
+                            FabricRecipeProvider.hasItem(itemInput),
                             FabricRecipeProvider.conditionsFromItem(itemInput)
                     );
                 }
