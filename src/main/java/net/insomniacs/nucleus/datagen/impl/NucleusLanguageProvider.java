@@ -29,8 +29,7 @@ public class NucleusLanguageProvider extends FabricLanguageProvider {
 			var value = entry.value();
 			var id = new Identifier(entry.getIdAsString());
 
-			var entryClazz = value.getClass();
-			var annotation = getAnnotation(entryClazz, Translate.class);
+			var annotation = getAnnotation(value, Translate.class);
 
 			String translationKey = Util.createTranslationKey(registry.getKey().getValue().getPath(), id);
 			String translation;
