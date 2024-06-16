@@ -14,8 +14,8 @@ import java.util.function.UnaryOperator;
 
 public class NucleusComponents {
 
-	public static final DataComponentType<BundleComponent> BUNDLE = register("bundle",
-			BundleComponent.CODEC
+	public static final DataComponentType<NucleusBundleComponent> BUNDLE = register("bundle",
+			NucleusBundleComponent.CODEC
 	);
 
 	public static final DataComponentType<SoulboundComponent> SOULBOUND = register("soulbound",

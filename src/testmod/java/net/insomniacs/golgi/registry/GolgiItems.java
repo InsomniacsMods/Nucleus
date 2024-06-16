@@ -38,7 +38,8 @@ public class GolgiItems {
 
     public static final Item BREADSTICK_BASKET = REGISTRY.item("breadstick_basket", settings ->
             new BreadstickBasketItem(
-                    settings.unstackable()
+                    settings.unstackable(),
+                    127
             )
     );
 

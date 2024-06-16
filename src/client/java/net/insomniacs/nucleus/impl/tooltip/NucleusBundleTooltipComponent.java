@@ -1,6 +1,6 @@
 package net.insomniacs.nucleus.impl.tooltip;
 
-import net.insomniacs.nucleus.api.components.BundleComponent;
+import net.insomniacs.nucleus.api.components.NucleusBundleComponent;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.List;
 
-public class CustomBundleTooltipComponent implements TooltipComponent {
+public class NucleusBundleTooltipComponent implements TooltipComponent {
 
 	public static final Identifier BACKGROUND_TEXTURE = new Identifier("container/bundle/background");
 
@@ -18,7 +18,7 @@ public class CustomBundleTooltipComponent implements TooltipComponent {
 	public int size;
 	public boolean fullCapacity;
 
-	public CustomBundleTooltipComponent(BundleComponent component) {
+	public NucleusBundleTooltipComponent(NucleusBundleComponent component) {
 		this.contents = component.contents();
 		this.size = contents.size();
 		this.fullCapacity = component.occupancy() == component.capacity();
@@ -55,23 +55,21 @@ public class CustomBundleTooltipComponent implements TooltipComponent {
 		int columns = this.getColumns();
 		int rows = this.getRows();
 		context.drawGuiTexture(BACKGROUND_TEXTURE, x, y, this.getColumnsWidth(), this.getRowsHeight());
-		boolean block = size > 1;
 
 		int i = 0;
 		for(int r = 0; r < rows; ++r) {
 			for(int c = 0; c < columns; ++c) {
 				int c1 = x + c * 18 + 1;
 				int r1 = y + r * 20 + 1;
-				this.drawSlot(c1, r1, i++, block, context, textRenderer);
+				this.drawSlot(c1, r1, i++, context, textRenderer);
 			}
 		}
 
 	}
 
-	public void drawSlot(int x, int y, int index, boolean shouldBlock, DrawContext context, TextRenderer textRenderer) {
-		// TODO make the BLOCKED sprite only render while at full capacity
+	public void drawSlot(int x, int y, int index, DrawContext context, TextRenderer textRenderer) {
 		if (index >= size) {
-			this.draw(context, x, y, shouldBlock ? SlotSprite.BLOCKED : SlotSprite.SLOT);
+			this.draw(context, x, y, fullCapacity ? SlotSprite.BLOCKED : SlotSprite.SLOT);
 			return;
 		}
 		ItemStack stack = contents.get(index);

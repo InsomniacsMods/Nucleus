@@ -3,7 +3,7 @@ package net.insomniacs.nucleus;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.insomniacs.nucleus.api.crosshair.CrosshairTextureCallback;
-import net.insomniacs.nucleus.api.items.CustomBundleItem;
+import net.insomniacs.nucleus.api.items.NucleusBundleItem;
 import net.insomniacs.nucleus.api.items.LocationBindingItem;
 import net.insomniacs.nucleus.api.tooltipLoader.ModTooltipLoader;
 import net.insomniacs.nucleus.impl.NucleusItemPredicates;
@@ -22,7 +22,7 @@ public class NucleusClient implements ClientModInitializer {
 	public void onInitializeClient() {
 
 		NucleusItemPredicates.addProvider(LocationBindingItem.class, "has_location", LocationBindingItem::getLocationPredicate);
-		NucleusItemPredicates.addProvider(CustomBundleItem.class, "filled", CustomBundleItem::getOccupancyPredicate);
+		NucleusItemPredicates.addProvider(NucleusBundleItem.class, "filled", NucleusBundleItem::getOccupancyPredicate);
 
 		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(SplashTextLoader.INSTANCE);
 		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(ModTooltipLoader.INSTANCE);

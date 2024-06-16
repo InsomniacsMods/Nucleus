@@ -1,12 +1,14 @@
 package net.insomniacs.nucleus.api.items;
 
-import net.insomniacs.nucleus.api.components.BundleComponent;
+import net.insomniacs.nucleus.api.components.NucleusBundleComponent;
 import net.insomniacs.nucleus.api.content.NucleusSoundEvents;
+import net.insomniacs.nucleus.api.content.NucleusTags;
 import net.insomniacs.nucleus.api.sound.BundleSoundGroup;
 import net.insomniacs.nucleus.impl.components.NucleusComponents;
 import net.minecraft.client.item.TooltipData;
 import net.minecraft.client.item.TooltipType;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.BundleContentsComponent;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,45 +21,47 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.ClickType;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
 
-public abstract class CustomBundleItem extends BundleItem {
+public abstract class NucleusBundleItem extends BundleItem {
 
-	public BundleSoundGroup soundGroup;
-	@Nullable public Integer defaultCapacity;
+	private final BundleSoundGroup soundGroup;
+	private final int defaultCapacity;
 
-	public CustomBundleItem(Settings settings, @Nullable Integer defaultCapacity, BundleSoundGroup soundGroup) {
+	public NucleusBundleItem(Settings settings, int defaultCapacity, BundleSoundGroup soundGroup) {
 		super(settings);
 		this.soundGroup = soundGroup;
 		this.defaultCapacity = defaultCapacity;
 	}
 
-	public CustomBundleItem(Settings settings, BundleSoundGroup soundGroup) {
-		this(settings, null, soundGroup);
-	}
-
-	public CustomBundleItem(Settings settings, int defaultCapacity) {
+	public NucleusBundleItem(Settings settings, int defaultCapacity) {
 		this(settings, defaultCapacity, NucleusSoundEvents.BUNDLE_ITEM);
 	}
 
-	public CustomBundleItem(Settings settings) {
-		this(settings, null, NucleusSoundEvents.BUNDLE_ITEM);
+
+	public static NucleusBundleComponent getComponent(ItemStack stack) {
+		int capacity = 64;
+		if (stack.getItem() instanceof NucleusBundleItem bundle) capacity = bundle.defaultCapacity;
+		return stack.getOrDefault(NucleusComponents.BUNDLE, NucleusBundleComponent.empty(capacity));
 	}
 
-	public static BundleComponent getComponent(ItemStack stack) {
-		return stack.getOrDefault(NucleusComponents.BUNDLE, BundleComponent.EMPTY);
+
+	public int getItemOccupancy(ItemStack stack) {
+		return stack.getCount() * (64 / stack.getMaxCount());
 	}
 
-	public abstract int getItemOccupancy(ItemStack stack);
+	public boolean acceptsItem(ItemStack stack) {
+		if (!stack.getItem().canBeNested()) return false;
+		if (stack.isIn(NucleusTags.CANNOT_BE_INSERTED_INTO_BUNDLES)) return false;
+		return !stack.isEmpty();
+	}
 
-	public abstract boolean acceptsItem(ItemStack stack);
 
 	public static float getOccupancyPredicate(ItemStack stack, World w, LivingEntity e, int s) {
 		var component = getComponent(stack);
@@ -74,8 +78,11 @@ public abstract class CustomBundleItem extends BundleItem {
 		ItemStack clickedStack = slot.getStack();
 		var builder = component.modify(this);
 
-		if (stack.isEmpty()) removeFromBundle(player, builder, slot);
-		else addToBundle(player, builder, clickedStack);
+		if (clickedStack.isEmpty()) removeFromBundle(player, builder, slot);
+		else {
+			ItemStack leftoverStack = addToBundle(player, builder, clickedStack);
+			slot.insertStack(leftoverStack);
+		}
 
 		builder.updateBundle(stack);
 		return true;
@@ -90,8 +97,10 @@ public abstract class CustomBundleItem extends BundleItem {
 		var builder = component.modify(this);
 
 
-		if (clickedStack.isEmpty()) removeToCursor(player, builder, cursor);
-		else addToBundle(player, builder, clickedStack);
+		if (clickedStack.isEmpty()) putInSlot(player, builder, cursor);
+		else {
+			addToBundle(player, builder, clickedStack);
+		}
 
 		builder.updateBundle(stack);
 		return true;
@@ -117,18 +126,17 @@ public abstract class CustomBundleItem extends BundleItem {
 	public void onItemEntityDestroyed(ItemEntity entity) {
 		var component = getComponent(entity.getStack());
 		if (component.isEmpty()) return;
-		entity.getStack().set(NucleusComponents.BUNDLE, BundleComponent.EMPTY);
+		entity.getStack().set(NucleusComponents.BUNDLE, NucleusBundleComponent.EMPTY);
 		ItemUsage.spawnItemContents(entity, component.iterateCopy());
 	}
 
-	public void addToBundle(PlayerEntity player, BundleComponent.Builder builder, ItemStack stack) {
-		stack = builder.addItem(stack);
-		if (stack.isEmpty()) return;
-
+	public ItemStack addToBundle(PlayerEntity player, NucleusBundleComponent.Builder builder, ItemStack stack) {
 		soundGroup.playAddSound(player);
+		var result = builder.addItem(stack);
+		return result;
 	}
 
-	public void removeFromBundle(PlayerEntity player, BundleComponent.Builder builder, Slot slot) {
+	public void removeFromBundle(PlayerEntity player, NucleusBundleComponent.Builder builder, Slot slot) {
 		ItemStack removedStack = builder.removeFirst();
 		soundGroup.playRemoveSound(player);
 		if (removedStack.isEmpty()) return;
@@ -137,7 +145,7 @@ public abstract class CustomBundleItem extends BundleItem {
 		builder.addItem(addedItem);
 	}
 
-	public void removeToCursor(PlayerEntity player, BundleComponent.Builder builder, StackReference cursor) {
+	public void putInSlot(PlayerEntity player, NucleusBundleComponent.Builder builder, StackReference cursor) {
 		ItemStack removedStack = builder.removeFirst();
 		if (removedStack == null) return;
 
@@ -153,10 +161,17 @@ public abstract class CustomBundleItem extends BundleItem {
 		return !component.isEmpty();
 	}
 
+//	@Override
+//	public int getItemBarStep(ItemStack stack) {
+//		var component = getComponent(stack);
+//		int step = (component.occupancy() / component.capacity()) * 13;
+//		return Math.min(step, 13);
+//	}
+
 	@Override
 	public int getItemBarStep(ItemStack stack) {
 		var component = getComponent(stack);
-		int step = (component.occupancy() / component.capacity()) * 13;
+		int step = (int)(component.getBundleOccupancy() * 13);
 		return Math.min(step, 13);
 	}
 
@@ -166,18 +181,13 @@ public abstract class CustomBundleItem extends BundleItem {
 		if (stack.contains(DataComponentTypes.HIDE_ADDITIONAL_TOOLTIP)) return Optional.empty();
 
 		var component = getComponent(stack);
-		return Optional.ofNullable(component).map(CustomBundleTooltipData::new);
+		return Optional.ofNullable(component).map(NucleusBundleTooltipData::new);
 	}
 
 	@Override
 	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
 		var component = getComponent(stack);
-		Text text = Text
-				.translatable("item.minecraft.bundle.fullness", component.occupancy(), component.capacity())
-				.formatted(Formatting.GRAY);
-		tooltip.add(text);
+		tooltip.add(component.getTooltip());
 	}
-
-	//
 
 }

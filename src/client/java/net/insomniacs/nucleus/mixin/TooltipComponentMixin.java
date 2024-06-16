@@ -1,7 +1,7 @@
 package net.insomniacs.nucleus.mixin;
 
-import net.insomniacs.nucleus.api.items.CustomBundleTooltipData;
-import net.insomniacs.nucleus.impl.tooltip.CustomBundleTooltipComponent;
+import net.insomniacs.nucleus.api.items.NucleusBundleTooltipData;
+import net.insomniacs.nucleus.impl.tooltip.NucleusBundleTooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.item.TooltipData;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,8 +14,8 @@ public interface TooltipComponentMixin {
 
 	@Inject(method = "of(Lnet/minecraft/client/item/TooltipData;)Lnet/minecraft/client/gui/tooltip/TooltipComponent;", at = @At("HEAD"), cancellable = true)
 	private static void returnCustomComponent(TooltipData tooltipData, CallbackInfoReturnable<TooltipComponent> cir) {
-		if (tooltipData instanceof CustomBundleTooltipData data) {
-			var result = new CustomBundleTooltipComponent(data.component());
+		if (tooltipData instanceof NucleusBundleTooltipData data) {
+			var result = new NucleusBundleTooltipComponent(data.component());
 			cir.setReturnValue(result);
 		}
 	}
