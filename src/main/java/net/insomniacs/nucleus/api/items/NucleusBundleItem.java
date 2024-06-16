@@ -19,8 +19,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.stat.Stats;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.ClickType;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.MathHelper;
@@ -187,7 +189,12 @@ public abstract class NucleusBundleItem extends BundleItem {
 	@Override
 	public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
 		var component = getComponent(stack);
-		tooltip.add(component.getTooltip());
+		tooltip.add(getTooltip(component));
+	}
+
+	public MutableText getTooltip(NucleusBundleComponent component) {
+		return Text.translatable("item.minecraft.bundle.fullness", component.occupancy(), component.capacity())
+				.formatted(Formatting.GRAY);
 	}
 
 }

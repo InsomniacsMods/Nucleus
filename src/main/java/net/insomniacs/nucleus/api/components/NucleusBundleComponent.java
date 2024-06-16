@@ -185,9 +185,4 @@ public record NucleusBundleComponent(
 		return this.getClass().getName() + toJson().getAsString();
 	}
 
-	public MutableText getTooltip() {
-		return Text.translatable("item.minecraft.bundle.fullness", occupancy, capacity)
-				.formatted(Formatting.GRAY);
-	}
-
 }
