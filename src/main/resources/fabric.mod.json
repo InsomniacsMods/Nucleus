@@ -32,7 +32,7 @@
         "loom:injected_interfaces": {
             "net/minecraft/class_1792\u0024class_1793": [ "net/insomniacs/nucleus/asm/NucleusItemSettings" ],
             "net/minecraft/class_1792": [ "net/insomniacs/nucleus/asm/NucleusItem" ],
-            "net/minecraft/class_1738": [ "net/insomniacs/sanguine/asm/NucleusArmorItem" ]
+            "net/minecraft/class_1738": [ "net/insomniacs/nucleus/asm/NucleusArmorItem" ]
         }
     },
 
