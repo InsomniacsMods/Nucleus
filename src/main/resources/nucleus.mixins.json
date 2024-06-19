@@ -10,6 +10,7 @@
 		"ItemStackMixin",
 		"LeavesCollisionMixins$LeavesBlockMixin",
 		"LeavesCollisionMixins$RavagerEntityMixin",
+		"PlayerEntityMixin",
 		"PlayerInventoryMixin"
 	]
 }
