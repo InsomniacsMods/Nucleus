@@ -15,15 +15,9 @@
     "license": "CC0-1.0",
 
     "entrypoints": {
-        "main": [
-            "net.insomniacs.nucleus.Nucleus"
-        ],
-        "client": [
-            "net.insomniacs.nucleus.NucleusClient"
-        ],
-        "fabric-datagen": [
-            "net.insomniacs.nucleus.datagen.NucleusDatagen"
-        ]
+        "main": [ "net.insomniacs.nucleus.Nucleus" ],
+        "client": [ "net.insomniacs.nucleus.NucleusClient" ],
+        "fabric-datagen": [ "net.insomniacs.nucleus.datagen.NucleusDatagen" ]
     },
     "mixins": [
         "nucleus.mixins.json",
@@ -36,8 +30,9 @@
 
     "custom": {
         "loom:injected_interfaces": {
-            "net/minecraft/class_1792\u0024class_1793": ["net/insomniacs/nucleus/asm/NucleusItemSettings"],
-            "net/minecraft/class_1792": ["net/insomniacs/nucleus/asm/NucleusItem"]
+            "net/minecraft/class_1792\u0024class_1793": [ "net/insomniacs/nucleus/asm/NucleusItemSettings" ],
+            "net/minecraft/class_1792": [ "net/insomniacs/nucleus/asm/NucleusItem" ],
+            "net/minecraft/class_1738": [ "net/insomniacs/sanguine/asm/NucleusArmorItem" ]
         }
     },
 

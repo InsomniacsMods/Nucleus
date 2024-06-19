@@ -18,7 +18,7 @@ import java.util.function.UnaryOperator;
 
 public class AdvancedSplashText implements SplashText {
 
-    private MutableText text;
+    private MutableText rawText;
     private final int weight;
     private final String mod;
     private final LocalDate date;
@@ -29,7 +29,7 @@ public class AdvancedSplashText implements SplashText {
             String mod,
             LocalDate date
     ) {
-        this.text = TextProcessor.process(text);
+        this.rawText = TextProcessor.process(text);
         this.weight = weight;
         this.mod = mod;
         this.date = date;
@@ -53,11 +53,11 @@ public class AdvancedSplashText implements SplashText {
     }
 
     public void modifyText(UnaryOperator<MutableText> operator) {
-        this.text = operator.apply(this.text);
+        this.rawText = operator.apply(this.rawText);
     }
 
     public static final Codec<AdvancedSplashText> ADVANCED_CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            TextCodecs.CODEC.fieldOf("text").forGetter(null),
+            TextCodecs.CODEC.fieldOf("raw").forGetter(null),
             Codecs.rangedInt(1, 128).optionalFieldOf("weight", 1).forGetter(null),
             Codec.STRING.optionalFieldOf("mod", "minecraft").forGetter(null),
             DateUtils.CODEC.optionalFieldOf("date", DateUtils.today()).forGetter(null)
@@ -65,18 +65,18 @@ public class AdvancedSplashText implements SplashText {
 
     @Override
     public SplashTextRenderer renderer() {
-        return new AdvancedSplashTextRenderer(this.text);
+        return new AdvancedSplashTextRenderer(this.rawText);
     }
 
     @Override
     public SplashText setStyle(Style style) {
-        modifyText(text -> text.setStyle(style));
+        modifyText(text -> text.fillStyle(style));
         return this;
     }
 
     @Override
     public String toString() {
-        return "AdvancedSplashText["+this.text.getString()+"]";
+        return "AdvancedSplashText["+this.rawText.getString()+"]";
     }
 
 }

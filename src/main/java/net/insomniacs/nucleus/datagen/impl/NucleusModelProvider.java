@@ -70,10 +70,9 @@ public class NucleusModelProvider extends FabricModelProvider {
 
             if (isExempt(blockClazz)) return;
 
-
-            var state = blockStateMap.get(blockClazz);
-            if (state == null) return;
-            state.generateModel(blockStateModelGenerator, value, id);
+//            var state = blockStateMap.get(blockClazz);
+//            if (state == null) return;
+//            state.generateModel(blockStateModelGenerator, value, id);
 
             blockStateModelGenerator.registerSimpleCubeAll(value);
         });
