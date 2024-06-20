@@ -5,10 +5,7 @@ import net.insomniacs.nucleus.api.content.NucleusSoundEvents;
 import net.insomniacs.nucleus.api.content.NucleusTags;
 import net.insomniacs.nucleus.api.sound.BundleSoundGroup;
 import net.insomniacs.nucleus.impl.components.NucleusComponents;
-import net.minecraft.client.item.TooltipData;
-import net.minecraft.client.item.TooltipType;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.BundleContentsComponent;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,6 +14,8 @@ import net.minecraft.item.BundleItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsage;
+import net.minecraft.item.tooltip.TooltipData;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.MutableText;
@@ -25,7 +24,6 @@ import net.minecraft.util.ClickType;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -163,19 +161,14 @@ public abstract class NucleusBundleItem extends BundleItem {
 		return !component.isEmpty();
 	}
 
-//	@Override
-//	public int getItemBarStep(ItemStack stack) {
-//		var component = getComponent(stack);
-//		int step = (component.occupancy() / component.capacity()) * 13;
-//		return Math.min(step, 13);
-//	}
-
 	@Override
 	public int getItemBarStep(ItemStack stack) {
 		var component = getComponent(stack);
 		int step = (int)(component.getBundleOccupancy() * 13);
 		return Math.min(step, 13);
 	}
+
+
 
 	@Override
 	public Optional<TooltipData> getTooltipData(ItemStack stack) {

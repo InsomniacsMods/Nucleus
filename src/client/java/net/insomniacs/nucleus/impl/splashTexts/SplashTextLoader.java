@@ -39,7 +39,7 @@ public class SplashTextLoader implements SimpleFileLoader {
 
 
     private static final String NEW_SPLASHES_FILE = "texts/splashes.json";
-    private static final Identifier OLD_SPLASHES_FILE = new Identifier("minecraft", "texts/splashes.txt");
+    private static final Identifier OLD_SPLASHES_FILE = Identifier.of("minecraft", "texts/splashes.txt");
 
     @Override
     public void init(SimpleFileLoader.DataFileLoader loader, ResourceManager manager) {

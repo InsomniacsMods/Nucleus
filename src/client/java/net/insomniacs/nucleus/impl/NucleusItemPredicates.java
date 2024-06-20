@@ -31,7 +31,7 @@ public class NucleusItemPredicates {
                 .filter(itemClass -> itemClass.isAssignableFrom(item.getClass()))
                 .map(ITEM_PREDICATES::get)
                 .forEach(map -> map.forEach(
-                        (path, provider) -> ModelPredicateProviderRegistry.register(item, new Identifier(path), provider)
+                        (path, provider) -> ModelPredicateProviderRegistry.register(item, Identifier.of(path), provider)
                 ));
 
     }

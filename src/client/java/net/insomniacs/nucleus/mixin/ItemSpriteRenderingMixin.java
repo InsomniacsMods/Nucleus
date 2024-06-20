@@ -50,7 +50,7 @@ public class ItemSpriteRenderingMixin {
         if (registryKey.isEmpty()) return null;
         Identifier location = registryKey.get().getRegistry();
         if (render2D) {
-            return new ModelIdentifier(location.getNamespace(), location.getPath(), "_inventory");
+            return new ModelIdentifier(location, "_inventory");
         } else {
             return null;
         }

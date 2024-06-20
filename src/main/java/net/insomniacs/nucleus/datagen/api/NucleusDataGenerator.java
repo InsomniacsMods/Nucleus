@@ -45,7 +45,7 @@ public record NucleusDataGenerator(String modID, FabricDataGenerator generator, 
     }
 
     public boolean filterMod(RegistryEntry.Reference<?> registryEntry) {
-        var id = new Identifier(registryEntry.getIdAsString());
+        var id = Identifier.of(registryEntry.getIdAsString());
         return Objects.equals(id.getNamespace(), modID);
     }
 

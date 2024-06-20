@@ -4,17 +4,15 @@ import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.ModMetadata;
-import net.insomniacs.nucleus.Nucleus;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.component.DataComponentType;
+import net.minecraft.component.ComponentType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.state.StateManager;
 import net.minecraft.util.Identifier;
 
 import java.util.function.Function;
@@ -33,7 +31,7 @@ public class ModRegistry {
 	}
 
 	private Identifier of(String path) {
-		return new Identifier(id, path);
+		return Identifier.of(id, path);
 	}
 
 
@@ -86,19 +84,19 @@ public class ModRegistry {
 
 	// Component
 
-	public <T> DataComponentType<T> component(String id, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
+	public <T> ComponentType<T> component(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
 		return Registry.register(
 				Registries.DATA_COMPONENT_TYPE,
 				of(id),
-				builderOperator.apply(DataComponentType.builder()).cache().build()
+				builderOperator.apply(ComponentType.builder()).cache().build()
 		);
 	}
 
-	public <T> DataComponentType<T> component(String id, Codec<T> codec, PacketCodec<ByteBuf, T> packetCodec) {
+	public <T> ComponentType<T> component(String id, Codec<T> codec, PacketCodec<ByteBuf, T> packetCodec) {
 		return component(id, builder -> builder.codec(codec).packetCodec(packetCodec));
 	}
 
-	public <T> DataComponentType<T> component(String id, Codec<T> codec) {
+	public <T> ComponentType<T> component(String id, Codec<T> codec) {
 		return component(id, codec, PacketCodecs.codec(codec));
 	}
 

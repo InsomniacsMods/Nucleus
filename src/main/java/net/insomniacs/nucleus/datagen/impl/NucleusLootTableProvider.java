@@ -35,7 +35,7 @@ public class NucleusLootTableProvider extends FabricBlockLootTableProvider {
             var dropsAnnotation = getAnnotation(value, Drops.class);
 
             if (dropsAnnotation != null) {
-                var droppedID = new Identifier(dropsAnnotation.item());
+                var droppedID = Identifier.of(dropsAnnotation.item());
                 var droppedItem = Registries.ITEM.get(droppedID);
 
                 addDrop(value, drops(droppedItem));

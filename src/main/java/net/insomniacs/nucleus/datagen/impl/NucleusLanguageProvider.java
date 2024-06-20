@@ -27,7 +27,7 @@ public class NucleusLanguageProvider extends FabricLanguageProvider {
 	public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder builder) {
 		ProviderUtils.streamAllRegistries(generator, (registry, entry) -> {
 			var value = entry.value();
-			var id = new Identifier(entry.getIdAsString());
+			var id = Identifier.of(entry.getIdAsString());
 
 			var annotation = getAnnotation(value, Translate.class);
 

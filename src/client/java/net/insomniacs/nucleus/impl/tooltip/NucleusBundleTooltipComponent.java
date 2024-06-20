@@ -12,7 +12,7 @@ import java.util.List;
 
 public class NucleusBundleTooltipComponent implements TooltipComponent {
 
-	public static final Identifier BACKGROUND_TEXTURE = new Identifier("container/bundle/background");
+	public static final Identifier BACKGROUND_TEXTURE = Identifier.of("container/bundle/background");
 
 	public List<ItemStack> contents;
 	public int size;
@@ -90,7 +90,7 @@ public class NucleusBundleTooltipComponent implements TooltipComponent {
 		public final Identifier texture;
 
 		SlotSprite(String path) {
-			this.texture = new Identifier(path);
+			this.texture = Identifier.of(path);
 		}
 	}
 

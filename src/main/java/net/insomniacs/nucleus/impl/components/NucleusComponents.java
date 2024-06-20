@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;
 import net.insomniacs.nucleus.Nucleus;
 import net.insomniacs.nucleus.api.components.*;
-import net.minecraft.component.DataComponentType;
+import net.minecraft.component.ComponentType;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.registry.Registries;
@@ -14,23 +14,23 @@ import java.util.function.UnaryOperator;
 
 public class NucleusComponents {
 
-	public static final DataComponentType<NucleusBundleComponent> BUNDLE = register("bundle",
+	public static final ComponentType<NucleusBundleComponent> BUNDLE = register("bundle",
 			NucleusBundleComponent.CODEC
 	);
 
-	public static final DataComponentType<SoulboundComponent> SOULBOUND = register("soulbound",
+	public static final ComponentType<SoulboundComponent> SOULBOUND = register("soulbound",
 			SoulboundComponent.CODEC
 	);
 
-	public static final DataComponentType<LocationBindingComponent> BOUND_LOCATION = register("bound_location",
+	public static final ComponentType<LocationBindingComponent> BOUND_LOCATION = register("bound_location",
 			LocationBindingComponent.CODEC
 	);
 
-	public static final DataComponentType<FontChangingComponent> FONT_CHANGING = register("font_changing",
+	public static final ComponentType<FontChangingComponent> FONT_CHANGING = register("font_changing",
 			FontChangingComponent.CODEC
 	);
 
-	public static final DataComponentType<InfoTooltipComponent> INFO = register("info",
+	public static final ComponentType<InfoTooltipComponent> INFO = register("info",
 			InfoTooltipComponent.CODEC
 	);
 
@@ -44,19 +44,19 @@ public class NucleusComponents {
 	}
 
 
-	public static <T> DataComponentType<T> register(String id, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
+	public static <T> ComponentType<T> register(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
 		return Registry.register(
 				Registries.DATA_COMPONENT_TYPE,
 				Nucleus.of(id),
-				builderOperator.apply(DataComponentType.builder()).cache().build()
+				builderOperator.apply(ComponentType.builder()).cache().build()
 		);
 	}
 
-	public static <T> DataComponentType<T> register(String id, Codec<T> codec, PacketCodec<ByteBuf, T> packetCodec) {
+	public static <T> ComponentType<T> register(String id, Codec<T> codec, PacketCodec<ByteBuf, T> packetCodec) {
 		return register(id, builder -> builder.codec(codec).packetCodec(packetCodec));
 	}
 
-	public static <T> DataComponentType<T> register(String id, Codec<T> codec) {
+	public static <T> ComponentType<T> register(String id, Codec<T> codec) {
 		return register(id, codec, PacketCodecs.codec(codec));
 	}
 

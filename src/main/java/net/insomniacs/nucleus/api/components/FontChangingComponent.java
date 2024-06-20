@@ -2,9 +2,9 @@ package net.insomniacs.nucleus.api.components;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.client.item.TooltipType;
 import net.minecraft.item.Item;
-import net.minecraft.item.TooltipAppender;
+import net.minecraft.item.tooltip.TooltipAppender;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -17,7 +17,7 @@ public record FontChangingComponent(
 		boolean showInTooltip
 ) implements TooltipAppender {
 
-	public static final FontChangingComponent EMPTY = new FontChangingComponent(new Identifier(""), false);
+	public static final FontChangingComponent EMPTY = new FontChangingComponent(Identifier.of(""), false);
 
 	public static final Codec<FontChangingComponent> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			Identifier.CODEC.fieldOf("location").forGetter(FontChangingComponent::font),

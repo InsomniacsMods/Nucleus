@@ -34,7 +34,7 @@ public class NucleusRecipeProvider extends RecipeProvider {
             var value = item.value();
             var shapedRecipes = getAnnotation(value, ShapedRecipes.class);
             var shapelessRecipes = getAnnotation(value, ShapelessRecipes.class);
-            var id = new Identifier(item.getIdAsString());
+            var id = Identifier.of(item.getIdAsString());
 
             if (shapedRecipes != null) for (var i = 0; i < shapedRecipes.value().length; i++) {
                 var shapedRecipe = shapedRecipes.value()[i];
@@ -65,7 +65,7 @@ public class NucleusRecipeProvider extends RecipeProvider {
                         .create(shapelessRecipe.category(), value);
 
                 for (var itemId : shapelessRecipe.input().split(",")) {
-                    var itemInput = Registries.ITEM.get(new Identifier(itemId));
+                    var itemInput = Registries.ITEM.get(Identifier.of(itemId));
 
                     builder.input(itemInput);
                     builder.criterion(
@@ -92,7 +92,7 @@ public class NucleusRecipeProvider extends RecipeProvider {
         for (var i = 0; i < chunks.length; i++) {
             var splitChunk = chunks[i].split("=");
             var input = splitChunk[0].charAt(0);
-            var itemID = new Identifier(splitChunk[1]);
+            var itemID = Identifier.of(splitChunk[1]);
             var itemVariant = Registries.ITEM.get(itemID);
 
             pairs[i] = new InputItemPair(input, itemVariant);
