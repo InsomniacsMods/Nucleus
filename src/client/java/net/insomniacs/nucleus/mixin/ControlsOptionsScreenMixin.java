@@ -20,7 +20,6 @@ public class ControlsOptionsScreenMixin {
 		SimpleOption<?>[] options = cir.getReturnValue();
 		List<SimpleOption<?>> newOptions = Arrays.asList(options);
 		newOptions.addAll(NucleusControlsRegistry.getOptions());
-		NucleusControlsRegistry.clear();
 		SimpleOption<?>[] result = newOptions.toArray(SimpleOption<?>[]::new);
 		cir.setReturnValue(result);
 	}

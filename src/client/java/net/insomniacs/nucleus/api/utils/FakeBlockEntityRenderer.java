@@ -56,7 +56,7 @@ public class FakeBlockEntityRenderer<T extends Entity> extends EntityRenderer<T>
 
 	public ModelIdentifier getModelId(T entity) {
 		var id = Registries.ENTITY_TYPE.getId(entity.getType());
-		return new ModelIdentifier(id.getNamespace(), id.getPath(), getVariant(entity));
+		return new ModelIdentifier(id, getVariant(entity));
 	}
 
 	public String getVariant(T entity) {

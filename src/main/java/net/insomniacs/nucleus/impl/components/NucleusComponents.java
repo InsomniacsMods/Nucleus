@@ -36,7 +36,7 @@ public class NucleusComponents {
 
 
 	public static void init() {
-		ComponentTooltipRegistry.register(
+		NucleusComponentTooltipRegistry.register(
 				NucleusComponents.SOULBOUND,
 				NucleusComponents.BOUND_LOCATION,
 				NucleusComponents.FONT_CHANGING

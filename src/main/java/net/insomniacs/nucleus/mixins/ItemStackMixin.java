@@ -2,7 +2,7 @@ package net.insomniacs.nucleus.mixins;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.insomniacs.nucleus.api.components.ComponentTooltipRegistry;
+import net.insomniacs.nucleus.api.components.NucleusComponentTooltipRegistry;
 import net.minecraft.component.ComponentType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,7 +27,7 @@ public class ItemStackMixin {
 	public List<Text> modifyGetTooltip(List<Text> original, @Local(argsOnly = true) Item.TooltipContext context, @Local(argsOnly = true) TooltipType type) {
 		var index = new AtomicInteger(1);
 		Consumer<Text> appender = text -> original.add(index.getAndIncrement(), text);
-		ComponentTooltipRegistry.getComponents().forEach(comp -> appendTooltip(comp, context, appender, type));
+		NucleusComponentTooltipRegistry.getComponents().forEach(comp -> appendTooltip(comp, context, appender, type));
 		return original;
 	}
 
