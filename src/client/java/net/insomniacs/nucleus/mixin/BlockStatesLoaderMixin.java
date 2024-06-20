@@ -2,7 +2,7 @@ package net.insomniacs.nucleus.mixin;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.render.model.ModelLoader;
+import net.minecraft.client.render.model.BlockStatesLoader;
 import net.minecraft.state.StateManager;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
@@ -16,8 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.HashMap;
 import java.util.Map;
 
-@Mixin(ModelLoader.class)
-public class ModelLoaderMixin {
+@Mixin(BlockStatesLoader.class)
+public class BlockStatesLoaderMixin {
 
 	@Shadow @Mutable @Final private static Map<Identifier, StateManager<Block, BlockState>> STATIC_DEFINITIONS;
 
