@@ -15,8 +15,6 @@
 		"ItemSpriteRenderingMixin",
 		"ItemStackMixin",
 		"MinecraftClientMixin",
-		"ModelLoaderAccessor",
-		"ModelLoaderMixin",
 		"TooltipComponentMixin"
 	]
 }
