@@ -5,7 +5,6 @@ import net.insomniacs.golgi.registry.GolgiBlocks;
 import net.insomniacs.golgi.registry.GolgiItems;
 import net.insomniacs.golgi.test.ModRegistry;
 import net.insomniacs.golgi.test.envelope.EnvelopeAPI;
-import net.insomniacs.nucleus.impl.recipes.NucleusRecipes;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,7 @@ public class Golgi implements ModInitializer {
     public static final ModRegistry REGISTRY = new ModRegistry(MOD_ID);
 
     public static Identifier of(String name) {
-        return new Identifier(MOD_ID, name);
+        return Identifier.of(MOD_ID, name);
     }
 
     @Override

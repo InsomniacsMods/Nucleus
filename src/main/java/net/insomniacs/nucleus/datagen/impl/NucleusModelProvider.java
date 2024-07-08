@@ -3,11 +3,10 @@ package net.insomniacs.nucleus.datagen.impl;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.insomniacs.nucleus.api.utils.TypeContainer;
-import net.insomniacs.nucleus.datagen.api.NucleusDataGenerator;
+import net.insomniacs.nucleus.datagen.api.Datagen;
 import net.insomniacs.nucleus.datagen.api.annotations.DatagenExempt;
 import net.insomniacs.nucleus.datagen.api.annotations.ModelOverride;
 import net.insomniacs.nucleus.datagen.impl.utility.AnnotationUtils;
-import net.insomniacs.nucleus.datagen.impl.utility.ProviderUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.block.PressurePlateBlock;
@@ -17,6 +16,7 @@ import net.minecraft.data.client.Model;
 import net.minecraft.data.client.Models;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 import java.util.Arrays;
@@ -54,17 +54,17 @@ public class NucleusModelProvider extends FabricModelProvider {
             Map.entry(new Single<>(BlockItem.class), Models.GENERATED)
     );
 
-    private final NucleusDataGenerator generator;
+    private final Map<Registry<?>, Datagen.RefAnnotationPair[]> refMap;
 
-    public NucleusModelProvider(FabricDataOutput output, NucleusDataGenerator generator) {
+    public NucleusModelProvider(FabricDataOutput output, Map<Registry<?>, Datagen.RefAnnotationPair[]> refMap) {
         super(output);
-        this.generator = generator;
+        this.refMap = refMap;
     }
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        ProviderUtils.streamRegistry(Registries.BLOCK, generator, block -> {
-            var value = block.value();
+        Arrays.stream(refMap.get(Registries.BLOCK)).forEach(pair -> {
+            var value = (Block) pair.reference().value();
             var blockClazz = value.getClass();
             var id = Registries.BLOCK.getId(value);
 
@@ -80,20 +80,22 @@ public class NucleusModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        ProviderUtils.streamRegistry(Registries.ITEM, generator, item -> {
-            var value = item.value(); // We know it at minimum extends item.
-            var itemClazz = value.getClass();
+        Arrays.stream(refMap.get(Registries.ITEM)).forEach(pair -> {
+            var item = (Item) pair.reference().value(); // We know it at minimum extends item.
+            var itemClazz = item.getClass();
 
-            var modelAnnotation = getAnnotation(item, ModelOverride.class);
+            var modelAnnotation = getAnnotation(item.getClass(), ModelOverride.class);
 
             if (isExempt(itemClazz)) return;
 
             // Optional chaining jumpscare
-            var model = getModelFromAnnotation(modelAnnotation)
-                    .orElse(getModelFromInheritance(itemClazz)
-                            .orElse(Models.GENERATED));
+            modelAnnotation.ifPresent(modelAnno -> {
+                var model = getModelFromAnnotation(modelAnno)
+                        .orElse(getModelFromInheritance(itemClazz)
+                                .orElse(Models.GENERATED));
 
-            itemModelGenerator.register(value, model);
+                itemModelGenerator.register(item, model);
+            });
         });
     }
 

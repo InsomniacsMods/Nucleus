@@ -1,10 +1,9 @@
 package net.insomniacs.nucleus.datagen.impl;
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.insomniacs.nucleus.datagen.api.NucleusDataGenerator;
+import net.insomniacs.nucleus.datagen.api.Datagen;
 import net.insomniacs.nucleus.datagen.impl.annotations.ShapedRecipes;
 import net.insomniacs.nucleus.datagen.impl.annotations.ShapelessRecipes;
-import net.insomniacs.nucleus.datagen.impl.utility.ProviderUtils;
 import net.minecraft.data.DataOutput;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.RecipeProvider;
@@ -12,76 +11,88 @@ import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 
+import java.util.Arrays;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 import static net.insomniacs.nucleus.datagen.impl.utility.AnnotationUtils.getAnnotation;
 
 public class NucleusRecipeProvider extends RecipeProvider {
 
-    private final NucleusDataGenerator dataGenerator;
+    private final Map<Registry<?>, Datagen.RefAnnotationPair[]> refMap;
 
-    public NucleusRecipeProvider(DataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookupFuture, NucleusDataGenerator generator) {
+    public NucleusRecipeProvider(DataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookupFuture, Map<Registry<?>, Datagen.RefAnnotationPair[]> refMap) {
         super(output, registryLookupFuture);
-        this.dataGenerator = generator;
+        this.refMap = refMap;
     }
 
     @Override
     public void generate(RecipeExporter exporter) {
-        ProviderUtils.streamRegistry(Registries.ITEM, dataGenerator, item -> {
-            var value = item.value();
-            var shapedRecipes = getAnnotation(value, ShapedRecipes.class);
-            var shapelessRecipes = getAnnotation(value, ShapelessRecipes.class);
-            var id = Identifier.of(item.getIdAsString());
+        Arrays.stream(refMap.get(Registries.ITEM)).forEach(pair -> {
+            var ref = pair.reference();
+            var item = (Item) ref.value();
 
-            if (shapedRecipes != null) for (var i = 0; i < shapedRecipes.value().length; i++) {
-                var shapedRecipe = shapedRecipes.value()[i];
-                var builder = ShapedRecipeJsonBuilder
-                        .create(shapedRecipe.category(), value);
-                var patterns = shapedRecipe.pattern().split("\n");
+            var shapedRecipes = getAnnotation(item.getClass(), ShapedRecipes.class);
+            var shapelessRecipes = getAnnotation(item.getClass(), ShapelessRecipes.class);
+            final var id = Identifier.of(ref.getIdAsString());
 
-                for (var pattern : patterns) builder.pattern(pattern);
-                for (var pair : getPairs(shapedRecipe.inputs())) {
-                    builder.input(pair.input(), pair.item());
-                    builder.criterion(
-                            FabricRecipeProvider.hasItem(pair.item),
-                            FabricRecipeProvider.conditionsFromItem(pair.item)
-                    );
+            shapedRecipes.ifPresent(recipes -> {
+                for (var i = 0; i < recipes.value().length; i++) {
+                    var shapedID = id;
+
+                    var shapedRecipe = recipes.value()[i];
+                    var builder = ShapedRecipeJsonBuilder
+                            .create(shapedRecipe.category(), item);
+                    var patterns = shapedRecipe.pattern().split("\n");
+
+                    for (var pattern : patterns) builder.pattern(pattern);
+                    for (var patternPair : getPairs(shapedRecipe.inputs())) {
+                        builder.input(patternPair.input(), patternPair.item());
+                        builder.criterion(
+                                FabricRecipeProvider.hasItem(patternPair.item),
+                                FabricRecipeProvider.conditionsFromItem(patternPair.item)
+                        );
+                    }
+
+                    shapedID.withPrefixedPath("shaped/");
+
+                    if (recipes.value().length > 1)
+                        builder.offerTo(exporter, shapedID.withSuffixedPath("_" + i));
+                    else
+                        builder.offerTo(exporter);
                 }
+            });
 
-                id = id.withPrefixedPath("shaped/");
+            shapelessRecipes.ifPresent( shapeless -> {
+                for (int i = 0; i < shapeless.value().length; i++) {
+                    var shapelessID = id;
 
-                if (shapedRecipes.value().length > 1)
-                    builder.offerTo(exporter, id.withSuffixedPath("_" + i));
-                else
-                    builder.offerTo(exporter);
-            }
+                    var shapelessRecipe = shapeless.value()[i];
+                    var builder = ShapelessRecipeJsonBuilder
+                            .create(shapelessRecipe.category(), item);
 
-            if (shapelessRecipes != null) for (int i = 0; i < shapelessRecipes.value().length; i++) {
-                var shapelessRecipe = shapelessRecipes.value()[i];
-                var builder = ShapelessRecipeJsonBuilder
-                        .create(shapelessRecipe.category(), value);
+                    for (var itemId : shapelessRecipe.input().split(",")) {
+                        var itemInput = Registries.ITEM.get(Identifier.of(itemId));
 
-                for (var itemId : shapelessRecipe.input().split(",")) {
-                    var itemInput = Registries.ITEM.get(Identifier.of(itemId));
+                        builder.input(itemInput);
+                        builder.criterion(
+                                FabricRecipeProvider.hasItem(itemInput),
+                                FabricRecipeProvider.conditionsFromItem(itemInput)
+                        );
+                    }
 
-                    builder.input(itemInput);
-                    builder.criterion(
-                            FabricRecipeProvider.hasItem(itemInput),
-                            FabricRecipeProvider.conditionsFromItem(itemInput)
-                    );
+                    shapelessID.withPrefixedPath("shapeless/");
+
+                    if (shapeless.value().length > 1)
+                        builder.offerTo(exporter, shapelessID.withSuffixedPath("_" + i));
+                    else
+                        builder.offerTo(exporter);
                 }
-
-                id = id.withPrefixedPath("shapeless/");
-
-                if (shapelessRecipes.value().length > 1)
-                    builder.offerTo(exporter, id.withSuffixedPath("_" + i));
-                else
-                    builder.offerTo(exporter);
-            }
-
+            });
         });
     }
 

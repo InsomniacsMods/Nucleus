@@ -17,19 +17,12 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class FileReader<
-		Value
-> {
+public class FileReader<Value> {
 
-	public record FilePath(
-			String basePath,
-			Function<Identifier, Boolean> predicate
-	) {
-
+	public record FilePath(String basePath, Function<Identifier, Boolean> predicate) {
 		public static FilePath simple(String path) {
 			return new FilePath(path, p -> true);
 		}
-
 	}
 
 	private final Function<BufferedReader, Value> bufferReader;

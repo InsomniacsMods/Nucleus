@@ -24,7 +24,7 @@ public class GolgiItems {
     );
 
     private static final FontChangingComponent ILLAGER_RUNE_FONT = new FontChangingComponent(
-            new Identifier("minecraft", "illageralt"),
+            Identifier.of("minecraft", "illageralt"),
             true
     );
 
