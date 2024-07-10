@@ -66,7 +66,7 @@ public class Datagen {
             .flatMap(Arrays::stream)
             .collect(Collectors.toUnmodifiableMap(
                    Datagen::getAccessibleField,
-                   Field::getDeclaredAnnotations
+                   Field::getAnnotations
             )
         );
     }

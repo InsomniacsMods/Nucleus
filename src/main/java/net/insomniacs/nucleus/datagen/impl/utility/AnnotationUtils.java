@@ -18,8 +18,9 @@ public final class AnnotationUtils {
         if (annotations == null)
             return Optional.empty();
         for (Annotation heldAnnotation : annotations) {
-            if (heldAnnotation.getClass().equals(annotation))
+            if (heldAnnotation.annotationType().equals(annotation)) {
                 return Optional.of((T) heldAnnotation);
+            }
         }
         return Optional.empty();
     }

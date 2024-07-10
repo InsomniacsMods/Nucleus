@@ -37,6 +37,7 @@ public class NucleusLanguageProvider extends FabricLanguageProvider {
 				var fieldAnnotation = getAnnotation(pair.annotations(), Translate.class).map(Translate::name);
 				var clazzAnnotation = getAnnotation(value.getClass(), Translate.class).map(Translate::name);
 
+
 				var translationKey = Util.createTranslationKey(registry.getKey().getValue().getPath(), id);
 				var translation = fieldAnnotation.orElse(clazzAnnotation.orElse(parseID(id)));
 

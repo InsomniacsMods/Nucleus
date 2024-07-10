@@ -33,12 +33,18 @@ public class NucleusRecipeProvider extends RecipeProvider {
     @Override
     public void generate(RecipeExporter exporter) {
         Arrays.stream(refMap.get(Registries.ITEM)).forEach(pair -> {
-            var ref = pair.reference();
-            var item = (Item) ref.value();
+            final var ref = pair.reference();
+            final var item = (Item) ref.value();
 
-            var shapedRecipes = getAnnotation(item.getClass(), ShapedRecipes.class);
-            var shapelessRecipes = getAnnotation(item.getClass(), ShapelessRecipes.class);
+            final var shapedRecipes = getAnnotation(pair.annotations(), ShapedRecipes.class)
+                    .or(() -> getAnnotation(pair.annotations(), ShapedRecipes.class));
+            final var shapelessRecipes = getAnnotation(pair.annotations(), ShapelessRecipes.class)
+                    .or(() -> getAnnotation(pair.annotations(), ShapelessRecipes.class));
             final var id = Identifier.of(ref.getIdAsString());
+            final var key = id.toUnderscoreSeparatedString() + "_key";
+
+            // My dumbass decided to use lambdas for optionals, so here we are with a cheat
+            int[] recipeCount = new int[] { 0 };
 
             shapedRecipes.ifPresent(recipes -> {
                 for (var i = 0; i < recipes.value().length; i++) {
@@ -46,7 +52,8 @@ public class NucleusRecipeProvider extends RecipeProvider {
 
                     var shapedRecipe = recipes.value()[i];
                     var builder = ShapedRecipeJsonBuilder
-                            .create(shapedRecipe.category(), item);
+                            .create(shapedRecipe.category(), item)
+                            .group(shapedRecipe.keyOverride().isEmpty() ? key : shapedRecipe.keyOverride());
                     var patterns = shapedRecipe.pattern().split("\n");
 
                     for (var pattern : patterns) builder.pattern(pattern);
@@ -64,6 +71,8 @@ public class NucleusRecipeProvider extends RecipeProvider {
                         builder.offerTo(exporter, shapedID.withSuffixedPath("_" + i));
                     else
                         builder.offerTo(exporter);
+
+                    recipeCount[0] = i;
                 }
             });
 
@@ -73,10 +82,11 @@ public class NucleusRecipeProvider extends RecipeProvider {
 
                     var shapelessRecipe = shapeless.value()[i];
                     var builder = ShapelessRecipeJsonBuilder
-                            .create(shapelessRecipe.category(), item);
+                            .create(shapelessRecipe.category(), item)
+                            .group(shapelessRecipe.keyOverride().isEmpty() ? key : shapelessRecipe.keyOverride());
 
                     for (var itemId : shapelessRecipe.input().split(",")) {
-                        var itemInput = Registries.ITEM.get(Identifier.of(itemId));
+                        var itemInput = Registries.ITEM.get(Identifier.of(itemId.trim().toLowerCase()));
 
                         builder.input(itemInput);
                         builder.criterion(
@@ -88,7 +98,7 @@ public class NucleusRecipeProvider extends RecipeProvider {
                     shapelessID.withPrefixedPath("shapeless/");
 
                     if (shapeless.value().length > 1)
-                        builder.offerTo(exporter, shapelessID.withSuffixedPath("_" + i));
+                        builder.offerTo(exporter, shapelessID.withSuffixedPath("_" + (recipeCount[0] + i)));
                     else
                         builder.offerTo(exporter);
                 }
