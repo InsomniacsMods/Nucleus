@@ -7,23 +7,17 @@ import java.util.List;
 
 public class NucleusControlsRegistry {
 
+    private final List<SimpleOption<?>> options = new ArrayList<>();
+
     private static final NucleusControlsRegistry INSTANCE = new NucleusControlsRegistry();
-
-    private final List<SimpleOption<?>> options;
-
-    private NucleusControlsRegistry() {
-        this.options = new ArrayList<>();
-    }
-
-
-    public static void register(SimpleOption<?> option) {
-        INSTANCE.options.add(option);
-    }
+    private NucleusControlsRegistry() {}
 
     public static void register(SimpleOption<?>... options) {
         for (SimpleOption<?> option : options) register(option);
     }
-
+    public static void register(SimpleOption<?> option) {
+        INSTANCE.options.add(option);
+    }
 
     public static List<SimpleOption<?>> getOptions() {
         return INSTANCE.options;

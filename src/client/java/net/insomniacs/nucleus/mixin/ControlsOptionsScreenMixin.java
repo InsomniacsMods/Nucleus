@@ -1,27 +1,29 @@
 package net.insomniacs.nucleus.mixin;
 
 import net.insomniacs.nucleus.api.NucleusControlsRegistry;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.ControlsOptionsScreen;
+import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.SimpleOption;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.Arrays;
-import java.util.List;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ControlsOptionsScreen.class)
-public class ControlsOptionsScreenMixin {
+public abstract class ControlsOptionsScreenMixin extends GameOptionsScreen {
 
-	@Inject(method = "getOptions", at = @At("RETURN"), cancellable = true)
-	private static void addOptions(GameOptions gameOptions, CallbackInfoReturnable<SimpleOption<?>[]> cir) {
-		SimpleOption<?>[] options = cir.getReturnValue();
-		List<SimpleOption<?>> newOptions = Arrays.asList(options);
-		newOptions.addAll(NucleusControlsRegistry.getOptions());
-		SimpleOption<?>[] result = newOptions.toArray(SimpleOption<?>[]::new);
-		cir.setReturnValue(result);
+	public ControlsOptionsScreenMixin(Screen parent, GameOptions options, Text title) {
+		super(parent, options, title);
+	}
+
+	@Inject(method = "addOptions", at = @At("TAIL"))
+	private void addCustomOptions(CallbackInfo ci) {
+		if (this.body == null) return;
+		System.out.println(NucleusControlsRegistry.getOptions());
+        this.body.addAll(NucleusControlsRegistry.getOptions().toArray(SimpleOption<?>[]::new));
 	}
 
 }
